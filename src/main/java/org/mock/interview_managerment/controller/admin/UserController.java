@@ -14,7 +14,7 @@ public class UserController {
     @GetMapping("/admin/user")
     public String getUserPage(Model model) {
 
-        return "admin/user/show";
+        return "list-user.jsp";
     }
 
     @RequestMapping("/")

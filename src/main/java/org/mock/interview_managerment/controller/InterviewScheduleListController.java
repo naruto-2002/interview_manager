@@ -5,10 +5,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class InterViewScheduleController {
-    @GetMapping("/interview_schedule")
-    public String getInterViewSchedulePage(Model model) {
+public class InterviewScheduleListController {
+    @GetMapping("/interview_schedule_list")
+    public String getInterviewScheduleListPage(Model model) {
 
-        return "interview_schedule/index";
+        return "interview_schedule_list/index";
     }
 }

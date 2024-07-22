@@ -35,7 +35,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 //        registry.addResourceHandler("/images/**").addResourceLocations("/assets/images/");
 //        registry.addResourceHandler("/client/**").addResourceLocations("/assets/client/");
         registry.addResourceHandler("/assets/**").addResourceLocations("/WEB-INF/view/assets/");
-        registry.addResourceHandler("/interview_schedule/**").addResourceLocations("/WEB-INF/view/interview_schedule/");
+        registry.addResourceHandler("/interview_schedule_list/**").addResourceLocations("/WEB-INF/view/interview_schedule_list/");
+        registry.addResourceHandler("/new_interview_schedule/**").addResourceLocations("/WEB-INF/view/new_interview_schedule/");
     }
 
 }

@@ -11,10 +11,10 @@ public class UserController {
 
 
 
-    @GetMapping("/admin/user")
+    @GetMapping("/user")
     public String getUserPage(Model model) {
 
-        return "admin/user/show";
+        return "user_view/list-user";
     }
 
     @RequestMapping("/")

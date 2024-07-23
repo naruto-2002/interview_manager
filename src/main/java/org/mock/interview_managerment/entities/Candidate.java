@@ -1,44 +1,41 @@
 package org.mock.interview_managerment.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+import org.mock.interview_managerment.entities.pk.GenderEnum;
+import org.mock.interview_managerment.entities.pk.LevelEnum;
+import org.mock.interview_managerment.entities.pk.PositionEnum;
+import org.mock.interview_managerment.entities.pk.StatusEnum;
 
 import java.util.Date;
-import java.util.List;
 
+@Data
 @Entity
 @Table(name = "candidates")
-@Data
 public class Candidate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long candidateId;
 
-    private String name;
-    private String email;
-    private String phone;
-    private String status;
-    private String currentPosition;
-    private String cvAttachmentLink;
-    private String skills;
-    private String recruiter;
-    private int yearsExperience;
-    private String highestLevel;
     private Date dob;
+    private Integer yearOfExp;
     private String address;
-    private String gender;
+    private String cv;
+    private String email;
+    private String fullName;
+    private String note;
+    private String phoneNumber;
+    private String skills;
 
-    @OneToMany(mappedBy = "candidate")
-    private List<Application> applications;
+    @Enumerated(EnumType.STRING)
+    private GenderEnum gender;
 
-    @OneToMany(mappedBy = "candidate")
-    private List<Schedule> schedules;
+    @Enumerated(EnumType.STRING)
+    private LevelEnum highestLevel;
 
-    @OneToMany(mappedBy = "candidate")
-    private List<Offer> offers;
+    @Enumerated(EnumType.STRING)
+    private PositionEnum position;
+
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
 }

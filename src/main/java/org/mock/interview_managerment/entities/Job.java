@@ -2,28 +2,29 @@ package org.mock.interview_managerment.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.mock.interview_managerment.entities.pk.StatusEnum;
 
 import java.util.Date;
-import java.util.List;
 
+@Data
 @Entity
 @Table(name = "jobs")
-@Data
 public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long jobId;
 
-    private String title;
-    private String description;
-    private String requiredSkills;
-    private String level;
-    private Date startDate;
     private Date endDate;
-    private String location;
+    private Double salaryFrom;
+    private Date startDate;
+    private Double salaryTo;
     private String benefits;
+    private String description;
+    private String levels;
+    private String location;
+    private String title;
+    private String workingAddress;
 
-    @OneToMany(mappedBy = "job")
-    private List<Application> applications;
-
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
 }

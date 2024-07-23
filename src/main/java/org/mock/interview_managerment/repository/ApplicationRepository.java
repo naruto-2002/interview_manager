@@ -1,2 +1,4 @@
-package org.mock.interview_managerment.repository;public interface ApplicationRepository {
+package org.mock.interview_managerment.repository;
+
+public interface ApplicationRepository {
 }

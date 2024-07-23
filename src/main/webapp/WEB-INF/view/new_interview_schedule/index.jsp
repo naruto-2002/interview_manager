@@ -312,8 +312,8 @@
                                 <div class="card text-center">
                                     <div class="d-flex justify-content-center align-items-center card-body">
                                         <div class="">
-                                            <button class="mr-6 btn btn-space btn-secondary active">Submit</button>
-                                            <button class="ml-6 btn btn-space btn-secondary active">Cancel</button>
+                                            <button class="mr-6 btn btn-space btn-secondary btn-width active">Submit</button>
+                                            <button class="ml-6 btn btn-space btn-secondary btn-width active">Cancel</button>
                                         </div>
                                     </div>
                                 </div>

@@ -9,12 +9,6 @@
     box-shadow: none !important;
 }
 
-.star:after {
-    content: "*";
-    color: red;
-    margin-right: 5px;
-}
-
 .btn-width {
     width: 108px;
 }

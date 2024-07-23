@@ -32,7 +32,7 @@
                     <div class="card card-table">
                         <div class="card-header">
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-space btn-secondary active">Add new</button>
+                                <button class="btn btn-space btn-secondary btn-width active">Add new</button>
                             </div>
                         </div>
                         <div class="card-body">

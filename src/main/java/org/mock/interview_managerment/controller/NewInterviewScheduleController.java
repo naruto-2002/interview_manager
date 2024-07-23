@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class NewInterviewScheduleController {
     @GetMapping("/new_interview_schedule")
     public String getNewInterviewSchedulePage(Model model) {
-
         return "new_interview_schedule/index";
     }
 }

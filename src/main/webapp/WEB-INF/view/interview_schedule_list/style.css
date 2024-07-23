@@ -11,3 +11,7 @@
 .icon + .icon {
     margin-left: 18px;
 }
+
+.btn-width {
+    width: 108px;
+}

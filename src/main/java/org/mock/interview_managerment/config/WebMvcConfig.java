@@ -1,7 +1,9 @@
 package org.mock.interview_managerment.config;
 
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate5.support.OpenSessionInViewInterceptor;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
+
 
     @Bean
     public ViewResolver viewResolver() {
@@ -30,14 +33,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/css/**").addResourceLocations("/assets/css/");
-//        registry.addResourceHandler("/js/**").addResourceLocations("/assets/js/");
-//        registry.addResourceHandler("/images/**").addResourceLocations("/assets/images/");
-//        registry.addResourceHandler("/client/**").addResourceLocations("/assets/client/");
-        registry.addResourceHandler("/assets/**").addResourceLocations("/WEB-INF/view/assets/");
-        registry.addResourceHandler("/interview_schedule_list/**").addResourceLocations("/WEB-INF/view/interview_schedule_list/");
-        registry.addResourceHandler("/new_interview_schedule/**").addResourceLocations("/WEB-INF/view/new_interview_schedule/");
-        registry.addResourceHandler("/interview_schedule_details/**").addResourceLocations("/WEB-INF/view/interview_schedule_details/");
+        registry.addResourceHandler("/css/**").addResourceLocations("/assets/css/");
+        registry.addResourceHandler("/js/**").addResourceLocations("/assets/js/");
+        registry.addResourceHandler("/img/**").addResourceLocations("/assets/img/");
+        registry.addResourceHandler("/client/**").addResourceLocations("/assets/client/");
+        registry.addResourceHandler("/lib/**").addResourceLocations("/assets/lib/");
     }
+
 
 }

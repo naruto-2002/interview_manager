@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="assets/img/logo-fav.png">
+    <link rel="shortcut icon" href="/img/logo-fav.png">
     <title>Beagle</title>
-    <link rel="stylesheet" type="text/css" href="assets/lib/perfect-scrollbar/css/perfect-scrollbar.css">
-    <link rel="stylesheet" type="text/css" href="assets/lib/material-design-icons/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/lib/datetimepicker/css/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/lib/select2/css/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/lib/bootstrap-slider/css/bootstrap-slider.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/perfect-scrollbar/css/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="/lib/material-design-icons/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/datetimepicker/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/select2/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/bootstrap-slider/css/bootstrap-slider.min.css">
     
-    <link rel="stylesheet" href="assets/css/app.css" type="text/css">
-    <link rel="stylesheet" href="/interview_schedule_details/style.css">
+    <link rel="stylesheet" href="/css/app.css" type="text/css">
+    <link rel="stylesheet" href="/css/interview_schedule/details.css">
 </head>
 <body>
 <div class="be-wrapper">
@@ -151,20 +151,20 @@
 
     <%@include file="../lay_out/setting.jsp"%>
 </div>
-<script src="assets/lib/jquery/jquery.min.js" type="text/javascript"></script>
-<script src="assets/lib/perfect-scrollbar/js/perfect-scrollbar.min.js" type="text/javascript"></script>
-<script src="assets/lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
-<script src="assets/js/app.js" type="text/javascript"></script>
-<script src="assets/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
-<script src="assets/lib/jquery.nestable/jquery.nestable.js" type="text/javascript"></script>
-<script src="assets/lib/moment.js/min/moment.min.js" type="text/javascript"></script>
-<script src="assets/lib/datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-<script src="assets/lib/select2/js/select2.min.js" type="text/javascript"></script>
-<script src="assets/lib/select2/js/select2.full.min.js" type="text/javascript"></script>
-<script src="assets/lib/bootstrap-slider/bootstrap-slider.min.js" type="text/javascript"></script>
-<script src="assets/lib/bs-custom-file-input/bs-custom-file-input.js" type="text/javascript"></script>
+<script src="/lib/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="/lib/perfect-scrollbar/js/perfect-scrollbar.min.js" type="text/javascript"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<script src="/js/app.js" type="text/javascript"></script>
+<script src="/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/lib/jquery.nestable/jquery.nestable.js" type="text/javascript"></script>
+<script src="/lib/moment.js/min/moment.min.js" type="text/javascript"></script>
+<script src="/lib/datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+<script src="/lib/select2/js/select2.min.js" type="text/javascript"></script>
+<script src="/lib/select2/js/select2.full.min.js" type="text/javascript"></script>
+<script src="/lib/bootstrap-slider/bootstrap-slider.min.js" type="text/javascript"></script>
+<script src="/lib/bs-custom-file-input/bs-custom-file-input.js" type="text/javascript"></script>
 
-<script src="/interview_schedule_details/script.js"></script>
+<script src="/js/interview_schedule/details.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         //-initialize the javascript

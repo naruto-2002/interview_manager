@@ -2,36 +2,53 @@ package org.mock.interview_managerment.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.mock.interview_managerment.entities.pk.*;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "offers")
 @Data
+@Entity
+@Table(name = "offer")
 public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long offerId;
+
+    private Double basicSalary;
+    private Date dueDate;
+    private Date endContract;
+    private Date startContract;
+
+    @ManyToOne
+    @JoinColumn(name = "approver_id")
+    private User approver;
 
     @ManyToOne
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
 
     @ManyToOne
-    @JoinColumn(name = "schedule_id")
-    private Schedule schedule;
-
-    private String status;
-    private String contractPeriod;
-    private String contractType;
-    private String level;
-    private String department;
+    @JoinColumn(name = "interview_id")
+    private Interview interview;
 
     @ManyToOne
-    @JoinColumn(name = "recruiter_owner_id")
-    private User recruiterOwner;
+    @JoinColumn(name = "recruiter_id")
+    private User recruiter;
 
-    private Date dueDate;
-    private double basicSalary;
     private String note;
+
+    @Enumerated(EnumType.STRING)
+    private ContractTypeEnum contractType;
+
+    @Enumerated(EnumType.STRING)
+    private DepartmentEnum department;
+
+    @Enumerated(EnumType.STRING)
+    private LevelEnum level;
+
+    @Enumerated(EnumType.STRING)
+    private PositionEnum position;
+
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
 }

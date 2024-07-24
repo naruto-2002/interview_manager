@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class InterviewScheduleDetailsController {
-    @GetMapping("/interview_schedule_details")
-    public String getNewInterviewSchedulePage(Model model) {
-        return "interview_schedule_details/index";
+    @GetMapping("/interview_schedule/details")
+    public String getInterviewScheduleDetailsPage(Model model) {
+        return "interview_schedule/details";
     }
 }

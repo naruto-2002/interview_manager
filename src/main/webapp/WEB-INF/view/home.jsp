@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-    Xin chao ca nha 123
+    <h1>Home</h1>
+    <a href="/logout">Logout</a>
+    <a href="/interview_schedule/list">Interview Schedule List</a>
+
 </body>
 </html>

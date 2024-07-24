@@ -2,23 +2,15 @@ package org.mock.interview_managerment.repository;
 
 import org.mock.interview_managerment.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
-//crud: create, read, update, delete
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User save(User eric);
 
-    void deleteById(long id);
-
-    List<User> findOneByEmail(String email);
-
-    List<User> findAll();
-
-    User findById(long id); // null
-
-    public boolean existsByEmail(String email);
-
-    public User findByEmail(String email);
+    @Query(value = "from User u where u.username = :username")
+    Optional<User> findByUsername(String username);
 }

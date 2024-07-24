@@ -1,24 +1,21 @@
 package org.mock.interview_managerment.entities;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
-@Entity
 @Data
+@Entity
 @Table(name = "roles")
 public class Role {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roleId;
 
-    @Column(name = "role_name")
+    private String description;
     private String roleName;
 
-    @OneToMany(mappedBy = "role")
-    private List<User> users = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "role")
+    private Set<User> users;
 }

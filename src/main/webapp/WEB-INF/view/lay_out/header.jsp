@@ -23,7 +23,7 @@
                         </div><a class="dropdown-item" href="pages-profile.html"><span
                             class="icon mdi mdi-face"></span>Account</a><a class="dropdown-item" href="#"><span
                             class="icon mdi mdi-settings"></span>Settings</a><a class="dropdown-item"
-                                                                                href="pages-login.html"><span class="icon mdi mdi-power"></span>Logout</a>
+                                                                                href="/logout"><span class="icon mdi mdi-power"></span>Logout</a>
                     </div>
                 </li>
             </ul>

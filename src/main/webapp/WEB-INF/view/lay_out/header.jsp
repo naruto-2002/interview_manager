@@ -6,26 +6,36 @@
         <div class="be-navbar-header"><a class="navbar-brand" href="index.html"></a>
         </div>
         <div class="page-title">
+            <c:if test = "${roleName == null}">
+                <span>Welcome to the interview management system</span>
+            </c:if>
             <c:if test = "${roleName == 'Interviewer'}">
                 <span>Interview Management</span>
             </c:if>
 
         </div>
+
         <div class="be-right-navbar">
             <ul class="nav navbar-nav float-right be-user-nav">
-                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
-                                                 role="button" aria-expanded="false"><img src="\img\avatar.png" alt="Avatar">
-                    <span class="user-name">${username}</span></a>
-                    <div class="dropdown-menu" role="menu">
-                        <div class="user-info">
-                            <div class="user-name">${username}</div>
-                            <div class="user-position online">${roleName}</div>
-                        </div><a class="dropdown-item" href="pages-profile.html"><span
-                            class="icon mdi mdi-face"></span>Account</a><a class="dropdown-item" href="#"><span
-                            class="icon mdi mdi-settings"></span>Settings</a><a class="dropdown-item"
-                                                                                href="/logout"><span class="icon mdi mdi-power"></span>Logout</a>
-                    </div>
-                </li>
+                <c:if test = "${roleName == null}">
+                    <a href="/login"><button class="btn btn-space btn-secondary btn-width active">Login</button></a>
+                </c:if>
+                <c:if test = "${roleName == 'Interviewer'}">
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
+                                                     role="button" aria-expanded="false"><img src="\img\avatar.png" alt="Avatar">
+                        <span class="user-name">${username}</span></a>
+                        <div class="dropdown-menu" role="menu">
+                            <div class="user-info">
+                                <div class="user-name">${username}</div>
+                                <div class="user-position online">${roleName}</div>
+                            </div><a class="dropdown-item" href="pages-profile.html"><span
+                                class="icon mdi mdi-face"></span>Account</a><a class="dropdown-item" href="#"><span
+                                class="icon mdi mdi-settings"></span>Settings</a><a class="dropdown-item"
+                                                                                    href="/logout"><span class="icon mdi mdi-power"></span>Logout</a>
+                        </div>
+                    </li>
+                </c:if>
+
             </ul>
         </div>
     </div>

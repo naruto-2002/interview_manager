@@ -15,8 +15,11 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+
+    @GetMapping("/user")
+    public String getUserPage(Model model) {
+
+        return "user_view/list-user";
     }
 
     @GetMapping("/user/create")

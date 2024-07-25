@@ -14,6 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class LoginController {
     @GetMapping("/home")
     public String viewHomeUser(Model model) {
+        getUserInfor(model);
+
+        return "home"; // Điều hướng đến trang home
+    }
+
+
+
+    public void getUserInfor(Model model) {
         // Lấy thông tin người dùng từ SecurityContextHolder
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
@@ -27,9 +35,8 @@ public class LoginController {
         } else {
             model.addAttribute("username", principal.toString());
         }
-
-        return "home"; // Điều hướng đến trang home
     }
+
 
     public String getRoleName(String authority) {
         switch(authority) {

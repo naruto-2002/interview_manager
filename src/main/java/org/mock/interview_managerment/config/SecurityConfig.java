@@ -32,9 +32,9 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(requests -> {
                 requests
-                        .requestMatchers("/user/create").permitAll()
-                        .requestMatchers("/home").permitAll()
-                        .requestMatchers("/interview_schedule/list").hasRole("INTERVIEWER")
+//                        .requestMatchers("/user/create").permitAll()
+//                        .requestMatchers("/home").permitAll()
+//                        .requestMatchers("/interview_schedule/list").hasRole("INTERVIEWER")
                         .anyRequest().permitAll();
             })
             .formLogin(formLogin ->

@@ -1,7 +1,6 @@
 package org.mock.interview_managerment.security;
 
 import lombok.RequiredArgsConstructor;
-import org.mock.interview_managerment.entities.Role;
 import org.mock.interview_managerment.entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class UserSecurity implements UserDetails {

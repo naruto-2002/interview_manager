@@ -14,6 +14,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class LoginController {
     @GetMapping("/home")
     public String viewHomeUser(Model model) {
-        return "home";
+        // Lấy thông tin người dùng từ SecurityContextHolder
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) principal;
+            model.addAttribute("username", userDetails.getUsername());
+            String roleName = getRoleName(userDetails.getAuthorities().toString());
+            model.addAttribute("roleName", roleName);
+            // Bạn có thể thêm các thông tin khác của user nếu cần
+        } else {
+            model.addAttribute("username", principal.toString());
+        }
+
+        return "home"; // Điều hướng đến trang home
+    }
+
+    public String getRoleName(String authority) {
+        switch(authority) {
+            case "[ROLE_INTERVIEWER]":
+                return "Interviewer";
+
+            default:
+                return "Unknown role";
+        }
     }
 }

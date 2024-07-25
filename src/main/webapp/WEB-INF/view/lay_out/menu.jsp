@@ -7,8 +7,8 @@
                         <li class="divider">Menu</li>
                         <li class="active"><a href="index.html"><i class="icon mdi mdi-home"></i><span>Home</span></a>
                         </li>
-<%--                        interview schedule--%>
-                        <li class="parent"><a href="#"><i class="icon mdi mdi-face"></i><span>Inerview Schedule</span></a>
+
+                        <li class="parent"><a href="#"><i class="icon mdi mdi-accounts-list"></i><span>Inerview Schedule</span></a>
                         </li>
 
                         </li>

@@ -20,8 +20,6 @@
     <%@include file="../lay_out/header.jsp"%>
     <%@include file="../lay_out/menu.jsp"%>
 
-
-
     <div class="be-content">
         <div class="page-head">
             <h2 class="page-head-title">Interview Schedule List</h2>
@@ -101,7 +99,7 @@
     </div>
 
 
-    <%@include file="../lay_out/setting.jsp"%>
+
 </div>
 <script src="/lib/jquery/jquery.min.js" type="text/javascript"></script>
 <script src="/lib/perfect-scrollbar/js/perfect-scrollbar.min.js" type="text/javascript"></script>

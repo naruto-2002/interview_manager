@@ -1,32 +1,22 @@
 package org.mock.interview_managerment.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.mock.interview_managerment.entities.pk.DepartmentEnum;
 import org.mock.interview_managerment.entities.pk.GenderEnum;
 import org.mock.interview_managerment.entities.pk.StatusEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.Set;
 
 @Data
 @Entity
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
@@ -46,4 +36,12 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+
+
+
 }

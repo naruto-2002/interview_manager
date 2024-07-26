@@ -2,11 +2,12 @@ package org.mock.interview_managerment.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.mock.interview_managerment.entities.pk.ResultEnum;
-import org.mock.interview_managerment.entities.pk.StatusEnum;
+import org.mock.interview_managerment.enums.ResultEnum;
+import org.mock.interview_managerment.enums.StatusEnum;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
-import java.util.Set;
+
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -17,8 +18,10 @@ public class InterviewSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long interview_schedule_id;
 
-    private Date endTime;
-    private Date startTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
+    private String startTime;
+    private String endTime;
     private String location;
     private String meetingId;
     private String note;
@@ -31,8 +34,12 @@ public class InterviewSchedule {
     private StatusEnum status;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "interviewer_id")
     private User interviewer;
+
+    @ManyToOne
+    @JoinColumn(name = "recuriter_id")
+    private User recruiter;
 
     @ManyToOne
     @JoinColumn(name = "job_id")

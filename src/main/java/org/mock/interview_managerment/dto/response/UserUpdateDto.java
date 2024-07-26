@@ -9,9 +9,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.mock.interview_managerment.entities.Role;
-import org.mock.interview_managerment.entities.pk.DepartmentEnum;
-import org.mock.interview_managerment.entities.pk.GenderEnum;
-import org.mock.interview_managerment.entities.pk.StatusEnum;
+import org.mock.interview_managerment.enums.DepartmentEnum;
+import org.mock.interview_managerment.enums.GenderEnum;
+import org.mock.interview_managerment.enums.StatusEnum;
 import org.mock.interview_managerment.validator.FullNameChecked;
 
 import java.time.LocalDate;

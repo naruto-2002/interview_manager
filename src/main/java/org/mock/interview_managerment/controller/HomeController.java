@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
     @GetMapping("/home")
-    public String viewHomeUser(Model model) {
+    public String getHomePage(Model model) {
         getUserInfor(model);
 
         return "home"; // Điều hướng đến trang home

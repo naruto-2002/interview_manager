@@ -6,18 +6,16 @@ import org.mock.interview_managerment.entities.pk.ResultEnum;
 import org.mock.interview_managerment.entities.pk.StatusEnum;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "interviews")
-public class Interview {
+@Table(name = "interview_schedules")
+public class InterviewSchedule {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long interviewId;
-
-    @ManyToOne
-    @JoinColumn(name = "candidate_id")
-    private Candidate candidate;
+    private Long interview_schedule_id;
 
     private Date endTime;
     private Date startTime;
@@ -31,4 +29,17 @@ public class Interview {
 
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User interviewer;
+
+    @ManyToOne
+    @JoinColumn(name = "job_id")
+    private Job job;
+
+    @ManyToOne
+    @JoinColumn(name = "candidate_id")
+    private Candidate candidate;
+
 }

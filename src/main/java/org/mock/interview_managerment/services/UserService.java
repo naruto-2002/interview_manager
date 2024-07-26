@@ -2,6 +2,7 @@ package org.mock.interview_managerment.services;
 
 import lombok.RequiredArgsConstructor;
 import org.mock.interview_managerment.entities.User;
+import org.mock.interview_managerment.repository.InterviewScheduleRespository;
 import org.mock.interview_managerment.repository.RoleRepository;
 import org.mock.interview_managerment.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -24,4 +25,6 @@ public class UserService {
         user.setRole(roleRepository.findByRoleName(user.getRole().getRoleName()));
         return userRepository.save(user);
     }
+
+
 }

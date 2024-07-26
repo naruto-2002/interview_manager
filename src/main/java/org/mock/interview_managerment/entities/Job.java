@@ -5,6 +5,7 @@ import lombok.Data;
 import org.mock.interview_managerment.entities.pk.StatusEnum;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Entity
@@ -27,4 +28,5 @@ public class Job {
 
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
+
 }

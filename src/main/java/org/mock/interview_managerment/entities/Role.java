@@ -16,6 +16,4 @@ public class Role {
     private String description;
     private String roleName;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "role")
-    private Set<User> users;
 }

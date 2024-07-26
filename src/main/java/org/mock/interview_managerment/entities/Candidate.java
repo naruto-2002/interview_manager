@@ -8,6 +8,7 @@ import org.mock.interview_managerment.entities.pk.PositionEnum;
 import org.mock.interview_managerment.entities.pk.StatusEnum;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Entity
@@ -38,4 +39,8 @@ public class Candidate {
 
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

@@ -146,10 +146,6 @@
         </div>
     </div>
 
-
-
-
-    <%@include file="../lay_out/setting.jsp"%>
 </div>
 <script src="/lib/jquery/jquery.min.js" type="text/javascript"></script>
 <script src="/lib/perfect-scrollbar/js/perfect-scrollbar.min.js" type="text/javascript"></script>

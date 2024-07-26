@@ -8,6 +8,7 @@ import org.mock.interview_managerment.entities.pk.StatusEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @Entity
@@ -16,8 +17,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-
-
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
@@ -41,4 +40,8 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+
+
+
 }

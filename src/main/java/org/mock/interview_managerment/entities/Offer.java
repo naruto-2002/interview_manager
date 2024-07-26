@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "offer")
+@Table(name = "offers")
 public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,23 +18,6 @@ public class Offer {
     private Date dueDate;
     private Date endContract;
     private Date startContract;
-
-    @ManyToOne
-    @JoinColumn(name = "approver_id")
-    private User approver;
-
-    @ManyToOne
-    @JoinColumn(name = "candidate_id")
-    private Candidate candidate;
-
-    @ManyToOne
-    @JoinColumn(name = "interview_id")
-    private Interview interview;
-
-    @ManyToOne
-    @JoinColumn(name = "recruiter_id")
-    private User recruiter;
-
     private String note;
 
     @Enumerated(EnumType.STRING)
@@ -51,4 +34,17 @@ public class Offer {
 
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User approver;
+
+    @ManyToOne
+    @JoinColumn(name = "interview_schedule_id")
+    private InterviewSchedule interviewSchedule;
+
+    @ManyToOne
+    @JoinColumn(name = "candidate_id")
+    private Candidate candidate;
+
 }

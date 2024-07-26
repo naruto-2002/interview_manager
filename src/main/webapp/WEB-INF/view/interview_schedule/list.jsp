@@ -30,7 +30,9 @@
                     <div class="card card-table">
                         <div class="card-header">
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-space btn-secondary btn-width active">Add new</button>
+                                <a href="/interview_schedule/add_new">
+                                    <button class="btn btn-space btn-secondary btn-width active">Add new</button>
+                                </a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -45,50 +47,24 @@
                                     <th>Status</th>
                                     <th>Job</th>
                                     <th>Action</th>
-
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Nguyen Anh Duc</td>
-                                    <td>eNguyen Khac Hoan</td>
-                                    <td>22/02/2022 09:00 - 10:30</td>
-                                    <td>Pass</td>
-                                    <td>Extra Info 1</td>
-                                    <td>Extra Info 2</td>
-                                    <td class="d-flex align-items-center">
-                                        <div class="icon"><span class="mdi mdi-eye"></span></div>
-                                        <div class="icon"><span class="mdi mdi-edit"></span></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Nguyen Anh Duc</td>
-                                    <td>bNguyen Khac Hoan</td>
-                                    <td>22/02/2022 09:00 - 10:30</td>
-                                    <td>Pass</td>
-                                    <td>Extra Info 1</td>
-                                    <td>Extra Info 2</td>
-                                    <td class="d-flex align-items-center">
-                                        <div class="icon"><span class="mdi mdi-eye"></span></div>
-                                        <div class="icon"><span class="mdi mdi-edit"></span></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Nguyen Anh Duc</td>
-                                    <td>aNguyen Khac Hoan</td>
-                                    <td>22/02/2022 09:00 - 10:30</td>
-                                    <td>Pass</td>
-                                    <td>Extra Info 1</td>
-                                    <td>Extra Info 2</td>
-                                    <td class="d-flex align-items-center">
-                                        <div class="icon"><span class="mdi mdi-eye"></span></div>
-                                        <div class="icon"><span class="mdi mdi-edit"></span></div>
-                                    </td>
-                                </tr>
-
+                                <c:forEach var="interviewSchedule" items="${interviewScheduleList}">
+                                    <tr>
+                                        <td>${interviewSchedule.title}</td>
+                                        <td>${interviewSchedule.candidate.fullName}</td>
+                                        <td>${interviewSchedule.interviewer.fullName}</td>
+                                        <td>${interviewSchedule.startTime} to ${interviewSchedule.endTime}</td>
+                                        <td>${interviewSchedule.status}</td>
+                                        <td>${interviewSchedule.result}</td>
+                                        <td>${interviewSchedule.job.title}</td>
+                                        <td class="d-flex align-items-center">
+                                            <div class="icon"><span class="mdi mdi-eye"></span></div>
+                                            <div class="icon"><span class="mdi mdi-edit"></span></div>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>

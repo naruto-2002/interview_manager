@@ -8,17 +8,8 @@
                 <div class="left-sidebar-content">
                     <ul class="sidebar-elements">
                         <li class="divider">Menu</li>
-                        <li class="active"><a href="#"><i class="icon mdi mdi-home"></i><span>Home</span></a>
-                        </li>
-                        <li class="parent"><a href="#"><i class="icon mdi mdi-account"></i><span>User</span></a>
-                            <ul class="sub-menu">
-                                <li><a href="email-inbox.html">Inbox</a>
-                                </li>
-                                <li><a href="email-read.html">Email Detail</a>
-                                </li>
-                                <li><a href="email-compose.html">Email Compose</a>
-                                </li>
-                            </ul>
+                        <li class="active"><a href="/user"><i class="icon mdi mdi-account"></i><span>User</span></a>
+
                         </li>
 
                     </ul>

@@ -1,7 +1,10 @@
 package org.mock.interview_managerment.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.mock.interview_managerment.entities.pk.DepartmentEnum;
 import org.mock.interview_managerment.entities.pk.GenderEnum;
 import org.mock.interview_managerment.entities.pk.StatusEnum;
@@ -12,6 +15,9 @@ import java.util.Date;
 
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "users")
 public class User {
     @Id

@@ -33,36 +33,36 @@
         <nav aria-label="breadcrumb mt-2" role="navigation">
             <ol class="breadcrumb page-head-nav">
                 <li class="breadcrumb-item"><a href="/user">User List</a></li>
-                <li class="breadcrumb-item active">Create User</li>
+                <li class="breadcrumb-item active">Update User</li>
             </ol>
         </nav>
     </div>
 
     <div class="container">
-        <h1>User Registration</h1>
-        <form:form action="/user/create" method="post" modelAttribute="newUser">
+        <h1>User Update</h1>
+        <form:form action="/user/update" method="post" modelAttribute="user">
             <div class="row">
                 <div class="col-md-6">
+                    <form:hidden path="userId" />
                     <div class="form-group">
                         <label for="fullName">Full Name:</label>
                         <form:input type="text" class="form-control" id="fullName" path="fullName" placeholder="Enter your full name" />
                         <form:errors path="fullName" cssClass="text-danger" />
                     </div>
                     <div class="form-group">
-                        <label for="dateOfBirth">Date of Birth:</label>
-                        <form:input type="date" class="form-control" id="dateOfBirth" path="dob"/>
+                        <label for="dob">Date of Birth:</label>
+                        <form:input path="dob" id="dob" type="text" class="form-control" />
                         <form:errors path="dob" cssClass="text-danger" />
                     </div>
                     <div class="form-group">
                         <label for="phoneNumber">Phone Number:</label>
-                        <form:input type="tel" class="form-control" id="phoneNumber"
-                               placeholder="Enter your phone number" path="phoneNumber"/>
+                        <form:input type="tel" class="form-control" id="phoneNumber" placeholder="Enter your phone number" path="phoneNumber"/>
                     </div>
                     <div class="form-group">
                         <label for="role">Role:</label>
                         <form:select class="form-control" id="role" path="role.roleName">
                             <form:option value="ADMIN">Admin</form:option>
-                            <form:option value="RECUITER">Recruiter</form:option>
+                            <form:option value="RECRUITER">Recruiter</form:option>
                             <form:option value="INTERVIEWER">Interviewer</form:option>
                             <form:option value="MANAGER">Manager</form:option>
                         </form:select>
@@ -74,9 +74,6 @@
                             <form:option value="INACTIVE">Inactive</form:option>
                         </form:select>
                     </div>
-
-
-
                 </div>
 
                 <div class="col-md-6">
@@ -109,12 +106,10 @@
                     </div>
                     <div class="form-group">
                         <label for="note">Note:</label>
-                        <form:input class="form-control" id="note" rows="3" path="note"/>
+                        <form:textarea class="form-control" id="note" rows="3" path="note"></form:textarea>
                     </div>
                 </div>
             </div>
-
-
 
             <div class="row text-center">
                 <div class="col-md-12">

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Create Job</title>
+    <script src="createJobCss.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Job</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Job list</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Create job</li>
+            </ol>
+        </nav>
+        <h2>Create job</h2>
+        <form>
+            <div class="form-group">
+                <label for="jobTitle">Job title</label>
+                <input type="text" class="form-control" id="jobTitle" required>
+            </div>
+            <!-- Skill  -->
+            <div class="form-group">
+                <label for="skills">Skills</label>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="skillsDropdown"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Skills
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="skillsDropdown" id="skillsMenu">
+                        <a class="dropdown-item" href="#" data-value="java">Java</a>
+                        <a class="dropdown-item" href="#" data-value="nodejs">Node.js</a>
+                        <a class="dropdown-item" href="#" data-value="net">.NET</a>
+                        <a class="dropdown-item" href="#" data-value="cpp">C++</a>
+                        <a class="dropdown-item" href="#" data-value="business-analysis">Business Analysis</a>
+                        <a class="dropdown-item" href="#" data-value="communication">Communication</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="selectedSkills">
+                Selected Skills:
+            </div>
+            <!-- date  -->
+            <div class="form-group">
+                <label for="startDate">Start date</label>
+                <input type="date" class="form-control datepicker" id="startDate" required>
+            </div>
+            <div class="form-group">
+                <label for="endDate">End date</label>
+                <input type="date" class="form-control datepicker" id="endDate" required>
+            </div>
+            <!-- salary  -->
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="salaryFrom">Salary range from</label>
+                    <input type="number" class="form-control" id="salaryFrom">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="salaryTo">To</label>
+                    <input type="number" class="form-control" id="salaryTo" required>
+                </div>
+            </div>
+            <!-- address  -->
+            <div class="form-group">
+                <label for="workingAddress">Working address</label>
+                <input type="text" class="form-control" id="workingAddress">
+            </div>
+            <!-- benefits  -->
+            <div class="form-group">
+                <label for="benefits">Benefits</label>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="benefitsDropdown"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Benefits
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="benefitsDropdown" id="benefitsMenu">
+                        <a class="dropdown-item" href="#" data-value="lunch">Lunch</a>
+                        <a class="dropdown-item" href="#" data-value="leave">25-day leave</a>
+                        <a class="dropdown-item" href="#" data-value="healthcare">Healthcare insurance</a>
+                        <a class="dropdown-item" href="#" data-value="hybrid">Hybrid working</a>
+                        <a class="dropdown-item" href="#" data-value="travel">Travel</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="selectedBenefits">
+                Selected Benefits:
+            </div>
+
+
+            <!-- levels  -->
+            <div class="form-group">
+                <label for="levels">Levels</label>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="levelsDropdown"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Levels
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="levelsDropdown" id="levelsMenu">
+                        <a class="dropdown-item" href="#" data-value="fresher">Fresher</a>
+                        <a class="dropdown-item" href="#" data-value="junior">Junior</a>
+                        <a class="dropdown-item" href="#" data-value="senior">Senior</a>
+                        <a class="dropdown-item" href="#" data-value="leader">Leader</a>
+                        <a class="dropdown-item" href="#" data-value="manager">Manager</a>
+                        <a class="dropdown-item" href="#" data-value="vice-head">Vice Head</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="selectedLevels">
+                Selected Levels:
+            </div>
+            <!-- description  -->
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-secondary">Cancel</button>
+        </form>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="createJobCss.js"></script>
+
+</body>
+
+</html>

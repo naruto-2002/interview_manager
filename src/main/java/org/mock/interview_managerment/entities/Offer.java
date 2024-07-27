@@ -40,8 +40,8 @@ public class Offer {
     private User approver;
 
     @ManyToOne
-    @JoinColumn(name = "interview_schedule_id")
-    private InterviewSchedule interviewSchedule;
+    @JoinColumn(name = "interview_id")
+    private Interview interview;
 
     @ManyToOne
     @JoinColumn(name = "candidate_id")

@@ -2,8 +2,8 @@ package org.mock.interview_managerment.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.mock.interview_managerment.entities.enums.ResultEnum;
-import org.mock.interview_managerment.entities.enums.StatusEnum;
+import org.mock.interview_managerment.enums.ResultEnum;
+import org.mock.interview_managerment.enums.StatusEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
 

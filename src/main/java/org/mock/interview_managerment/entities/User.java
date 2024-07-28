@@ -2,13 +2,12 @@ package org.mock.interview_managerment.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.mock.interview_managerment.entities.pk.DepartmentEnum;
-import org.mock.interview_managerment.entities.pk.GenderEnum;
-import org.mock.interview_managerment.entities.pk.StatusEnum;
+import org.mock.interview_managerment.enums.DepartmentEnum;
+import org.mock.interview_managerment.enums.GenderEnum;
+import org.mock.interview_managerment.enums.StatusEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 @Data
 @Entity
@@ -40,8 +39,4 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
-
-
-
-
 }

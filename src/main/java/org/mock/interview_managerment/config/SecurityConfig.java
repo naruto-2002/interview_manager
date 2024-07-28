@@ -34,7 +34,7 @@ public class SecurityConfig {
                 requests
 //                        .requestMatchers("/user/create").permitAll()
 //                        .requestMatchers("/home").permitAll()
-//                        .requestMatchers("/interview_schedule/list").hasRole("INTERVIEWER")
+//                        .requestMatchers("/interview/list").hasRole("INTERVIEWER")
                         .anyRequest().permitAll();
             })
             .formLogin(formLogin ->

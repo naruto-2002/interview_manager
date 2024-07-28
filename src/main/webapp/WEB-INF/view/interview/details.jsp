@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap-slider/css/bootstrap-slider.min.css">
     
     <link rel="stylesheet" href="/css/app.css" type="text/css">
-    <link rel="stylesheet" href="/css/interview_schedule/details.css">
+    <link rel="stylesheet" href="/css/interview/details.css">
 </head>
 <body>
 <div class="be-wrapper">
@@ -45,25 +45,25 @@
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="inputReadonly3">Schedule title</label>
                                                 <div class="col-12 col-sm-8 col-lg-6">
-                                                    <input class="form-control" id="inputReadonly3" type="text" readonly="readonly" value="Readonly input text">
+                                                    <input class="form-control" id="inputReadonly3" type="text" readonly="readonly" value="123">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="inputReadonly3">Candidate name</label>
                                                 <div class="col-12 col-sm-8 col-lg-6">
-                                                    <input class="form-control" id="inputReadonly4" type="text" readonly="readonly" value="Readonly input text">
+                                                    <input class="form-control" id="inputReadonly4" type="text" readonly="readonly" value="123">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="inputReadonly3">Schedule Time</label>
                                                 <div class="col-12 col-sm-8 col-lg-6">
-                                                    <input class="form-control" id="inputReadonly5" type="text" readonly="readonly" value="Readonly input text">
+                                                    <input class="form-control" id="inputReadonly5" type="text" readonly="readonly" value="123"/>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="inputReadonly3">Notes</label>
                                                 <div class="col-12 col-sm-8 col-lg-6">
-                                                    <input class="form-control" id="inputReadonly7" type="text" readonly="readonly" value="Readonly input text">
+                                                    <input class="form-control" id="inputReadonly7" type="text" readonly="readonly" value="123">
                                                 </div>
                                             </div>
 
@@ -82,7 +82,7 @@
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="inputReadonly3">Job</label>
                                                 <div class="col-12 col-sm-8 col-lg-6">
-                                                    <input class="form-control" id="inputReadonly8" type="text" readonly="readonly" value="Readonly input text">
+                                                    <input class="form-control" id="inputReadonly8" type="text" readonly="readonly" value="123">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -160,7 +160,7 @@
 <script src="/lib/bootstrap-slider/bootstrap-slider.min.js" type="text/javascript"></script>
 <script src="/lib/bs-custom-file-input/bs-custom-file-input.js" type="text/javascript"></script>
 
-<script src="/js/interview_schedule/details.js"></script>
+<script src="/js/interview/details.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         //-initialize the javascript

@@ -42,7 +42,6 @@
 
     <div class="container">
         <h1>User Registration</h1>
-        <%--@elvariable id="newUser" type=""--%>
         <form:form action="/user/create" method="post" modelAttribute="newUser">
             <div class="row">
                 <div class="col-md-6">

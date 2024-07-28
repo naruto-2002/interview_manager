@@ -2,7 +2,7 @@ package org.mock.interview_managerment.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.mock.interview_managerment.entities.pk.*;
+import org.mock.interview_managerment.enums.*;
 
 import java.util.Date;
 
@@ -40,8 +40,8 @@ public class Offer {
     private User approver;
 
     @ManyToOne
-    @JoinColumn(name = "interview_schedule_id")
-    private InterviewSchedule interviewSchedule;
+    @JoinColumn(name = "interview_id")
+    private Interview interview;
 
     @ManyToOne
     @JoinColumn(name = "candidate_id")

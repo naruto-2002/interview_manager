@@ -20,6 +20,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByRoleName(String roleName);
 
     @Query("SELECT u FROM User u WHERE u.userId = :userId")
-    List<User> findByUserId(long userId);
+    User findByUserId(long userId);
 
 }

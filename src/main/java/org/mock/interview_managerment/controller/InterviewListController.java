@@ -1,8 +1,8 @@
 package org.mock.interview_managerment.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.mock.interview_managerment.entities.InterviewSchedule;
-import org.mock.interview_managerment.services.InterviewScheduleService;
+import org.mock.interview_managerment.entities.Interview;
+import org.mock.interview_managerment.services.InterviewService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,17 +14,20 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class InterviewScheduleListController {
-    private final InterviewScheduleService interviewScheduleService;
+public class InterviewListController {
+    private final InterviewService interviewService;
 
-    @GetMapping("/interview_schedule/list")
-    public String getInterviewScheduleListPage(Model model) {
-        getUserInfor(model);
+    @GetMapping("/interview/list")
+    public String getInterviewListPage(Model model) {
+//        getUserInfor(model);
 
-        List<InterviewSchedule> interviewScheduleList = interviewScheduleService.getAllInterviewScheduleList();
-        model.addAttribute("interviewScheduleList", interviewScheduleList);
+        List<Interview> interviews = interviewService.getAllInterviews();
 
-        return "interview_schedule/list";
+        System.out.println(interviews);
+
+        model.addAttribute("interviews", interviews);
+
+        return "interview/list";
     }
 
     public void getUserInfor(Model model) {

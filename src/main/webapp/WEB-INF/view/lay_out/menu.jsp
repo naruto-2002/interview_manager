@@ -9,7 +9,7 @@
                         </li>
 
                         <c:if test = "${roleName == 'Interviewer'}">
-                            <li class="parent"><a href="/interview_schedule/list"><i class="icon mdi mdi-accounts-list"></i><span>Inerview Schedule</span></a>
+                            <li class="parent"><a href="/interview/list"><i class="icon mdi mdi-accounts-list"></i><span>Inerview Schedule</span></a>
                             </li>
                         </c:if>
 

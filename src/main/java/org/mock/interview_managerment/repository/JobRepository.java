@@ -13,5 +13,5 @@ public interface JobRepository extends JpaRepository<Job, Long> {
     List<Job> findAll();
 
     @Query("SELECT j FROM Job j WHERE j.jobId = :jobId")
-    List<Job> findByJobId(long jobId);
+    Job findByJobId(long jobId);
 }

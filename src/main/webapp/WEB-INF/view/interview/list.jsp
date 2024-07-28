@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="/lib/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css" href="/lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
-    <link rel="stylesheet" href="/css/interview_schedule/list.css">
+    <link rel="stylesheet" href="/css/interview/list.css">
 </head>
 <body>
 <div class="be-wrapper">
@@ -30,7 +30,7 @@
                     <div class="card card-table">
                         <div class="card-header">
                             <div class="d-flex justify-content-end">
-                                <a href="/interview_schedule/add_new">
+                                <a href="/interview/add_new">
                                     <button class="btn btn-space btn-secondary btn-width active">Add new</button>
                                 </a>
                             </div>
@@ -39,6 +39,7 @@
                             <table class="table table-striped table-hover table-bordered " id="table1">
                                 <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Title</th>
                                     <th>Candidate Name</th>
                                     <th>Interviewer</th>
@@ -50,18 +51,31 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="interviewSchedule" items="${interviewScheduleList}">
+                                <c:forEach var="interview" items="${interviews}">
                                     <tr>
-                                        <td>${interviewSchedule.title}</td>
-                                        <td>${interviewSchedule.candidate.fullName}</td>
-                                        <td>${interviewSchedule.interviewer.fullName}</td>
-                                        <td>${interviewSchedule.date} ${interviewSchedule.startTime} - ${interviewSchedule.endTime}</td>
-                                        <td>${interviewSchedule.status}</td>
-                                        <td>${interviewSchedule.result}</td>
-                                        <td>${interviewSchedule.job.title}</td>
-                                        <td class="d-flex align-items-center">
-                                            <div class="icon"><span class="mdi mdi-eye"></span></div>
-                                            <div class="icon"><span class="mdi mdi-edit"></span></div>
+                                        <td>${interview.interviewId}</td>
+                                        <td>${interview.title}</td>
+                                        <td>${interview.candidate.fullName}</td>
+                                        <td>
+                                            <c:forEach var="scheduledInterview" items="${interview.scheduledInterviews}">
+                                                ${scheduledInterview.interviewer.username}
+                                            </c:forEach>
+                                        </td>
+                                        <td>${interview.date} ${interview.startTime} - ${interview.endTime}</td>
+                                        <td>${interview.result}</td>
+                                        <td>${interview.status}</td>
+                                        <td>${interview.job.title}</td>
+                                        <td class="d-flex align-items-center justify-content-center">
+                                            <div class="icon">
+                                                <a href="/interview/details?interview_id=${interview.interviewId}">
+                                                    <span class="mdi mdi-eye"></span>
+                                                </a>
+                                            </div>
+                                            <div class="icon">
+                                                <a href="/interview/edit">
+                                                    <span class="mdi mdi-edit"></span>
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -94,7 +108,7 @@
 <script src="/lib/datatables/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js" type="text/javascript"></script>
 <script src="/lib/datatables/datatables.net-responsive/js/dataTables.responsive.min.js" type="text/javascript"></script>
 <script src="/lib/datatables/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js" type="text/javascript"></script>
-<script src="/js/interview_schedule/list.js"></script>
+<script src="/js/interview/list.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         //-initialize the javascript

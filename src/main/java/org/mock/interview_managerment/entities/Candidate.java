@@ -2,13 +2,12 @@ package org.mock.interview_managerment.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.mock.interview_managerment.entities.pk.GenderEnum;
-import org.mock.interview_managerment.entities.pk.LevelEnum;
-import org.mock.interview_managerment.entities.pk.PositionEnum;
-import org.mock.interview_managerment.entities.pk.StatusEnum;
+import org.mock.interview_managerment.enums.GenderEnum;
+import org.mock.interview_managerment.enums.LevelEnum;
+import org.mock.interview_managerment.enums.PositionEnum;
+import org.mock.interview_managerment.enums.StatusEnum;
 
 import java.util.Date;
-import java.util.Set;
 
 @Data
 @Entity

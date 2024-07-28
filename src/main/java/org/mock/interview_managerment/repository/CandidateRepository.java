@@ -10,8 +10,8 @@ import java.util.List;
 
 @Repository
 public interface CandidateRepository extends JpaRepository<Candidate, Long> {
-    List<Candidate> findAll()
-            ;
+    List<Candidate> findAll();
     @Query("SELECT c FROM Candidate c WHERE c.candidateId = :candidateId")
-    List<Candidate> findByCandidateId(long candidateId);
+    Candidate findByCandidateId(long candidateId);
+
 }

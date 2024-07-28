@@ -9,7 +9,7 @@
 }
 
 .icon + .icon {
-    margin-left: 18px;
+    margin-left: 26px !important;
 }
 
 .btn-width {

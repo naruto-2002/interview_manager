@@ -2,21 +2,26 @@ package org.mock.interview_managerment.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.mock.interview_managerment.entities.pk.ResultEnum;
-import org.mock.interview_managerment.entities.pk.StatusEnum;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.mock.interview_managerment.enums.ResultEnum;
+import org.mock.interview_managerment.enums.StatusEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "interview_schedules")
-public class InterviewSchedule {
+@Table(name = "interviews")
+public class Interview {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long interview_schedule_id;
+    private Long interviewId;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
@@ -28,14 +33,12 @@ public class InterviewSchedule {
     private String title;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 20)
     private ResultEnum result;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 20)
     private StatusEnum status;
-
-    @ManyToOne
-    @JoinColumn(name = "interviewer_id")
-    private User interviewer;
 
     @ManyToOne
     @JoinColumn(name = "recuriter_id")
@@ -48,5 +51,11 @@ public class InterviewSchedule {
     @ManyToOne
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
+
+    @OneToMany(mappedBy = "interview", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
+    @ToString.Exclude // Không sử dụng trong toString()
+    private List<ScheduledInterview> scheduledInterviews;
+
 
 }

@@ -16,4 +16,6 @@ public class CandidateService {
         return candidateRepository.findAll();
     }
 
+
+
 }

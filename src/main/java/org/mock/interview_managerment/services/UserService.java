@@ -44,13 +44,14 @@ public class UserService {
 
         //gen password
         String password = passwordService.autoGeneratePassword();
-        // send password to email
-        sendEmailService.sendPasswordCreate(user.getEmail(), password);
         String hashPasword = passwordService.encryptPassword(password);
         user.setPassword(hashPasword);
 
         user = userRepository.save(user);
         user.setUsername(UserNameValid.genUserName(user.getFullName(), user.getUserId()));
+
+        // send password to email
+        sendEmailService.sendPasswordCreate(user.getEmail(), user.getUsername(), password);
 
         return userRepository.save(user);
     }
@@ -84,6 +85,10 @@ public class UserService {
         User user = userMapper.toUser(request);
         user.setUsername(UserNameValid.genUserName(user.getFullName(), user.getUserId()));
         return userRepository.save(user);
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     public List<UserListDto> search(String keyword) {

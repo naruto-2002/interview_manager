@@ -3,24 +3,46 @@
 <!-- header -->
 <nav class="navbar navbar-expand fixed-top be-top-header">
     <div class="container-fluid">
-        <div class="be-navbar-header"><a class="navbar-brand" href="index.html"></a>
-        </div>
-        <div class="page-title"><span>Interview Managerment</span></div>
+
+        <div class="page-title"><a href="/user">Interview Managerment</a></div>
         <div class="be-right-navbar">
             <ul class="nav navbar-nav float-right be-user-nav">
-                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
-                                                 role="button" aria-expanded="false"><img src="\img\avatar.png" alt="Avatar"><span
-                        class="user-name">Túpac Amaru</span></a>
+                <c:if test="${not empty pageContext.request.userPrincipal}">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
+                       aria-expanded="false">
+                        <img src="\img\avatar.png" alt="Avatar">
+                        <span class="user-name">Túpac Amaru</span>
+                    </a>
                     <div class="dropdown-menu" role="menu">
                         <div class="user-info">
-                            <div class="user-name">Túpac Amaru</div>
-                            <div class="user-position online">Available</div>
-                        </div><a class="dropdown-item" href="pages-profile.html"><span
-                            class="icon mdi mdi-face"></span>Account</a><a class="dropdown-item" href="#"><span
-                            class="icon mdi mdi-settings"></span>Settings</a><a class="dropdown-item"
-                                                                                href="pages-login.html"><span class="icon mdi mdi-power"></span>Logout</a>
+                            <div class="user-name d-flex justify-content-center">
+                                <c:out value="${pageContext.request.userPrincipal.name}"/>
+                            </div>
+                        </div>
+                        <a class="dropdown-item" href="/reset-password">
+                            <span class="icon mdi mdi-settings"></span>
+                            Reset Password
+                        </a>
+                        <form class="dropdown-item " method="post" action="/logout">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <button class="btn btn-secondary" href="/logout">
+                                <span class="icon mdi mdi-power"></span>
+                                Logout</button>
+                        </form>
                     </div>
+
                 </li>
+                </c:if>
+
+                <c:if test="${empty pageContext.request.userPrincipal}">
+                    <!-- If the user is not logged in -->
+                    <a class="nav-link btn btn-success" href="/login">
+                        <span class="icon mdi mdi-login"></span>
+                        Login
+                    </a>
+                </c:if>
+
             </ul>
         </div>
     </div>

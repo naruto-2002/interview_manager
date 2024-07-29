@@ -50,7 +50,7 @@
             </div>
 
             <div class="col-12 col-sm-5 col-lg-3 mb-2 mb-sm-0">
-                <select class="select2 select2-hidden-accessible" id="icon-category" tabindex="-1" aria-hidden="true" style="width: 100%; height: 100%">
+                <select class="select2 select2-hidden-accessible" id="icon-category" tabindex="-1" aria-hidden="true" style="width: 100%; height: 100%; padding-left: 12px;">
                     <option value="all">Role</option>
                     <c:forEach items="${listRole}" var="role">
                         <option value="${role.roleId}">${role.roleName}</option>

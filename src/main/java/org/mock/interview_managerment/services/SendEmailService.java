@@ -2,7 +2,6 @@ package org.mock.interview_managerment.services;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -11,13 +10,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class SendEmailService {
 
-    @Autowired
-    private JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
 
     @Value("${spring.mail.username}")
     private String fromEmail;
 
-    public void sendPasswordCreate(String toEmail, String password) {
+
+    public SendEmailService(JavaMailSender javaMailSender) {
+        this.javaMailSender = javaMailSender;
+    }
+
+    public void sendPasswordCreate(String toEmail, String username, String password) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -39,7 +42,7 @@ public class SendEmailService {
                             "    <p>IMS Team.</p>" +
                             "  </body>" +
                             "</html>",
-                    toEmail, password, fromEmail
+                    username, password, fromEmail
             ), true);
 
             javaMailSender.send(message);

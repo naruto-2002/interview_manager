@@ -27,6 +27,8 @@ public class User {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
     private String address;
+
+    @Column(unique = true, nullable = false)
     private String email;
     private String fullName;
     private String note;

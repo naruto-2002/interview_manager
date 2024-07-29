@@ -107,4 +107,21 @@ public class UserController {
         model.addAttribute("userPage", userService.search(keyword));
         return "user/list";
     }
+
+    @GetMapping("/login")
+    public String getPageLogin() {
+        return "auth/login";
+    }
+
+    @GetMapping("/forgot-password")
+    public String getPageForgotPassword() {
+
+        return "auth/forgot-password";
+    }
+
+    @GetMapping("/reset-password")
+    public String resetPassword(@RequestParam(name = "email") String email) {
+        System.out.println(email);
+        return "auth/forgot-password";
+    }
 }

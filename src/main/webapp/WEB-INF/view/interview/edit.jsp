@@ -29,12 +29,12 @@
 
     <div class="be-content">
         <div class="page-head">
-            <h2 class="page-head-title">New Interview Schedule</h2>
+            <h2 class="page-head-title">Edit Interview Schedule</h2>
         </div>
         <div class="main-content container-fluid">
             <div class="card text-center">
                 <div class="card-body">
-                    <form:form action="/interview/edit" method="post" modelAttribute="editInterview">
+                    <form:form action="/interview/edit" method="post" modelAttribute="newInterview">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="bs-grid-block">
@@ -43,18 +43,17 @@
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star" for="title">Schedule title</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
-                                                    <form:input type="text" class="form-control" id="title" path="title" />
+                                                    <form:input type="text" class="form-control" id="title" path="title" value="${interview.title}" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Candidate name</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
                                                     <form:select class="select2" id="candidate" path="candidate.candidateId">
-                                                        <optgroup label="List of candidates">
-                                                            <c:forEach var="candidate" items="${candidates}">
-                                                                <form:option value="${candidate.candidateId}">${candidate.fullName}</form:option>
-                                                            </c:forEach>
-                                                        </optgroup>
+                                                        <option value="" selected disabled>Select a candidate</option>
+                                                        <c:forEach var="candidate" items="${candidates}">
+                                                            <form:option value="${candidate.candidateId}">${candidate.fullName}</form:option>
+                                                        </c:forEach>
                                                     </form:select>
                                                 </div>
                                             </div>
@@ -62,7 +61,7 @@
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Schedule Time</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
                                                     <div class="input-group date datetimepicker" data-min-view="2" data-date-format="yyyy-mm-dd">
-                                                        <form:input type="text" class="form-control" id="date" path="date" />
+                                                        <form:input type="text" class="form-control" id="date" path="date" value="${interview.date}" />
                                                         <div class="input-group-append">
                                                             <button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
                                                         </div>
@@ -71,14 +70,14 @@
                                             </div>
                                             <div class=" form-group row d-flex justify-content-center">
                                                 <label class="col-form-label text-sm-right mr-2" for="startTime">From:</label>
-                                                <form:input class="col-2 form-control input-spacing mr-4" id="startTime" path="startTime" type="text" />
+                                                <form:input class="col-2 form-control input-spacing mr-4" id="startTime" path="startTime" type="text" value="${interview.startTime}"/>
                                                 <label class="col-form-label text-sm-right mr-2" for="endTime">To:</label>
-                                                <form:input class="col-2 form-control mr-6" id="endTime" path="endTime" type="text" />
+                                                <form:input class="col-2 form-control mr-6" id="endTime" path="endTime" type="text" value="${interview.endTime}"/>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 " for="note">Notes    </label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
-                                                    <form:textarea class="form-control" id="note" path="note"/>
+                                                    <form:textarea class="form-control" id="note" path="note"></form:textarea>>
                                                 </div>
                                             </div>
 
@@ -95,11 +94,10 @@
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Job</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
                                                     <form:select class="select2" id="job" path="job.jobId">
-                                                        <optgroup label="List of jobs">
-                                                            <c:forEach var="job" items="${jobs}">
-                                                                <form:option value="${job.jobId}">${job.title}</form:option>
-                                                            </c:forEach>
-                                                        </optgroup>
+                                                        <option value="" disabled selected>Select a job</option>
+                                                        <c:forEach var="job" items="${jobs}">
+                                                            <form:option value="${job.jobId}">${job.title}</form:option>
+                                                        </c:forEach>
                                                     </form:select>
 
                                                 </div>
@@ -112,13 +110,22 @@
                                                         <table class="table table-striped table-borderless">
                                                             <tr>
                                                                 <td>
-                                                                    <form:select id="searchable" multiple="multiple"  path="selectedInterviewerIds">
+                                                                    <form:select id="searchable" multiple="multiple" path="selectedInterviewerIds">
                                                                         <c:forEach var="interviewer" items="${interviewers}">
-                                                                            <form:option value="${interviewer.userId}">
-                                                                                ${interviewer.fullName}
-                                                                            </form:option>
+                                                                            <c:if test="${interview.selectedInterviewerIds.contains(interviewer.userId)}">
+                                                                                <form:option value="${interviewer.userId}" selected="true">
+                                                                                    ${interviewer.fullName}
+                                                                                </form:option>
+                                                                            </c:if>
+                                                                            <c:if test="${!interview.selectedInterviewerIds.contains(interviewer.userId)}">
+                                                                                <form:option value="${interviewer.userId}">
+                                                                                    ${interviewer.fullName}
+                                                                                </form:option>
+                                                                            </c:if>
+
                                                                         </c:forEach>
                                                                     </form:select>
+
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -129,25 +136,46 @@
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="location">Location</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
-                                                    <form:input class="form-control" id="location" path="location" type="text"/>
+                                                    <form:input class="form-control" id="location" path="location" type="text" value="${interview.location}"/>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Recruiter owner</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
                                                     <form:select class="select2" id="recruiter" path="recruiter.userId">
-                                                        <optgroup label="List of recruiters">
-                                                            <c:forEach var="recruiter" items="${recruiters}">
-                                                                <form:option value="${recruiter.userId}">${recruiter.fullName}</form:option>
-                                                            </c:forEach>
-                                                        </optgroup>
+                                                        <option value="" disabled selected>Select a recruiter</option>
+                                                        <c:forEach var="recruiter" items="${recruiters}">
+                                                            <form:option value="${recruiter.userId}">${recruiter.fullName}</form:option>
+                                                        </c:forEach>
                                                     </form:select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="meetingId">Meeting ID</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
-                                                    <form:input class="form-control" id="meetingId" path="meetingId" type="text"/>
+                                                    <form:input class="form-control" id="meetingId" path="meetingId" type="text" value="${interview.meetingId}"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Result</label>
+                                                <div class="col-12 col-sm-8 col-lg-8">
+                                                    <form:select class="select2" id="result" path="result">
+                                                        <option value="" disabled selected>Select a result</option>
+                                                        <c:forEach var="result" items="${results}">
+                                                            <form:option value="${result.name()}">${result.name().toString()}</form:option>
+                                                        </c:forEach>
+                                                    </form:select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Status</label>
+                                                <div class="col-12 col-sm-8 col-lg-8">
+                                                    <form:select class="select2" id="status" path="status">
+                                                        <option value="" disabled selected>Select a status</option>
+                                                        <c:forEach var="status" items="${states}">
+                                                            <form:option value="${status.name()}">${status.name().toString()}</form:option>
+                                                        </c:forEach>
+                                                    </form:select>
                                                 </div>
                                             </div>
                                         </div>

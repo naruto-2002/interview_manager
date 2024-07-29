@@ -29,7 +29,7 @@
 
     <div class="be-content">
         <div class="page-head">
-            <h2 class="page-head-title">New Interview Schedule</h2>
+            <h2 class="page-head-title">Add Interview Schedule</h2>
         </div>
         <div class="main-content container-fluid">
             <div class="card text-center">
@@ -49,12 +49,11 @@
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Candidate name</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
-                                                    <form:select class="select2" id="candidate" path="candidate.candidateId">
-                                                        <optgroup label="List of candidates">
-                                                            <c:forEach var="candidate" items="${candidates}">
-                                                                <form:option value="${candidate.candidateId}">${candidate.fullName}</form:option>
-                                                            </c:forEach>
-                                                        </optgroup>
+                                                    <form:select class="select2" id="candidate" path="candidate.candidateId" >
+                                                        <option value="" disabled selected>Select a candidate</option>
+                                                        <c:forEach var="candidate" items="${candidates}">
+                                                            <form:option value="${candidate.candidateId}">${candidate.fullName}</form:option>
+                                                        </c:forEach>
                                                     </form:select>
                                                 </div>
                                             </div>
@@ -95,11 +94,10 @@
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Job</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
                                                     <form:select class="select2" id="job" path="job.jobId">
-                                                        <optgroup label="List of jobs">
-                                                            <c:forEach var="job" items="${jobs}">
-                                                                <form:option value="${job.jobId}">${job.title}</form:option>
-                                                            </c:forEach>
-                                                        </optgroup>
+                                                        <option value="" disabled selected>Select a job</option>
+                                                        <c:forEach var="job" items="${jobs}">
+                                                            <form:option value="${job.jobId}">${job.title}</form:option>
+                                                        </c:forEach>
                                                     </form:select>
 
                                                 </div>
@@ -136,11 +134,10 @@
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Recruiter owner</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
                                                     <form:select class="select2" id="recruiter" path="recruiter.userId">
-                                                        <optgroup label="List of recruiters">
-                                                            <c:forEach var="recruiter" items="${recruiters}">
-                                                                <form:option value="${recruiter.userId}">${recruiter.fullName}</form:option>
-                                                            </c:forEach>
-                                                        </optgroup>
+                                                        <option value="" disabled selected>Select a recruiter</option>
+                                                        <c:forEach var="recruiter" items="${recruiters}">
+                                                            <form:option value="${recruiter.userId}">${recruiter.fullName}</form:option>
+                                                        </c:forEach>
                                                     </form:select>
                                                 </div>
                                             </div>
@@ -202,6 +199,8 @@
 <script src="/lib/quicksearch/jquery.quicksearch.min.js" type="text/javascript"></script>
 <script src="/lib/select2/js/select2.min.js" type="text/javascript"></script>
 <script src="/lib/select2/js/select2.full.min.js" type="text/javascript"></script>
+<script src="/lib/bootstrap-slider/bootstrap-slider.min.js" type="text/javascript"></script>
+<script src="/lib/bs-custom-file-input/bs-custom-file-input.js" type="text/javascript"></script>
 <script src="/js/interview/add.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){

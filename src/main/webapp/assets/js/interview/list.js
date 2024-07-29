@@ -5,7 +5,7 @@ $(document).ready(function() {
             "<'row be-datatable-body'<'col-sm-12'tr>>" +
             "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
         columnDefs: [
-            { orderable: false, targets: [4, 5, 6, 7] }
+            { orderable: false, targets: [5, 6, 7, 8] }
         ]
     });
 });

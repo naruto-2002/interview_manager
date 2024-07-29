@@ -1,4 +1,4 @@
-package org.mock.interview_managerment.controller;
+package org.mock.interview_managerment.controller.interview;
 
 import lombok.RequiredArgsConstructor;
 import org.mock.interview_managerment.entities.Interview;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class InterviewListController {
+public class ListController {
     private final InterviewService interviewService;
 
     @GetMapping("/interview/list")

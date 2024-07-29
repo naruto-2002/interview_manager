@@ -1,22 +1,22 @@
-package org.mock.interview_managerment.controller;
+package org.mock.interview_managerment.controller.interview;
 
 import lombok.RequiredArgsConstructor;
 import org.mock.interview_managerment.entities.*;
 import org.mock.interview_managerment.entities.pk.ScheduledInterviewId;
+import org.mock.interview_managerment.enums.ResultEnum;
+import org.mock.interview_managerment.enums.StatusEnum;
 import org.mock.interview_managerment.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class NewInterviewController {
+public class AddController {
     private final UserService userService;
     private final JobService jobService;
     private final CandidateService candidateService;
@@ -25,8 +25,6 @@ public class NewInterviewController {
 
     @GetMapping("/interview/add")
     public String getNewInterviewPage(Model model) {
-
-        model.addAttribute("newInterview", new Interview());
         List<Candidate> candidates = candidateService.getAllCandidates();
         List<Job> jobs = jobService.getJobs();
         List<User> interviewers = userService.getUsersByRoleName("INTERVIEWER");
@@ -36,6 +34,7 @@ public class NewInterviewController {
         model.addAttribute("jobs", jobs);
         model.addAttribute("interviewers", interviewers);
         model.addAttribute("recruiters", recruiters);
+        model.addAttribute("newInterview", new Interview());
 
 
 
@@ -44,6 +43,8 @@ public class NewInterviewController {
 
     @PostMapping("/interview/add")
     public String addNewInterview(@ModelAttribute("newInterview") Interview newInterview) {
+        newInterview.setResult(ResultEnum.NA);
+        newInterview.setStatus(StatusEnum.NEW);
         Interview interview = interviewService.handleSaveInterview(newInterview);
 
         List<Long> selectedInterviewerIds = newInterview.getSelectedInterviewerIds();

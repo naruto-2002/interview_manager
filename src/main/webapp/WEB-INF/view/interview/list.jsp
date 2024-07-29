@@ -66,8 +66,8 @@
                                             </c:forEach>
                                         </td>
                                         <td>${interview.date} ${interview.startTime} - ${interview.endTime}</td>
-                                        <td>${interview.result == null ? "N/A" : interview.result}</td>
-                                        <td>${interview.status == null ? "NEW" : interview.status}</td>
+                                        <td>${interview.result}</td>
+                                        <td>${interview.status}</td>
                                         <td>${interview.job.title}</td>
                                         <td class="d-flex align-items-center justify-content-center">
                                             <div class="icon">
@@ -76,7 +76,7 @@
                                                 </a>
                                             </div>
                                             <div class="icon">
-                                                <a href="/interview/edit">
+                                                <a href="/interview/edit?interview_id=${interview.interviewId}">
                                                     <span class="mdi mdi-edit"></span>
                                                 </a>
                                             </div>

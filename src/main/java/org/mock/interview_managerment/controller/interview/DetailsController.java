@@ -1,4 +1,4 @@
-package org.mock.interview_managerment.controller;
+package org.mock.interview_managerment.controller.interview;
 
 import lombok.RequiredArgsConstructor;
 import org.mock.interview_managerment.entities.Interview;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
-public class InterviewDetailsController {
+public class DetailsController {
     private final InterviewService interviewService;
 
     @GetMapping("/interview/details")

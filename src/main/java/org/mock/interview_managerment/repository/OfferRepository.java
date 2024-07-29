@@ -16,7 +16,7 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     Page<Offer> findAllActiveOffers(Pageable pageable);
 
     @Query("SELECT o FROM Offer o WHERE " +
-            "LOWER(o.candidate.fullName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(o.candidate.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(o.candidate.email) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(o.contractType) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(o.department) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
@@ -26,7 +26,7 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     Page<Offer> findByKeyword(String keyword, Pageable pageable);
 
     @Query("SELECT o FROM Offer o WHERE " +
-            "(LOWER(o.candidate.fullName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "(LOWER(o.candidate.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(o.candidate.email) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(o.contractType) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(o.department) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +

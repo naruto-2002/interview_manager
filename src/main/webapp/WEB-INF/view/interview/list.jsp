@@ -1,3 +1,7 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +34,7 @@
                     <div class="card card-table">
                         <div class="card-header">
                             <div class="d-flex justify-content-end">
-                                <a href="/interview/add_new">
+                                <a href="/interview/add">
                                     <button class="btn btn-space btn-secondary btn-width active">Add new</button>
                                 </a>
                             </div>
@@ -62,8 +66,8 @@
                                             </c:forEach>
                                         </td>
                                         <td>${interview.date} ${interview.startTime} - ${interview.endTime}</td>
-                                        <td>${interview.result}</td>
-                                        <td>${interview.status}</td>
+                                        <td>${interview.result == null ? "N/A" : interview.result}</td>
+                                        <td>${interview.status == null ? "NEW" : interview.status}</td>
                                         <td>${interview.job.title}</td>
                                         <td class="d-flex align-items-center justify-content-center">
                                             <div class="icon">

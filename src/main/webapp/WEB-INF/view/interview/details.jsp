@@ -1,3 +1,7 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,28 +46,35 @@
                                     <div class="card-body">
 
                                         <form>
-                                            <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="inputReadonly3">Schedule title</label>
-                                                <div class="col-12 col-sm-8 col-lg-6">
-                                                    <input class="form-control" id="inputReadonly3" type="text" readonly="readonly" value="123">
+                                            <div class="form-group row d-flex align-items-center">
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" >Schedule title:</label>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label" >
+                                                    <span>${interview.title}</span>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="inputReadonly3">Candidate name</label>
-                                                <div class="col-12 col-sm-8 col-lg-6">
-                                                    <input class="form-control" id="inputReadonly4" type="text" readonly="readonly" value="123">
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" >Candidate name:</label>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
+                                                    <span>${interview.candidate.fullName}</span>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="inputReadonly3">Schedule Time</label>
-                                                <div class="col-12 col-sm-8 col-lg-6">
-                                                    <input class="form-control" id="inputReadonly5" type="text" readonly="readonly" value="123"/>
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" >Schedule Time:</label>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label" >
+                                                    <ul style="list-style: none; padding: 0">
+                                                        <li>
+                                                            <span>${interview.date}</span>
+                                                        </li>
+                                                        <li>
+                                                            <span>From: ${interview.startTime} To: ${interview.endTime}</span>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="inputReadonly3">Notes</label>
-                                                <div class="col-12 col-sm-8 col-lg-6">
-                                                    <input class="form-control" id="inputReadonly7" type="text" readonly="readonly" value="123">
+                                            <div class="form-group row d-flex justify-content-start">
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" >Notes:</label>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label" >
+                                                    <span>${interview.note}</span>
                                                 </div>
                                             </div>
 
@@ -80,45 +91,47 @@
                                     <div class="card-body">
                                         <form>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="inputReadonly3">Job</label>
-                                                <div class="col-12 col-sm-8 col-lg-6">
-                                                    <input class="form-control" id="inputReadonly8" type="text" readonly="readonly" value="123">
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4">Job:</label>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
+                                                    <span>${interview.job.title}</span>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="inputReadonly3">Interviewer</label>
-                                                <div class="col-12 col-sm-8 col-lg-6">
-                                                    <input class="form-control" id="inputReadonly9" type="text" readonly="readonly" value="Readonly input text">
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4">Interviewer:</label>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
+                                                    <c:forEach var="scheduleInterview" items="${interview.scheduledInterviews}">
+                                                        <soan>${scheduleInterview.interviewer.username}</soan>
+                                                    </c:forEach>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="inputReadonly3">Location</label>
-                                                <div class="col-12 col-sm-8 col-lg-6">
-                                                    <input class="form-control" id="inputReadonly10" type="text" readonly="readonly" value="Readonly input text">
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4">Location:</label>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
+                                                    <span>${interview.location}</span>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="inputReadonly3">Recruiter owner</label>
-                                                <div class="col-12 col-sm-8 col-lg-6">
-                                                    <input class="form-control" id="inputReadonly11" type="text" readonly="readonly" value="Readonly input text">
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4">Recruiter owner:</label>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
+                                                    <span>${interview.recruiter.fullName}</span>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="inputReadonly3">Meeting ID</label>
-                                                <div class="col-12 col-sm-8 col-lg-6">
-                                                    <input class="form-control" id="inputReadonly12" type="text" readonly="readonly" value="Readonly input text">
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4">Meeting ID:</label>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
+                                                    <span>${interview.meetingId}</span>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="inputReadonly3">Result</label>
-                                                <div class="col-12 col-sm-8 col-lg-6">
-                                                    <input class="form-control" id="inputReadonly13" type="text" readonly="readonly" value="Readonly input text">
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4">Result:</label>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
+                                                    <span>${interview.result == null ? "N/A" : interview.status}</span>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="inputReadonly3">Status</label>
-                                                <div class="col-12 col-sm-8 col-lg-6">
-                                                    <input class="form-control" id="inputReadonly14" type="text" readonly="readonly" value="Readonly input text">
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4">Status:</label>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
+                                                    <span>${interview.status == null ? "NEW" : interview.status}</span>
                                                 </div>
                                             </div>
                                         </form>

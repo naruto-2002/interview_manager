@@ -21,25 +21,11 @@ public class InterviewService {
 
 
     public List<Interview> getAllInterviews() {
-        List<Interview> interviews = interviewRepository.findAll();
-
-        for(Interview interview : interviews) {
-            interview.setScheduledInterviews(scheduledInterviewRepository.findByInterviewId(interview.getInterviewId()));
-        }
-
-        return interviews;
+        return interviewRepository.findAll();
     }
 
-    public void handleSaveInterview(Interview interview) {
-
-        interview.setCandidate(candidateRepository.findByCandidateId(interview.getCandidate().getCandidateId()));
-        interview.setJob(jobRepository.findByJobId(interview.getJob().getJobId()));
-        interview.setScheduledInterviews(scheduledInterviewRepository.findAll());
-        interview.setRecruiter(userRepository.findByUserId(interview.getRecruiter().getUserId()));
-        interview.setResult(ResultEnum.NA);
-        interview.setStatus(StatusEnum.NEW);
-
-        interviewRepository.save(interview);
+    public Interview handleSaveInterview(Interview interview) {
+        return interviewRepository.save(interview);
     }
 
     public Interview getByInterviewId(Long id) {

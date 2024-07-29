@@ -13,19 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class InterviewDetailsController {
     private final InterviewService interviewService;
 
-//    @GetMapping("/interview/details")
-//    public String getInterviewDetailsPage(@RequestParam("interview_id") long interviewId, Model model) {
-//
-//        Interview interview = interviewService.getByInterviewId(interviewId);
-//        System.out.println(interview);
-//
-//        model.addAttribute("interview", interview);
-//
-//        return "interview/details";
-//    }
-
     @GetMapping("/interview/details")
-    public String getInterviewDetailsPage(Model model) {
+    public String getInterviewDetailsPage(@RequestParam("interview_id") long interviewId, Model model) {
+
+        Interview interview = interviewService.getByInterviewId(interviewId);
+        System.out.println(interview);
+
+        model.addAttribute("interview", interview);
 
         return "interview/details";
     }

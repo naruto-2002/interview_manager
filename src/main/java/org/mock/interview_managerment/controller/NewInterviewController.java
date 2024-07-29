@@ -2,13 +2,16 @@ package org.mock.interview_managerment.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.mock.interview_managerment.entities.*;
+import org.mock.interview_managerment.entities.pk.ScheduledInterviewId;
 import org.mock.interview_managerment.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -20,17 +23,13 @@ public class NewInterviewController {
     private final InterviewService interviewService;
     private final ScheduledInterviewService scheduledInterviewService;
 
-    @GetMapping("/interview/add_new")
+    @GetMapping("/interview/add")
     public String getNewInterviewPage(Model model) {
 
         model.addAttribute("newInterview", new Interview());
-
         List<Candidate> candidates = candidateService.getAllCandidates();
         List<Job> jobs = jobService.getJobs();
         List<User> interviewers = userService.getUsersByRoleName("INTERVIEWER");
-        List<ScheduledInterview> scheduledInterviews;
-
-        System.out.println(interviewers);
         List<User> recruiters = userService.getUsersByRoleName("RECRUITER");
 
         model.addAttribute("candidates", candidates);
@@ -39,14 +38,27 @@ public class NewInterviewController {
         model.addAttribute("recruiters", recruiters);
 
 
-        return "interview/add_new";
+
+        return "interview/add";
     }
 
-    @PostMapping("/interview/add_new")
-    public String addNewInterview(@ModelAttribute("newInterview") Interview interview) {
+    @PostMapping("/interview/add")
+    public String addNewInterview(@ModelAttribute("newInterview") Interview newInterview) {
+        Interview interview = interviewService.handleSaveInterview(newInterview);
 
-        interviewService.handleSaveInterview(interview);
-        System.out.println(interview);
+        List<Long> selectedInterviewerIds = newInterview.getSelectedInterviewerIds();
+        for(Long selectedInterviewerId : selectedInterviewerIds) {
+            ScheduledInterviewId scheduledInterviewId = new ScheduledInterviewId();
+            scheduledInterviewId.setInterviewId(interview.getInterviewId());
+            scheduledInterviewId.setInterviewerId(selectedInterviewerId);
+
+            ScheduledInterview scheduledInterview = new ScheduledInterview();
+            scheduledInterview.setId(scheduledInterviewId);
+            scheduledInterview.setInterview(interview);
+            scheduledInterview.setInterviewer(userService.getByUserId(selectedInterviewerId));
+
+            scheduledInterviewService.handleSaveScheduledInterview(scheduledInterview);
+        }
 
         return "redirect:/interview/list";
     }

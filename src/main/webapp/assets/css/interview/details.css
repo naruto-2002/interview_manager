@@ -1,3 +1,6 @@
+*{
+    color: black;
+}
 .bs-grid-block {
     border: none !important;
     outline: none !important;

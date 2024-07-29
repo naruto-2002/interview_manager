@@ -31,5 +31,8 @@ public class UserService {
         return userRepository.findByRoleName(roleName);
     }
 
+    public User getByUserId(long userId) {
+        return userRepository.findByUserId(userId);
+    }
 
 }

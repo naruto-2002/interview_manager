@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap-slider/css/bootstrap-slider.min.css">
     <link rel="stylesheet" type="text/css" href="/multiselect/css/multi-select.css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
-    <link rel="stylesheet" href="/css/interview/add_new.css">
+    <link rel="stylesheet" href="/css/interview/add.css">
 </head>
 <body>
 <div class="be-wrapper">
@@ -34,7 +34,7 @@
         <div class="main-content container-fluid">
             <div class="card text-center">
                 <div class="card-body">
-                    <form:form action="/interview/add_new" method="post" modelAttribute="newInterview">
+                    <form:form action="/interview/add" method="post" modelAttribute="newInterview">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="bs-grid-block">
@@ -112,7 +112,7 @@
                                                         <table class="table table-striped table-borderless">
                                                             <tr>
                                                                 <td>
-                                                                    <form:select id="searchable" multiple="multiple"  path="scheduledInterviews">
+                                                                    <form:select id="searchable" multiple="multiple"  path="selectedInterviewerIds">
                                                                         <c:forEach var="interviewer" items="${interviewers}">
                                                                             <form:option value="${interviewer.userId}">
                                                                                 ${interviewer.fullName}
@@ -202,7 +202,7 @@
 <script src="/lib/quicksearch/jquery.quicksearch.min.js" type="text/javascript"></script>
 <script src="/lib/select2/js/select2.min.js" type="text/javascript"></script>
 <script src="/lib/select2/js/select2.full.min.js" type="text/javascript"></script>
-<script src="/js/interview/add_new.js"></script>
+<script src="/js/interview/add.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         //-initialize the javascript

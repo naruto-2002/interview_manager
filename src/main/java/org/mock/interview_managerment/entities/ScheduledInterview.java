@@ -26,5 +26,4 @@ public class ScheduledInterview implements Serializable {
     @MapsId("interviewerId")
     @JoinColumn(name = "interviewer_id")
     private User interviewer;
-
 }

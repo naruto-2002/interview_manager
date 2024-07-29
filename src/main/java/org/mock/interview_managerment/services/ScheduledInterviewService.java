@@ -11,8 +11,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ScheduledInterviewService {
     private final ScheduledInterviewRepository scheduledInterviewRepository;
+    private final InterviewService interviewService;
+    private final UserService userService;
 
     public List<ScheduledInterview> getAllScheduledInterview() {
         return scheduledInterviewRepository.findAll();
+    }
+
+    public ScheduledInterview handleSaveScheduledInterview(ScheduledInterview scheduledInterview) {
+        return scheduledInterviewRepository.save(scheduledInterview);
     }
 }

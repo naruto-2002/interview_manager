@@ -57,5 +57,8 @@ public class Interview {
     @ToString.Exclude // Không sử dụng trong toString()
     private List<ScheduledInterview> scheduledInterviews;
 
+    @Transient // Chú thích này để JPA không lưu trữ trường này vào cơ sở dữ liệu
+    private List<Long> selectedInterviewerIds = new ArrayList<>();
+
 
 }

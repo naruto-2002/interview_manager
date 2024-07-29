@@ -5,13 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.mock.interview_managerment.entities.pk.DepartmentEnum;
-import org.mock.interview_managerment.entities.pk.GenderEnum;
-import org.mock.interview_managerment.entities.pk.StatusEnum;
+import org.mock.interview_managerment.enums.DepartmentEnum;
+import org.mock.interview_managerment.enums.GenderEnum;
+import org.mock.interview_managerment.enums.StatusEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @Entity
@@ -31,6 +30,8 @@ public class User {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
     private String address;
+
+    @Column(unique = true, nullable = false)
     private String email;
     private String fullName;
     private String note;

@@ -41,17 +41,27 @@
     <div class="container">
         <h1>User Registration</h1>
         <form:form action="/user/create" method="post" modelAttribute="newUser">
+
+            <c:set var="errorFullname">
+                <form:errors path="fullName" cssClass="text-danger" />
+            </c:set>
+            <c:set var="errorDob">
+                <form:errors path="dob" cssClass="text-danger" />
+            </c:set>
+            <c:set var="errorEmail">
+                <form:errors path="email" cssClass="text-danger" />
+            </c:set>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="fullName">Full Name:</label>
-                        <form:input type="text" class="form-control" id="fullName" path="fullName" placeholder="Enter your full name" />
-                        <form:errors path="fullName" cssClass="text-danger" />
+                        <form:input type="text" class="form-control ${not empty errorFullname ? 'is-invalid' : ''}" id="fullName" path="fullName" placeholder="Enter your full name" />
+                        ${errorFullname}
                     </div>
                     <div class="form-group">
                         <label for="dateOfBirth">Date of Birth:</label>
-                        <form:input type="date" class="form-control" id="dateOfBirth" path="dob"/>
-                        <form:errors path="dob" cssClass="text-danger" />
+                        <form:input type="date" class="form-control ${not empty errorDob ? 'is-invalid' : ''}" id="dateOfBirth" path="dob"/>
+                        ${errorDob}
                     </div>
                     <div class="form-group">
                         <label for="phoneNumber">Phone Number:</label>
@@ -82,8 +92,8 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <form:input type="email" class="form-control" id="email" path="email" />
-                        <form:errors path="email" cssClass="text-danger" />
+                        <form:input type="email" class="form-control ${not empty errorEmail ? 'is-invalid' : ''}" id="email" path="email" />
+                        ${errorEmail}
                     </div>
                     <div class="form-group">
                         <label for="address">Address:</label>

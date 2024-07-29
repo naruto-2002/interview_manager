@@ -20,7 +20,7 @@ public class SendEmailService {
         this.javaMailSender = javaMailSender;
     }
 
-    public void sendPasswordCreate(String toEmail, String password) {
+    public void sendPasswordCreate(String toEmail, String username, String password) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -42,7 +42,7 @@ public class SendEmailService {
                             "    <p>IMS Team.</p>" +
                             "  </body>" +
                             "</html>",
-                    toEmail, password, fromEmail
+                    username, password, fromEmail
             ), true);
 
             javaMailSender.send(message);

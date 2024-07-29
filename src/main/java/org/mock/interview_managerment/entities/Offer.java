@@ -2,7 +2,8 @@ package org.mock.interview_managerment.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.mock.interview_managerment.entities.pk.*;
+import org.mock.interview_managerment.entities.*;
+import org.mock.interview_managerment.enums.*;
 
 import java.util.Date;
 

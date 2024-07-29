@@ -2,6 +2,7 @@ package org.mock.interview_managerment.services;
 
 import lombok.RequiredArgsConstructor;
 import org.mock.interview_managerment.entities.ScheduledInterview;
+import org.mock.interview_managerment.entities.pk.ScheduledInterviewId;
 import org.mock.interview_managerment.repository.ScheduledInterviewRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +21,9 @@ public class ScheduledInterviewService {
 
     public ScheduledInterview handleSaveScheduledInterview(ScheduledInterview scheduledInterview) {
         return scheduledInterviewRepository.save(scheduledInterview);
+    }
+
+    public void deleteScheduledInterviewByInterviewId(long interviewId) {
+        scheduledInterviewRepository.deleteByInterviewId(interviewId);
     }
 }

@@ -31,4 +31,12 @@ public class InterviewService {
     public Interview getByInterviewId(Long id) {
         return interviewRepository.findByInterviewId(id);
     }
+
+    public void updateInterview(Interview interview) {
+        interviewRepository.save(interview);
+    }
+
+    public void deleteInterviewById(Long interviewId) {
+        interviewRepository.deleteById(interviewId);
+    }
 }

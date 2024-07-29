@@ -40,6 +40,7 @@
                                 <div class="bs-grid-block">
                                     <div class="card">
                                         <div class="card-body">
+                                            <form:input type="text" class="d-none" id="title" path="interviewId" value="${interview.interviewId}" />
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star" for="title">Schedule title</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
@@ -193,7 +194,6 @@
                                                 <a href="/interview/list">
                                                     <button type="button" class="ml-6 btn btn-space btn-secondary btn-width active">Cancel</button>
                                                 </a>
-
                                             </div>
                                         </div>
                                     </div>

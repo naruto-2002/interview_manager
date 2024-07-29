@@ -35,7 +35,9 @@
             <div class="card text-center">
                 <div class="card-header">
                     <div class="d-flex justify-content-end">
-                        <button class="btn btn-space btn-secondary btn-width active">Send reminder</button>
+                        <a href="/interview/delete?interviewId=${interview.interviewId}">
+                            <button class="btn btn-space btn-secondary btn-width active">Delete</button>
+                        </a>
                     </div>
                 </div>
                 <div class="card-body">

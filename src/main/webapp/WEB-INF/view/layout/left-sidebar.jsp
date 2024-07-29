@@ -9,7 +9,8 @@
                     <ul class="sidebar-elements">
                         <li class="divider">Menu</li>
                         <li class="active"><a href="/user"><i class="icon mdi mdi-account"></i><span>User</span></a>
-
+                        </li>
+                        <li><a href="/offers"><i class="icon mdi mdi-account"></i><span>Offer</span></a>
                         </li>
 
                     </ul>

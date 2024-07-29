@@ -23,5 +23,6 @@ public class ScheduledInterview {
     @JoinColumn(name = "interviewer_id")
     private User interviewer;
 
+    private String note;
 
 }

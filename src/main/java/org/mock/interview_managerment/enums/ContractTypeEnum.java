@@ -1,5 +1,9 @@
 package org.mock.interview_managerment.enums;
 
 public enum ContractTypeEnum {
-    FULL_TIME, PART_TIME, CONTRACT
+    TRIAL_2_MONTHS,
+    TRAINEE_3_MONTHS,
+    ONE_YEAR,
+    THREE_YEARS,
+    UNLIMITED
 }

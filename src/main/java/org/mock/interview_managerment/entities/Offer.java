@@ -19,6 +19,7 @@ public class Offer {
     private Date endContract;
     private Date startContract;
     private String note;
+    private boolean deleted = false;  // Add this line
 
     @Enumerated(EnumType.STRING)
     private ContractTypeEnum contractType;
@@ -33,7 +34,7 @@ public class Offer {
     private PositionEnum position;
 
     @Enumerated(EnumType.STRING)
-    private StatusEnum status;
+    private OfferStatusEnum status;
 
     @ManyToOne
     @JoinColumn(name = "approver_id")
@@ -46,5 +47,14 @@ public class Offer {
     @ManyToOne
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
+
+
+    @ManyToOne
+    @JoinColumn(name = "scheduled_interview_id")
+    private ScheduledInterview scheduledInterview;
+
+    @ManyToOne
+    @JoinColumn(name = "recruiter_id")
+    private User recruiter;
 
 }

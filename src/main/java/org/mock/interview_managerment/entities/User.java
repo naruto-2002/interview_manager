@@ -47,4 +47,8 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
+    public String getFullNameWithAccountName() {
+        return fullName + " (" + username + ")";
+    }
+
 }

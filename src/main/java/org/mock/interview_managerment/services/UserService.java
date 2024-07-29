@@ -92,4 +92,13 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    public List<User> getManagers() {
+        return userRepository.findByRoleRoleName("MANAGER");
+    }
+    public List<User> getRecruiters() {
+        return userRepository.findByRoleRoleName("RECRUITER");
+    }
+
+
+
 }

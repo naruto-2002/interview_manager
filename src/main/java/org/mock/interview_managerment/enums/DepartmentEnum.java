@@ -1,5 +1,5 @@
 package org.mock.interview_managerment.enums;
 
 public enum DepartmentEnum {
-    HR, ENGINEERING, SALES, MARKETING
+    IT, HR, FINANCE, COMMUNICATION, MARKETING, ACCOUNTING
 }

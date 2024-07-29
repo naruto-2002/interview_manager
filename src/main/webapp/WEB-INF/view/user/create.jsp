@@ -24,11 +24,11 @@
 </head>
 
 <body>
-<jsp:include page="../layout/header.jsp" />
+<jsp:include page="../layout/header.jsp"/>
 
-<jsp:include page="../layout/left-sidebar.jsp" />
+<jsp:include page="../layout/left-sidebar.jsp"/>
 <div class="be-content">
-    <div class="page-head" style="margin-top: 60px;"style="margin-top: 60px;">
+    <div class="page-head" style="margin-top: 60px;" style="margin-top: 60px;">
         <h2 class="page-head-title">User</h2>
         <nav aria-label="breadcrumb mt-2" role="navigation">
             <ol class="breadcrumb page-head-nav">
@@ -43,25 +43,27 @@
         <form:form action="/user/create" method="post" modelAttribute="newUser">
 
             <c:set var="errorFullname">
-                <form:errors path="fullName" cssClass="text-danger" />
+                <form:errors path="fullName" cssClass="text-danger"/>
             </c:set>
             <c:set var="errorDob">
-                <form:errors path="dob" cssClass="text-danger" />
+                <form:errors path="dob" cssClass="text-danger"/>
             </c:set>
             <c:set var="errorEmail">
-                <form:errors path="email" cssClass="text-danger" />
+                <form:errors path="email" cssClass="text-danger"/>
             </c:set>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="fullName">Full Name:</label>
-                        <form:input type="text" class="form-control ${not empty errorFullname ? 'is-invalid' : ''}" id="fullName" path="fullName" placeholder="Enter your full name" />
-                        ${errorFullname}
+                        <form:input type="text" class="form-control ${not empty errorFullname ? 'is-invalid' : ''}"
+                                    id="fullName" path="fullName" placeholder="Enter your full name"/>
+                            ${errorFullname}
                     </div>
                     <div class="form-group">
                         <label for="dateOfBirth">Date of Birth:</label>
-                        <form:input type="date" class="form-control ${not empty errorDob ? 'is-invalid' : ''}" id="dateOfBirth" path="dob"/>
-                        ${errorDob}
+                        <form:input type="date" class="form-control ${not empty errorDob ? 'is-invalid' : ''}"
+                                    id="dateOfBirth" path="dob"/>
+                            ${errorDob}
                     </div>
                     <div class="form-group">
                         <label for="phoneNumber">Phone Number:</label>
@@ -71,20 +73,16 @@
                     <div class="form-group">
                         <label for="role">Role:</label>
                         <form:select class="form-control" id="role" path="role.roleName">
-                            <form:option value="ADMIN">Admin</form:option>
-                            <form:option value="RECUITER">Recruiter</form:option>
-                            <form:option value="INTERVIEWER">Interviewer</form:option>
-                            <form:option value="MANAGER">Manager</form:option>
+                            <form:options items="${roles}" itemValue="name" itemLabel="name"/>
                         </form:select>
+
                     </div>
                     <div class="form-group">
                         <label for="status">Status:</label>
                         <form:select class="form-control" id="status" path="status">
-                            <form:option value="ACTIVE">Active</form:option>
-                            <form:option value="INACTIVE">Inactive</form:option>
+                            <form:options items="${statuses}" itemValue="name" itemLabel="name"/>
                         </form:select>
                     </div>
-
 
 
                 </div>
@@ -92,8 +90,9 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <form:input type="email" class="form-control ${not empty errorEmail ? 'is-invalid' : ''}" id="email" path="email" />
-                        ${errorEmail}
+                        <form:input type="email" class="form-control ${not empty errorEmail ? 'is-invalid' : ''}"
+                                    id="email" path="email"/>
+                            ${errorEmail}
                     </div>
                     <div class="form-group">
                         <label for="address">Address:</label>
@@ -110,20 +109,17 @@
                     <div class="form-group">
                         <label for="department">Department:</label>
                         <form:select class="form-control" id="department" path="department">
-                            <option value="">Select</option>
-                            <form:option value="HR">HR</form:option>
-                            <form:option value="ENGINEERING">Engineering</form:option>
-                            <form:option value="SALES">Sales</form:option>
-                            <form:option value="MARKETING">Marketting</form:option>
+                            <form:option value="">Select</form:option>
+                            <form:options items="${departments}" itemValue="name" itemLabel="name"/>
                         </form:select>
                     </div>
+
                     <div class="form-group">
                         <label for="note">Note:</label>
                         <form:input class="form-control" id="note" rows="3" path="note"/>
                     </div>
                 </div>
             </div>
-
 
 
             <div class="row text-center">

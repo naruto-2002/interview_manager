@@ -10,6 +10,7 @@ import org.mock.interview_managerment.mapper.UserMapper;
 import org.mock.interview_managerment.repository.RoleRepository;
 import org.mock.interview_managerment.repository.UserRepository;
 import org.mock.interview_managerment.util.UserNameValid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -20,11 +21,21 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-    private final UserRepository userRepository;
-    private final PasswordService passwordService;
-    private final RoleRepository roleRepository;
-    private final SendEmailService sendEmailService;
-    private final UserMapper userMapper;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordService passwordService;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private SendEmailService sendEmailService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     public UserService(UserRepository userRepository,
                        PasswordService passwordService,
@@ -51,7 +62,7 @@ public class UserService {
         user.setUsername(UserNameValid.genUserName(user.getFullName(), user.getUserId()));
 
         // send password to email
-        sendEmailService.sendPasswordCreate(user.getEmail(), user.getUsername(), password);
+//        sendEmailService.sendPasswordCreate(user.getEmail(), user.getUsername(), password);
 
         return userRepository.save(user);
     }
@@ -100,10 +111,10 @@ public class UserService {
     public List<User> getManagers() {
         return userRepository.findByRoleRoleName("MANAGER");
     }
+
     public List<User> getRecruiters() {
         return userRepository.findByRoleRoleName("RECRUITER");
     }
-
 
 
 }

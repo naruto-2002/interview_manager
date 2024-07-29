@@ -97,13 +97,11 @@
                     <div class="form-group">
                         <label for="department">Department:</label>
                         <form:select class="form-control" id="department" path="department">
-                            <option value="">Select</option>
-                            <form:option value="HR">HR</form:option>
-                            <form:option value="ENGINEERING">Engineering</form:option>
-                            <form:option value="SALES">Sales</form:option>
-                            <form:option value="MARKETING">Marketting</form:option>
+                            <form:option value="">Select</form:option>
+                            <form:options items="${departments}" itemValue="name" itemLabel="name"/>
                         </form:select>
                     </div>
+
                     <div class="form-group">
                         <label for="note">Note:</label>
                         <form:textarea class="form-control" id="note" rows="3" path="note"></form:textarea>

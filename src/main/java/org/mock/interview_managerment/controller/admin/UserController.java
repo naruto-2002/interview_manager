@@ -7,6 +7,7 @@ import org.mock.interview_managerment.dto.response.UserDetailDto;
 import org.mock.interview_managerment.dto.response.UserListDto;
 import org.mock.interview_managerment.dto.response.UserUpdateDto;
 import org.mock.interview_managerment.entities.User;
+import org.mock.interview_managerment.enums.*;
 import org.mock.interview_managerment.repository.UserRepository;
 import org.mock.interview_managerment.services.RoleService;
 import org.mock.interview_managerment.services.UserService;
@@ -38,6 +39,7 @@ public class UserController {
         Pageable pageable = PageRequest.of(page, 5);
         Page<UserListDto> userPage = userService.handleGetAllUsers(pageable);
 
+        populateModelAttributes(model);
         model.addAttribute("listRole", roleService.handleGetAllRole());
         model.addAttribute("userPage", userPage);
         model.addAttribute("page", userPage.getNumber() + 1);
@@ -49,6 +51,7 @@ public class UserController {
     @GetMapping("/user/create")
     public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new UserCreateDto());
+        populateModelAttributes(model);
         return "user/create";
     }
 
@@ -66,6 +69,7 @@ public class UserController {
     @GetMapping("/user/detail/{userId}")
     public String getUserDetailPage(@PathVariable("userId") Long userId, Model model) {
 
+        populateModelAttributes(model);
         UserDetailDto userDetail = userService.handleGetUserDetail(userId);
         System.out.println(userDetail);
         model.addAttribute("userDetail", userDetail);
@@ -87,6 +91,7 @@ public class UserController {
 
         UserUpdateDto userUpdateDto = userService.handleGetUserById(userId);
         System.out.println(userUpdateDto);
+        populateModelAttributes(model);
         model.addAttribute("user", userUpdateDto);
         return "user/update";
     }
@@ -105,6 +110,7 @@ public class UserController {
     @GetMapping("/user/search")
     public String searchByKeyword(@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, Model model) {
         model.addAttribute("userPage", userService.search(keyword));
+        populateModelAttributes(model);
         return "user/list";
     }
 
@@ -124,4 +130,19 @@ public class UserController {
         System.out.println(email);
         return "auth/forgot-password";
     }
+    private void populateModelAttributes(Model model) {
+        model.addAttribute("benefits", BenefitEnum.values());
+        model.addAttribute("contractTypes", ContractTypeEnum.values());
+        model.addAttribute("departments", DepartmentEnum.values());
+        model.addAttribute("genders", GenderEnum.values());
+        model.addAttribute("highestLevels", HighestLevelEnum.values());
+        model.addAttribute("levels", LevelEnum.values());
+        model.addAttribute("offerStatuses", OfferStatusEnum.values());
+        model.addAttribute("positions", PositionEnum.values());
+        model.addAttribute("results", ResultEnum.values());
+        model.addAttribute("roles", RoleEnum.values());
+        model.addAttribute("skills", SkillEnum.values());
+        model.addAttribute("statuses", StatusEnum.values());
+    }
+
 }

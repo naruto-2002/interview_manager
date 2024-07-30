@@ -19,7 +19,7 @@ public class ListController {
 
     @GetMapping("/interview/list")
     public String getInterviewListPage(Model model) {
-//        getUserInfor(model);
+        getUserInfor(model);
 
         List<Interview> interviews = interviewService.getAllInterviews();
 
@@ -40,17 +40,22 @@ public class ListController {
             model.addAttribute("username", userDetails.getUsername());
             String roleName = getRoleName(userDetails.getAuthorities().toString());
             model.addAttribute("roleName", roleName);
-            // Bạn có thể thêm các thông tin khác của user nếu cần
         } else {
             model.addAttribute("username", principal.toString());
         }
     }
 
-
+//"ADMIN", "RECRUITER", "INTERVIEWER", "MANAGER"
     public String getRoleName(String authority) {
         switch(authority) {
             case "[ROLE_INTERVIEWER]":
-                return "Interviewer";
+                return "interviewer";
+            case "[ROLE_ADMIN]":
+                return "admin";
+            case "[ROLE_RECRUITER]":
+                return "recruiter";
+            case "[ROLE_MANAGER]":
+                return "manager";
 
             default:
                 return "Unknown role";

@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class InterviewService {
+    // code van
     private final InterviewRepository interviewRepository;
     private final CandidateRepository candidateRepository;
     private final JobRepository jobRepository;

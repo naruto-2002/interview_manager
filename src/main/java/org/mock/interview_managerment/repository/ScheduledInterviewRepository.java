@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Repository
 public interface ScheduledInterviewRepository extends JpaRepository<ScheduledInterview, Long> {
-
+    // code van
     List<ScheduledInterview> findAll();
 
     @Query("SELECT s FROM ScheduledInterview s WHERE s.interview.interviewId = :interviewId")

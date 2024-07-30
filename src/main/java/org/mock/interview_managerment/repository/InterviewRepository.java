@@ -13,9 +13,8 @@ import java.util.List;
 
 @Repository
 public interface InterviewRepository extends JpaRepository<Interview, Long> {
-
+    // code van
     List<Interview> findAll();
-
     @Query("SELECT i FROM Interview i WHERE i.interviewId = :interviewId")
     Interview findByInterviewId(long interviewId);
 }

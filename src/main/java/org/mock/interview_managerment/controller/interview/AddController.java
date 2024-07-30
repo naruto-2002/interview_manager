@@ -2,6 +2,7 @@ package org.mock.interview_managerment.controller.interview;
 
 import lombok.RequiredArgsConstructor;
 import org.mock.interview_managerment.entities.*;
+import org.mock.interview_managerment.entities.pk.ScheduledInterviewId;
 import org.mock.interview_managerment.enums.ResultEnum;
 import org.mock.interview_managerment.enums.StatusEnum;
 import org.mock.interview_managerment.services.*;
@@ -25,7 +26,7 @@ public class AddController {
     @GetMapping("/interview/add")
     public String getNewInterviewPage(Model model) {
         List<Candidate> candidates = candidateService.getAllCandidates();
-        List<Job> jobs = jobService.getJobs();
+        List<Job> jobs = jobService.getJobsByStatusOpen();
         List<User> interviewers = userService.getUsersByRoleName("INTERVIEWER");
         List<User> recruiters = userService.getUsersByRoleName("RECRUITER");
 
@@ -34,6 +35,9 @@ public class AddController {
         model.addAttribute("interviewers", interviewers);
         model.addAttribute("recruiters", recruiters);
         model.addAttribute("newInterview", new Interview());
+
+
+
         return "interview/add";
     }
 
@@ -41,16 +45,18 @@ public class AddController {
     public String addNewInterview(@ModelAttribute("newInterview") Interview newInterview) {
         newInterview.setResult(ResultEnum.NA);
         newInterview.setStatus(StatusEnum.NEW);
-
-        // Save the new interview
         Interview interview = interviewService.handleSaveInterview(newInterview);
 
         List<Long> selectedInterviewerIds = newInterview.getSelectedInterviewerIds();
-        for (Long selectedInterviewerId : selectedInterviewerIds) {
+        for(Long selectedInterviewerId : selectedInterviewerIds) {
+            ScheduledInterviewId scheduledInterviewId = new ScheduledInterviewId();
+            scheduledInterviewId.setInterviewId(interview.getInterviewId());
+            scheduledInterviewId.setInterviewerId(selectedInterviewerId);
+
             ScheduledInterview scheduledInterview = new ScheduledInterview();
+            scheduledInterview.setId(scheduledInterviewId);
             scheduledInterview.setInterview(interview);
             scheduledInterview.setInterviewer(userService.getByUserId(selectedInterviewerId));
-            scheduledInterview.setNote(""); // Optional, set as needed
 
             scheduledInterviewService.handleSaveScheduledInterview(scheduledInterview);
         }

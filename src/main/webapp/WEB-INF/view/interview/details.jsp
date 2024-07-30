@@ -34,11 +34,13 @@
         <div class="main-content container-fluid">
             <div class="card text-center">
                 <div class="card-header">
-                    <div class="d-flex justify-content-end">
-                        <a href="/interview/delete?interviewId=${interview.interviewId}">
-                            <button class="btn btn-space btn-secondary btn-width active">Delete</button>
-                        </a>
-                    </div>
+                    <c:if test = "${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
+                        <div class="d-flex justify-content-end">
+                            <a href="javascript:void(0);" onclick="confirmDelete(${interview.interviewId})">
+                                <button class="btn btn-space btn-secondary btn-width active">Delete</button>
+                            </a>
+                        </div>
+                    </c:if>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -48,38 +50,61 @@
                                     <div class="card-body">
 
                                         <form>
-                                            <div class="form-group row d-flex align-items-center">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" >Schedule title:</label>
-                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label" >
-                                                    <span>${interview.title}</span>
+                                            <div class="form-group row">
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left">
+                                                    <div class="card" style="padding: 0; margin: 0">
+                                                        <div class="card-header card-header-divider" style="padding: 0; margin: 0; font-weight: 400; font-size: 20px">Schedule title</div>
+                                                        <div class="card-body" style="padding: 0; margin: 0; font-size: 14px; font-weight: 400">
+                                                            <span>${interview.title}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" >Candidate name:</label>
-                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
-                                                    <span>${interview.candidate.name}</span>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left">
+                                                    <div class="card" style="padding: 0; margin: 0">
+                                                        <div class="card-header card-header-divider" style="padding: 0; margin: 0; font-weight: 400; font-size: 20px">Candidate</div>
+                                                        <div class="card-body" style="padding: 0; margin: 0; font-size: 14px; font-weight: 400">
+                                                            <ul class="list-unstyled">
+                                                                <li>Name: <span>${interview.candidate.name}</span></li>
+                                                                <li>Date of birth: <span>${interview.candidate.dob}</span></li>
+                                                                <li>Address: <span>${interview.candidate.address}</span></li>
+                                                                <li>Email: <span>${interview.candidate.email}</span></li>
+                                                                <li>Phone number: <span>${interview.candidate.phoneNumber}</span></li>
+                                                                <li>Skills: <span>${interview.candidate.skills}</span></li>
+                                                                <li>Position: <span>${interview.candidate.position}</span></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" >Schedule Time:</label>
-                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label" >
-                                                    <ul style="list-style: none; padding: 0">
-                                                        <li>
-                                                            <span>${interview.date}</span>
-                                                        </li>
-                                                        <li>
-                                                            <span>From: ${interview.startTime} To: ${interview.endTime}</span>
-                                                        </li>
-                                                    </ul>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left">
+                                                    <div class="card" style="padding: 0; margin: 0">
+                                                        <div class="card-header card-header-divider" style="padding: 0; margin: 0; font-weight: 400; font-size: 20px">Schedule Time</div>
+                                                        <div class="card-body" style="padding: 0; margin: 0; font-size: 14px; font-weight: 400">
+                                                            <ul style="list-style: none; padding: 0">
+                                                                <li>
+                                                                    <span>${interview.date}</span>
+                                                                </li>
+                                                                <li>
+                                                                    <span>From: ${interview.startTime} To: ${interview.endTime}</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group row d-flex justify-content-start">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" >Notes:</label>
-                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label" >
-                                                    <span>${interview.note}</span>
+                                            <div class="form-group row">
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left">
+                                                    <div class="card" style="padding: 0; margin: 0">
+                                                        <div class="card-header card-header-divider" style="padding: 0; margin: 0; font-weight: 400; font-size: 20px">Notes</div>
+                                                        <div class="card-body" style="padding: 0; margin: 0; font-size: 14px; font-weight: 400">
+                                                            <span>${interview.note}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-
                                         </form>
 
                                     </div>
@@ -93,47 +118,90 @@
                                     <div class="card-body">
                                         <form>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4">Job:</label>
-                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
-                                                    <span>${interview.job.title}</span>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left">
+                                                    <div class="card" style="padding: 0; margin: 0">
+                                                        <div class="card-header card-header-divider" style="padding: 0; margin: 0; font-weight: 400; font-size: 20px">Job</div>
+                                                        <div class="card-body" style="padding: 0; margin: 0; font-size: 14px; font-weight: 400">
+                                                            <ul class="list-unstyled">
+                                                                <li>Title: <span>${interview.job.title}</span></li>
+                                                                <li>Location: <span>${interview.job.location}</span></li>
+                                                                <li>Working address: <span>${interview.job.workingAddress}</span></li>
+                                                                <li>Levels: <span>${interview.job.levels}</span></li>
+                                                                <li>Status: <span>${interview.job.status}</span></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left">
+                                                    <div class="card" style="padding: 0; margin: 0">
+                                                        <div class="card-header card-header-divider" style="padding: 0; margin: 0; font-weight: 400; font-size: 20px">Interviewer</div>
+                                                        <div class="card-body" style="padding: 0; margin: 0; font-size: 14px; font-weight: 400; padding-top: 6px">
+                                                            <c:forEach var="scheduleInterview" items="${interview.scheduledInterviews}">
+                                                                <ul class="list-unstyled" style="line-height: 6px">
+                                                                    <li><span>${scheduleInterview.interviewer.fullName} | ${scheduleInterview.interviewer.department}</span></li>
+                                                                </ul>
+                                                            </c:forEach>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4">Interviewer:</label>
-                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
-                                                    <c:forEach var="scheduleInterview" items="${interview.scheduledInterviews}">
-                                                        <soan>${scheduleInterview.interviewer.username}</soan>
-                                                    </c:forEach>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left">
+                                                    <div class="card" style="padding: 0; margin: 0">
+                                                        <div class="card-header card-header-divider" style="padding: 0; margin: 0; font-weight: 400; font-size: 20px">Location</div>
+                                                        <div class="card-body" style="padding: 0; margin: 0; font-size: 14px; font-weight: 400">
+                                                            <span>${interview.location}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4">Location:</label>
-                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
-                                                    <span>${interview.location}</span>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left">
+                                                    <div class="card" style="padding: 0; margin: 0">
+                                                        <div class="card-header card-header-divider" style="padding: 0; margin: 0; font-weight: 400; font-size: 20px">Recruiter owner</div>
+                                                        <div class="card-body" style="padding: 0; margin: 0; font-size: 14px; font-weight: 400">
+                                                            <ul class="list-unstyled">
+                                                                <li>Full name: <span>${interview.recruiter.fullName}</span></li>
+                                                                <li>Date of birth: <span>${interview.recruiter.dob}</span></li>
+                                                                <li>Address: <span>${interview.recruiter.address}</span></li>
+                                                                <li>Email: <span>${interview.recruiter.email}</span></li>
+                                                                <li>Phone number: <span>${interview.recruiter.phoneNumber}</span></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4">Recruiter owner:</label>
-                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
-                                                    <span>${interview.recruiter.fullName}</span>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left">
+                                                    <div class="card" style="padding: 0; margin: 0">
+                                                        <div class="card-header card-header-divider" style="padding: 0; margin: 0; font-weight: 400; font-size: 20px">Meeting ID</div>
+                                                        <div class="card-body" style="padding: 0; margin: 0; font-size: 14px; font-weight: 400">
+                                                            <span>${interview.meetingId}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4">Meeting ID:</label>
-                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
-                                                    <span>${interview.meetingId}</span>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left">
+                                                    <div class="card" style="padding: 0; margin: 0">
+                                                        <div class="card-header card-header-divider" style="padding: 0; margin: 0; font-weight: 400; font-size: 20px">Result</div>
+                                                        <div class="card-body" style="padding: 0; margin: 0; font-size: 14px; font-weight: 400">
+                                                            <span>${interview.result.name().toString()}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4">Result:</label>
-                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
-                                                    <span>${interview.result == null ? "N/A" : interview.status}</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4">Status:</label>
-                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
-                                                    <span>${interview.status == null ? "NEW" : interview.status}</span>
+                                                <div class="col-12 col-sm-8 col-lg-6 text-sm-left">
+                                                    <div class="card" style="padding: 0; margin: 0">
+                                                        <div class="card-header card-header-divider" style="padding: 0; margin: 0; font-weight: 400; font-size: 20px">Status</div>
+                                                        <div class="card-body" style="padding: 0; margin: 0; font-size: 14px; font-weight: 400">
+                                                            <span>${interview.status.name().toString()}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </form>
@@ -148,8 +216,19 @@
                                 <div class="card text-center">
                                     <div class="d-flex justify-content-center align-items-center card-body">
                                         <div class="d-flex">
-                                            <button class="mr-6 btn btn-space btn-secondary btn-width active">Edit</button>
-                                            <button class="ml-6 btn btn-space btn-secondary btn-width active">Cancel</button>
+                                            <c:if test = "${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
+                                                <a href="/interview/edit?interview_id=${interview.interviewId}">
+                                                    <button class="mr-6 btn btn-space btn-secondary btn-width active">Edit</button>
+                                                </a>
+                                            </c:if>
+                                            <c:if test = "${roleName == 'interviewer'}">
+                                                <a href="/interview/edit?interview_id=${interview.interviewId}">
+                                                    <button class="mr-6 btn btn-space btn-secondary btn-width active">Edit Result</button>
+                                                </a>
+                                            </c:if>
+                                            <a href="/interview/list">
+                                                <button class="ml-6 btn btn-space btn-secondary btn-width active">Cancel</button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

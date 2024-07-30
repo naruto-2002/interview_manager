@@ -8,26 +8,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="assets\img\logo-fav.png">
+    <link rel="shortcut icon" href="/img/logo-fav.png">
     <title>Beagle</title>
-    <link rel="stylesheet" type="text/css" href="assets\lib\perfect-scrollbar\css\perfect-scrollbar.css">
-    <link rel="stylesheet" type="text/css"
-          href="assets\lib\material-design-icons\css\material-design-iconic-font.min.css">
-    <link rel="stylesheet" type="text/css"
-          href="assets\lib\datatables\datatables.net-bs4\css\dataTables.bootstrap4.css">
-    <link rel="stylesheet" type="text/css"
-          href="assets\lib\datatables\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="\css\app.css" type="text/css">
-    <link rel="stylesheet" href="\css\virtual-select.min.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/lib/perfect-scrollbar/css/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="/lib/material-design-icons/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/datetimepicker/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/select2/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/bootstrap-slider/css/bootstrap-slider.min.css">
+    <link rel="stylesheet" type="text/css" href="/multiselect/css/multi-select.css">
+    <link rel="stylesheet" href="/css/app.css" type="text/css">
+
+
+    <link rel="stylesheet" href="/css/virtual-select.min.css" type="text/css">
 </head>
 <body>
-<div class="be-wrapper be-fixed-sidebar">
-
-</div>
-
-<div class="be-left-sidebar" >
-
-</div>
+<div class="be-wrapper">
+    <jsp:include page="../layout/header.jsp"/>
+    <jsp:include page="../layout/left-sidebar.jsp"/>
 <div class="be-content" style="padding: 30px">
     <h2 class="mb-4">Candidate Detail</h2>
     <div class="d-flex justify-content-end mb-3">

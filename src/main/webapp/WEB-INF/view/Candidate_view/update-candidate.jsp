@@ -14,17 +14,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="assets\img\logo-fav.png">
+    <link rel="shortcut icon" href="/img/logo-fav.png">
     <title>Beagle</title>
-    <link rel="stylesheet" type="text/css" href="assets\lib\perfect-scrollbar\css\perfect-scrollbar.css">
-    <link rel="stylesheet" type="text/css"
-          href="\lib\material-design-icons\css\material-design-iconic-font.min.css">
-    <link rel="stylesheet" type="text/css"
-          href="\lib\datatables\datatables.net-bs4\css\dataTables.bootstrap4.css">
-    <link rel="stylesheet" type="text/css"
-          href="\lib\datatables\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="\css\app.css" type="text/css">
-    <link rel="stylesheet" href="\css\virtual-select.min.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/lib/perfect-scrollbar/css/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="/lib/material-design-icons/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/datetimepicker/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/select2/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/bootstrap-slider/css/bootstrap-slider.min.css">
+    <link rel="stylesheet" type="text/css" href="/multiselect/css/multi-select.css">
+    <link rel="stylesheet" href="/css/app.css" type="text/css">
+    <link rel="stylesheet" href="/css/interview/add.css">
+    <link rel="stylesheet" href="/css/virtual-select.min.css" type="text/css">
     <style>
         .vscomp-toggle-button {
             box-shadow: none;
@@ -34,6 +34,7 @@
 </head>
 
 <body>
+<div class="be-wrapper">
 <jsp:include page="../layout/header.jsp"/>
 <jsp:include page="../layout/left-sidebar.jsp"/>
 <div class="be-content">
@@ -136,9 +137,9 @@
 
 
 
-            <div class="row">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="row justify-content-center" style="margin-top:20px;margin-bottom:50px;padding: 20px">
+                <div class="col-md-auto">
+                    <button type="submit" class="btn btn-primary mx-20">Submit</button>
                     <button type="button" class="btn btn-secondary">Cancel</button>
                 </div>
             </div>
@@ -146,9 +147,6 @@
     </div>
 </div>
 
-</div>
-<div class="be-right-sidebar">
-    <!-- Right sidebar -->
 </div>
 </div>
 <script src="assets\js\virtual-select.min.js"></script>

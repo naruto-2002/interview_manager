@@ -14,7 +14,7 @@ public interface CandidateRepository extends JpaRepository<Candidate,Long> {
     public Page<Candidate> findAll(Pageable pageable);
     public Candidate save(Candidate candidate);
     public Page<Candidate> findByStatusAndNameContainingOrEmailContainingOrPhoneContainingOrUserContaining(StatusCandidateEnum status, String name, String email, String phone, String recruiter, Pageable pageable);
-    public Page<Candidate> findByNameContainingOrEmailContainingOrPhoneContainingOrUserContaining(String name, String email, String phone, String recruiter, Pageable pageable);;
+    public Page<Candidate> findByNameContainingOrEmailContainingOrPhoneContaining(String name, String email, String phone, Pageable pageable);;
     public Candidate getById(Long id);
     public Page<Candidate> findByStatus(StatusCandidateEnum status, Pageable pageable);
 }

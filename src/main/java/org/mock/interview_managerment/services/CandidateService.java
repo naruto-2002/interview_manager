@@ -46,7 +46,7 @@ public class CandidateService {
     }
     public ResponseEntity<Page<Candidate>> findBykey(String keyword, int page){
         Pageable pageable= (Pageable) PageRequest.of(page,7);
-        Page<Candidate> l= candidateRepository.findByNameContainingOrEmailContainingOrPhoneContainingOrUserContaining(keyword,keyword,keyword,keyword,pageable);
+        Page<Candidate> l= candidateRepository.findByNameContainingOrEmailContainingOrPhoneContaining(keyword,keyword,keyword,pageable);
         return ResponseEntity.ok().body(l);
     }
     public Candidate create(CandidateCreateDto c){

@@ -56,9 +56,9 @@
                                                                          data-dob="${candidate.dob}"
                                                                          data-address="${candidate.address}"
                                                                          data-email="${candidate.email}"
-                                                                         data-phone-number="${candidate.phoneNumber}"
+                                                                         data-phone-number="${candidate.phone}"
                                                                          data-skill="${candidate.skills}"
-                                                                         data-position="${candidate.position}">
+                                                                         data-position="${candidate.currentPosition}">
                                                                 ${candidate.name}
                                                             </form:option>
                                                         </c:forEach>
@@ -120,8 +120,7 @@
                                                         <c:forEach var="job" items="${jobs}">
                                                             <form:option value="${job.jobId}"
                                                                          data-location="${job.location}"
-                                                                         data-working-address="${job.workingAddress}"
-                                                                         data-levels="${job.levels}"
+                                                                         data-level="${job.level}"
                                                                          data-status="${job.status}">
                                                                 ${job.title}
                                                             </form:option>
@@ -132,7 +131,7 @@
                                                             <ul class="list-unstyled" style="line-height: 26px">
                                                                 <li>Location: <span id="job-location"></span></li>
                                                                 <li>Working address: <span id="job-working-address"></span></li>
-                                                                <li>Levels: <span id="job-levels"></span></li>
+                                                                <li>level: <span id="job-level"></span></li>
                                                                 <li>Status: <span id="job-status"></span></li>
                                                             </ul>
                                                         </div>

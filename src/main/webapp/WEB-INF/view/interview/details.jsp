@@ -70,9 +70,9 @@
                                                                 <li>Date of birth: <span>${interview.candidate.dob}</span></li>
                                                                 <li>Address: <span>${interview.candidate.address}</span></li>
                                                                 <li>Email: <span>${interview.candidate.email}</span></li>
-                                                                <li>Phone number: <span>${interview.candidate.phoneNumber}</span></li>
+                                                                <li>Phone number: <span>${interview.candidate.phone}</span></li>
                                                                 <li>Skills: <span>${interview.candidate.skills}</span></li>
-                                                                <li>Position: <span>${interview.candidate.position}</span></li>
+                                                                <li>Position: <span>${interview.candidate.currentPosition}</span></li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -125,8 +125,7 @@
                                                             <ul class="list-unstyled">
                                                                 <li>Title: <span>${interview.job.title}</span></li>
                                                                 <li>Location: <span>${interview.job.location}</span></li>
-                                                                <li>Working address: <span>${interview.job.workingAddress}</span></li>
-                                                                <li>Levels: <span>${interview.job.levels}</span></li>
+                                                                <li>level: <span>${interview.job.level}</span></li>
                                                                 <li>Status: <span>${interview.job.status}</span></li>
                                                             </ul>
                                                         </div>

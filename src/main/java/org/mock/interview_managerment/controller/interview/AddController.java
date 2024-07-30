@@ -55,7 +55,7 @@ public class AddController {
             scheduledInterviewId.setInterviewerId(selectedInterviewerId);
 
             ScheduledInterview scheduledInterview = new ScheduledInterview();
-            scheduledInterview.setScheduledInterviewId(scheduledInterview.getScheduledInterviewId());
+            scheduledInterview.setId(scheduledInterviewId);
             scheduledInterview.setInterview(interview);
             scheduledInterview.setInterviewer(userService.getByUserId(selectedInterviewerId));
 

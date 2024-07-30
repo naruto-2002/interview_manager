@@ -38,18 +38,6 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public UserService(UserRepository userRepository,
-                       PasswordService passwordService,
-                       RoleRepository roleRepository,
-                       SendEmailService sendEmailService,
-                       UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.passwordService = passwordService;
-        this.roleRepository = roleRepository;
-        this.sendEmailService = sendEmailService;
-        this.userMapper = userMapper;
-    }
-
     public User handleSaveUser(UserCreateDto request) {
         // mapper entity
         User user = userMapper.toUser(request);

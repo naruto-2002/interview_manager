@@ -4,12 +4,15 @@
 <html lang="en">
 <head>
     <title>Create Offer</title>
-    <link rel="stylesheet" type="text/css" href="/lib/perfect-scrollbar/css/perfect-scrollbar.css">
-    <link rel="stylesheet" type="text/css" href="/lib/material-design-icons/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" type="text/css" href="/lib/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css">
-    <link rel="stylesheet" type="text/css"
-          href="/lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+    <!-- Các liên kết CSS khác -->
     <link rel="stylesheet" href="/css/app.css" type="text/css">
+    <style>
+        .required {
+            color: red;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="../layout/header.jsp"/>
@@ -33,20 +36,20 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="candidate">Candidate:</label>
+                            <label for="candidate">Candidate: <span class="required">*</span></label>
                             <form:select path="candidate.id" class="form-control" id="candidate" required="true">
                                 <option value="" selected>Select a candidate</option>
-                                <form:options items="${candidates}" itemValue="id" itemLabel="fullName"/>
+                                <form:options items="${candidates}" itemValue="id" itemLabel="name"/>
                             </form:select>
                         </div>
                         <div class="form-group">
-                            <label for="position">Position:</label>
-                            <form:select path="position" class="form-control" id="position">
+                            <label for="position">Position: <span class="required">*</span></label>
+                            <form:select path="position" class="form-control" id="position"  required="true">
                                 <form:options items="${positions}"/>
                             </form:select>
                         </div>
                         <div class="form-group">
-                            <label for="manager">Approved by:</label>
+                            <label for="manager">Approved by: <span class="required">*</span></label>
                             <form:select path="approver" class="form-control" id="manager" required="true">
                                 <form:option value="" label="Select Manager"/>
                                 <form:options items="${managers}" itemValue="userId" itemLabel="fullName"/>
@@ -55,70 +58,73 @@
                         <div class="form-group">
                             <label for="interview">Interview Schedule:</label>
                             <form:select path="interview.interviewId" class="form-control"
-                                         id="interview"
-                                         required="true">
+                                         id="interview">
                                 <form:option value="" label="Select Interview"/>
                                 <form:options items="${interviews}" itemValue="interviewId"
                                               itemLabel="title"/>
                             </form:select>
                         </div>
                         <div class="form-group">
-                            <label>Start Contract:</label>
+                            <label>Start Contract: <span class="required">*</span></label>
                             <div class="row">
                                 <div class="col-md-6">
                                     From
-                                    <form:input path="startContract" class="form-control" id="startContract" type="date"/>
+                                    <form:input path="startContract" class="form-control" id="startContract"
+                                                type="date" required="true"/>
                                 </div>
                                 <div class="col-md-6">
                                     To
-                                    <form:input path="endContract" class="form-control" id="endContract" type="date"/>
+                                    <form:input path="endContract" class="form-control" id="endContract" type="date"
+                                                required="true"/>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="dueDate">Due Date:</label>
-                            <form:input path="dueDate" class="form-control" id="dueDate" type="date"/>
+                            <label for="dueDate">Due Date: <span class="required">*</span></label>
+                            <form:input path="dueDate" class="form-control" id="dueDate" type="date" required="true"/>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="contractType">Contract Type:</label>
-                            <form:select path="contractType" class="form-control" id="contractType">
+                            <label for="contractType">Contract Type: <span class="required">*</span></label>
+                            <form:select path="contractType" class="form-control" id="contractType" required="true">
                                 <form:options items="${contractTypes}"/>
                             </form:select>
                         </div>
                         <div class="form-group">
-                            <label for="level">Level:</label>
-                            <form:select path="level" class="form-control" id="level">
+                            <label for="level">Level: <span class="required">*</span></label>
+                            <form:select path="level" class="form-control" id="level"  required="true">
                                 <form:options items="${levels}"/>
                             </form:select>
                         </div>
                         <div class="form-group">
-                            <label for="department">Department:</label>
-                            <form:select path="department" class="form-control" id="department">
+                            <label for="department">Department:<span class="required">*</span></label>
+                            <form:select path="department" class="form-control" id="department"  required="true">
                                 <form:options items="${departments}"/>
                             </form:select>
                         </div>
                         <div class="form-group">
-                            <label for="recruiter">Recruiter:</label>
+                            <label for="recruiter">Recruiter:<span class="required">*</span></label>
                             <form:select path="recruiter" class="form-control" id="recruiter" required="true">
                                 <form:option value="" label="Select Recruiter"/>
-                                <form:options items="${recruiters}" itemValue="userId" itemLabel="fullNameWithAccountName"/>
+                                <form:options items="${recruiters}" itemValue="userId"
+                                              itemLabel="fullNameWithAccountName"/>
                             </form:select>
                         </div>
                         <div class="form-group">
-                            <label for="basicSalary">Basic Salary:</label>
-                            <form:input path="basicSalary" class="form-control" id="basicSalary"/>
+                            <label for="basicSalary">Basic Salary:<span class="required">*</span></label>
+                            <form:input path="basicSalary" class="form-control" id="basicSalary"  required="true"/>
                         </div>
                         <div class="form-group">
-                            <label for="status">Status:</label>
-                            <form:select path="status" class="form-control" id="status">
+                            <label for="status">Status:<span class="required">*</span></label>
+                            <form:select path="status" class="form-control" id="status"  required="true">
                                 <form:options items="${statuses}"/>
                             </form:select>
                         </div>
                         <div class="form-group">
                             <label for="note">Note:</label>
-                            <form:textarea class="form-control" path="note" id="note" maxlength="500" rows="4" cols="50"/>
+                            <form:textarea class="form-control" path="note" id="note" maxlength="500" rows="4"
+                                           cols="50"/>
                         </div>
                     </div>
                 </div>

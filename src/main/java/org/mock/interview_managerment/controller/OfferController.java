@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+//import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -64,11 +65,45 @@ public class OfferController {
         return "offers/index";
     }
 
-
     @GetMapping("/delete/{id}")
     public String deleteOffer(@PathVariable Long id) {
         offerService.deleteOffer(id);
         return "redirect:/offers";
+    }
+
+    @PostMapping("/cancel/{id}")
+////    @Secured({"RECRUITER", "MANAGER", "ADMIN"})
+    public String cancelOffer(@PathVariable Long id) {
+        offerService.cancelOffer(id);
+        return "redirect:/offers"; // redirect to offer list
+    }
+
+    @PostMapping("/approve/{id}")
+//    @Secured({"MANAGER", "ADMIN"})
+    public String approveOffer(@PathVariable Long id) {
+        offerService.approveOffer(id);
+        return "redirect:/offers"; // redirect to offer list
+    }
+
+    @PostMapping("/reject/{id}")
+//    @Secured({"MANAGER", "ADMIN"})
+    public String rejectOffer(@PathVariable Long id) {
+        offerService.rejectOffer(id);
+        return "redirect:/offers"; // redirect to offer list
+    }
+
+    @PostMapping("/mark-asSent/{id}")
+//    @Secured({"RECRUITER", "MANAGER", "ADMIN"})
+    public String markAsSent(@PathVariable Long id) {
+        offerService.markAsSent(id);
+        return "redirect:/offers"; // redirect to offer list
+    }
+
+    @PostMapping("/decline/{id}")
+//    @Secured({"RECRUITER", "MANAGER", "ADMIN"})
+    public String declineOffer(@PathVariable Long id) {
+        offerService.declineOffer(id);
+        return "redirect:/offers"; // redirect to offer list
     }
 
     @InitBinder

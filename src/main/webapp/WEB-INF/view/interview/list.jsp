@@ -59,7 +59,7 @@
                                     <tr>
                                         <td>${interview.interviewId}</td>
                                         <td>${interview.title}</td>
-                                        <td>${interview.candidate.fullName}</td>
+                                        <td>${interview.candidate.name}</td>
                                         <td>
                                             <c:forEach var="scheduledInterview" items="${interview.scheduledInterviews}">
                                                 ${scheduledInterview.interviewer.username}

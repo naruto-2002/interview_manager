@@ -91,7 +91,7 @@
                                     <tbody>
                                     <c:forEach items="${offerPage.content}" var="offer">
                                         <tr class="gradeA odd" role="row">
-                                            <td class="text-center">${offer.candidate.fullName}</td>
+                                            <td class="text-center">${offer.candidate.name}</td>
                                             <td class="text-center">${offer.candidate.email}</td>
                                             <td class="text-center">${offer.contractType}</td>
                                             <td class="text-center">${offer.department}</td>

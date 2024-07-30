@@ -39,7 +39,7 @@ public class Interview {
     private StatusEnum status;
 
     @ManyToOne
-    @JoinColumn(name = "recruiter_id") // Đảm bảo tên cột đúng trong bảng cơ sở dữ liệu
+    @JoinColumn(name = "recuriter_id")
     private User recruiter;
 
     @ManyToOne
@@ -51,11 +51,12 @@ public class Interview {
     private Candidate candidate;
 
     @OneToMany(mappedBy = "interview", cascade = CascadeType.ALL)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private List<ScheduledInterview> scheduledInterviews = new ArrayList<>();
+    @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
+    @ToString.Exclude // Không sử dụng trong toString()
+    private List<ScheduledInterview> scheduledInterviews;
 
-    @Transient
+    @Transient // Chú thích này để JPA không lưu trữ trường này vào cơ sở dữ liệu
     private List<Long> selectedInterviewerIds = new ArrayList<>();
+
 
 }

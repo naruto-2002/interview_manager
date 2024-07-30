@@ -100,7 +100,7 @@ public class CandidateController {
         model.addAttribute("candidate", candidate);
         List<User> users= userService.findByRoleforCandidate();
         model.addAttribute("recruiters",users);
-        return "/Candidate_view/add-candidate";
+        return "Candidate_view/add-candidate";
     }
 
     @PostMapping("/candidate/addCandidate")
@@ -109,31 +109,30 @@ public class CandidateController {
             System.out.println(bindingResult.getAllErrors());
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("message", "Failed to created candidate");
-            return "/Candidate_view/add-candidate";
+            return "Candidate_view/add-candidate";
         }
         try {
             candidateService.create(candidateCreateDto);
         }catch (Exception e){
             redirectAttributes.addAttribute("message", "Failed to created candidate");
-            return "/Candidate_view/add-candidate";
+            return "Candidate_view/add-candidate";
         }
         redirectAttributes.addFlashAttribute("message2", "Successfully created candidate");
         return "redirect:/candidate";
     }
 
     @GetMapping("/candidate/candidateDetail")
-
     public String viewDetail(@RequestParam("id") Long id, Model model) {
         Candidate candidate = candidateService.getById(id).getBody();
         model.addAttribute("candidate", candidate);
-        return "/Candidate_view/candidate-details";
+        return "Candidate_view/candidate-details";
     }
 
     @GetMapping("/candidate/updateForward")
     public String updateForward(@RequestParam("id") Long id, Model model) {
         Candidate candidate = candidateService.getById(id).getBody();
         model.addAttribute("candidate", candidate);
-        return "/Candidate_view/update-candidate";
+        return "Candidate_view/update-candidate";
     }
 
     @PostMapping("/candidate/updateCandidate")

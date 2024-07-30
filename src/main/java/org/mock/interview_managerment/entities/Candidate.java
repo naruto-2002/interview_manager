@@ -59,6 +59,4 @@ public class Candidate {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-
 }

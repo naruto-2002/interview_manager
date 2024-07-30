@@ -20,15 +20,14 @@
           href="assets\lib\datatables\datatables.net-bs4\css\dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css"
           href="assets\lib\datatables\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="assets\css\app.css" type="text/css">
-    <link rel="stylesheet" href="assets\css\popup.css" type="text/css">
+    <link rel="stylesheet" href="\css\app.css" type="text/css">
+    <link rel="stylesheet" href="\css\popup.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 
 <body>
-<div class="be-wrapper be-fixed-sidebar">
-
-</div>
+<jsp:include page="../layout/header.jsp"/>
+<jsp:include page="../layout/left-sidebar.jsp"/>
 <% String alertMessage = (String) request.getAttribute("message"); %>
 <% if (alertMessage != null) { %>
 <div class="alert alert-info text-center" role="alert"><%= alertMessage %></div>

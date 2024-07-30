@@ -17,8 +17,8 @@
           href="assets\lib\datatables\datatables.net-bs4\css\dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css"
           href="assets\lib\datatables\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="assets\css\app.css" type="text/css">
-    <link rel="stylesheet" href="assets\css\virtual-select.min.css" type="text/css">
+    <link rel="stylesheet" href="\css\app.css" type="text/css">
+    <link rel="stylesheet" href="\css\virtual-select.min.css" type="text/css">
 </head>
 <body>
 <div class="be-wrapper be-fixed-sidebar">

@@ -18,13 +18,13 @@
     <title>Beagle</title>
     <link rel="stylesheet" type="text/css" href="assets\lib\perfect-scrollbar\css\perfect-scrollbar.css">
     <link rel="stylesheet" type="text/css"
-          href="assets\lib\material-design-icons\css\material-design-iconic-font.min.css">
+          href="\lib\material-design-icons\css\material-design-iconic-font.min.css">
     <link rel="stylesheet" type="text/css"
-          href="assets\lib\datatables\datatables.net-bs4\css\dataTables.bootstrap4.css">
+          href="\lib\datatables\datatables.net-bs4\css\dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css"
-          href="assets\lib\datatables\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="assets\css\app.css" type="text/css">
-    <link rel="stylesheet" href="assets\css\virtual-select.min.css" type="text/css">
+          href="\lib\datatables\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="\css\app.css" type="text/css">
+    <link rel="stylesheet" href="\css\virtual-select.min.css" type="text/css">
     <style>
         .vscomp-toggle-button {
             box-shadow: none;
@@ -34,12 +34,8 @@
 </head>
 
 <body>
-<div class="be-wrapper be-fixed-sidebar">
-
-</div>
-
-<div class="be-left-sidebar">
-</div>
+<jsp:include page="../layout/header.jsp"/>
+<jsp:include page="../layout/left-sidebar.jsp"/>
 <div class="be-content">
     <div class="container">
         <h1>User Registration</h1>

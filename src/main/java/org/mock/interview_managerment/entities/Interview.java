@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.mock.interview_managerment.enums.ResultEnum;
 import org.mock.interview_managerment.enums.StatusEnum;
-import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -37,7 +36,7 @@ public class Interview {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private StatusInterviewEnum status;
+    private StatusEnum status;
 
     @ManyToOne
     @JoinColumn(name = "recruiter_id") // Đảm bảo tên cột đúng trong bảng cơ sở dữ liệu

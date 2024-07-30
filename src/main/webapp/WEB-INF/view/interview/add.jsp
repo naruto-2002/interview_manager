@@ -49,10 +49,10 @@
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Candidate name</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
-                                                    <form:select class="select2" id="candidate" path="candidate.candidateId" >
+                                                    <form:select class="select2" id="candidate" path="candidate.id" >
                                                         <option value="" disabled selected>Select a candidate</option>
                                                         <c:forEach var="candidate" items="${candidates}">
-                                                            <form:option value="${candidate.candidateId}">${candidate.fullName}</form:option>
+                                                            <form:option value="${candidate.id}">${candidate.name}</form:option>
                                                         </c:forEach>
                                                     </form:select>
                                                 </div>

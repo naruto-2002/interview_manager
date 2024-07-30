@@ -57,7 +57,7 @@
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" >Candidate name:</label>
                                                 <div class="col-12 col-sm-8 col-lg-6 text-sm-left col-form-label">
-                                                    <span>${interview.candidate.fullName}</span>
+                                                    <span>${interview.candidate.name}</span>
                                                 </div>
                                             </div>
                                             <div class="form-group row">

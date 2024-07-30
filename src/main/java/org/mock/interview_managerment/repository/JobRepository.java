@@ -16,11 +16,6 @@ import org.springframework.stereotype.Repository;
 public interface JobRepository extends JpaRepository<Job, Long> {
     List<Job> findAll();
 
-    @Query("SELECT j FROM Job j WHERE j.jobId = :jobId")
-    Job findByJobId(long jobId);
-    
-
-
     @Query("SELECT j FROM Job j WHERE "
             + "(j.title LIKE %:keyword% OR j.description LIKE %:keyword% OR "
             + "j.requiredSkills LIKE %:keyword% OR j.level LIKE %:keyword% OR "

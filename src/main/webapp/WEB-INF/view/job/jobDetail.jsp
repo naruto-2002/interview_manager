@@ -101,8 +101,8 @@
                     </div>
                     <hr>
                     <div class="btn-container">
-                        <a href="/job/joblist" class="btn btn-success">Back</a>
-                        <a href="/job/joblist/update/${jobdetail.jobId}" class="btn btn-warning">Edit</a>
+                        <a href="/job" class="btn btn-success">Back</a>
+                        <a href="/job/update/${jobdetail.jobId}" class="btn btn-warning">Edit</a>
                     </div>
                 </div>
 

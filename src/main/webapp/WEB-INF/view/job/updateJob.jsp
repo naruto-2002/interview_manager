@@ -19,12 +19,12 @@
                     <h1>Job</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/job/joblist">Job list</a></li>
+                            <li class="breadcrumb-item"><a href="/job">Job list</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Update job</li>
                         </ol>
                     </nav>
                     <h2>Update job</h2>
-                    <form:form action="/job/joblist/update" method="post" modelAttribute="update">
+                    <form:form action="/job/update" method="post" modelAttribute="update">
                         <div class="mb-3">
                             <label class="form-label">Id: </label>
                             <form:input type="text" class="form-control" path="jobId" name="id" readonly="true" />
@@ -129,7 +129,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <a href="/job/joblist" class="btn btn-secondary">Cancel</a>
+                        <a href="/job" class="btn btn-secondary">Cancel</a>
                         <hr>
 
                     </form:form>

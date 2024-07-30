@@ -29,7 +29,7 @@
 <body>
     <div class="container">
         <h2 class="mb-4 text-center">Upload Excel File</h2>
-        <form action="/job/joblist/import" method="POST" enctype="multipart/form-data">
+        <form action="/job/import" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" id="file" name="file" required>

@@ -1,9 +1,10 @@
 package org.mock.interview_managerment.controller.admin;
 
 import org.mock.interview_managerment.entities.Job;
+import org.mock.interview_managerment.entities.JobService;
 import org.mock.interview_managerment.services.JobFileParser;
-import org.mock.interview_managerment.services.JobService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,13 +29,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class JobController {
-    private final JobService jobService;
+    @Autowired
+    private JobService jobService;
 
-    public JobController(JobService jobService) {
-        this.jobService = jobService;
-    }
-
-    @GetMapping("/job/joblist")
+    @GetMapping("/job")
     public String listJobs(Model model,
             @RequestParam("p") Optional<Integer> p,
             @RequestParam(value = "keyword", required = false) String keyword,
@@ -53,12 +51,12 @@ public class JobController {
         return "job/jobList";
     }
 
-    @GetMapping("/job/joblist/import")
+    @GetMapping("/job/import")
     public String showImportPage() {
         return "job/import"; // Tên của trang HTML để tải lên file
     }
 
-    @PostMapping("/job/joblist/import")
+    @PostMapping("/job/import")
     public String handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
             JobFileParser parser = new JobFileParser();
@@ -69,16 +67,16 @@ public class JobController {
             e.printStackTrace();
             System.out.println("lỗi controller: " + e.getMessage());
         }
-        return "redirect:/job/joblist";
+        return "redirect:/job";
     }
 
-    @GetMapping("/job/joblist/create")
+    @GetMapping("/job/create")
     public String showCreateJobForm(Model model) {
         model.addAttribute("job", new Job());
         return "/job/createJob";
     }
 
-    @PostMapping("/job/joblist/create")
+    @PostMapping("/job/create")
     public String createJob(
             @RequestParam String title,
             @RequestParam String description,
@@ -120,7 +118,7 @@ public class JobController {
             jobService.saveJob(job);
 
             // Redirect to job list page or success page
-            return "redirect:/job/joblist";
+            return "redirect:/job";
 
         } catch (ParseException e) {
             // Handle parse exception
@@ -129,7 +127,7 @@ public class JobController {
         }
     }
 
-    @RequestMapping("/job/joblist/detail/{id}")
+    @RequestMapping("/job/detail/{id}")
     public String getJobrDetailPage(Model model, @PathVariable long id) {
         System.out.println("check path id = " + id);
         Job jobdetail = this.jobService.getJobById(id);
@@ -137,13 +135,13 @@ public class JobController {
         return "job/jobDetail";
     }
 
-    @RequestMapping("/job/joblist/delete/{id}")
+    @RequestMapping("/job/delete/{id}")
     public String getDeleteJob(Model model, @PathVariable long id) {
         jobService.deleteJobById(id);
-        return "redirect:/job/joblist";
+        return "redirect:/job";
     }
 
-    @RequestMapping("/job/joblist/update/{id}")
+    @RequestMapping("/job/update/{id}")
     public String getJobUpdatePage(Model model, @PathVariable long id) {
         Job updateJob = this.jobService.getJobById(id);
         System.out.println(updateJob);
@@ -151,7 +149,7 @@ public class JobController {
         return "job/updateJob";
     }
 
-    @PostMapping("/job/joblist/update")
+    @PostMapping("/job/update")
     public String updateJob(@RequestParam Long id,
             @RequestParam String title,
             @RequestParam String description,
@@ -192,7 +190,7 @@ public class JobController {
             jobService.saveJob(job);
 
             // Redirect to job list page or success page
-            return "redirect:/job/joblist";
+            return "redirect:/job";
 
         } catch (ParseException e) {
             // Handle parse exception

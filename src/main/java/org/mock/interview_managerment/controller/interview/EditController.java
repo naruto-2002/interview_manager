@@ -85,7 +85,7 @@ public class EditController {
             scheduledInterviewId.setInterviewerId(selectedInterviewerId);
 
             ScheduledInterview scheduledInterview = new ScheduledInterview();
-            scheduledInterview.setId(scheduledInterviewId);
+            scheduledInterview.setScheduledInterviewId(scheduledInterview.getScheduledInterviewId());
             scheduledInterview.setInterview(newInterview);
             scheduledInterview.setInterviewer(userService.getByUserId(selectedInterviewerId));
 

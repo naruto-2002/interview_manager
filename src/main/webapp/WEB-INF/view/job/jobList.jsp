@@ -23,13 +23,13 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <h3>Job List</h3>
                                 <div>
-                                    <a href="/job/joblist/import" class="btn btn-primary">Import</a>
+                                    <a href="/job/import" class="btn btn-primary">Import</a>
 
-                                    <a href="/job/joblist/create" class="btn btn-primary">Create a user</a>
+                                    <a href="/job/create" class="btn btn-primary">Create a user</a>
                                 </div>
                             </div>
                             <div class="container mt-2">
-                                <form action="/job/joblist" method="GET" style="display: flex; align-items: center;">
+                                <form action="/job" method="GET" style="display: flex; align-items: center;">
                                     <div class="search-box" style="flex: 0 0 50%; margin-right: 10px;">
                                         <input class="form-control" type="search" name="keyword" placeholder="Search"
                                             aria-label="Search" style="width: 100%;">
@@ -73,11 +73,11 @@
                                             <td>${job.level}</td>
                                             <td>${job.status}</td>
                                             <td>
-                                                <a href="/job/joblist/detail/${job.jobId}"
+                                                <a href="/job/detail/${job.jobId}"
                                                     class="btn btn-success">View</a>
-                                                <a href="/job/joblist/update/${job.jobId}"
+                                                <a href="/job/update/${job.jobId}"
                                                     class="btn btn-warning mx-2">Update</a>
-                                                <a href="/job/joblist/delete/${job.jobId}"
+                                                <a href="/job/delete/${job.jobId}"
                                                     class="btn btn-danger">Delete</a>
                                             </td>
                                         </tr>
@@ -86,7 +86,7 @@
                             </table>
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="/job/joblist?p=0">First</a></li>
+                                    <li class="page-item"><a class="page-link" href="/job?p=0">First</a></li>
                                     <li class="page-item">
                                         <c:choose>
                                             <c:when test="${listjobs.number == 0}">
@@ -95,7 +95,7 @@
                                             </c:when>
                                             <c:otherwise>
                                                 <a class="page-link"
-                                                    href="/job/joblist?p=${listjobs.number - 1}">Previous</a>
+                                                    href="/job?p=${listjobs.number - 1}">Previous</a>
                                             </c:otherwise>
                                         </c:choose>
                                     </li>
@@ -107,12 +107,12 @@
                                             </c:when>
                                             <c:otherwise>
                                                 <a class="page-link"
-                                                    href="/job/joblist?p=${listjobs.number + 1}">Next</a>
+                                                    href="/job?p=${listjobs.number + 1}">Next</a>
                                             </c:otherwise>
                                         </c:choose>
                                     </li>
                                     <li class="page-item"><a class="page-link"
-                                            href="/job/joblist?p=${listjobs.totalPages - 1}">Last</a></li>
+                                            href="/job?p=${listjobs.totalPages - 1}">Last</a></li>
                                 </ul>
                             </nav>
 

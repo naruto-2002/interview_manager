@@ -6,6 +6,8 @@ import org.mock.interview_managerment.dto.response.UserListDto;
 import org.mock.interview_managerment.dto.response.UserUpdateDto;
 import org.mock.interview_managerment.entities.User;
 import org.mock.interview_managerment.enums.StatusEnum;
+import org.mock.interview_managerment.enums.StatusInterviewEnum;
+import org.mock.interview_managerment.enums.StatusUserEnum;
 import org.mock.interview_managerment.mapper.UserMapper;
 import org.mock.interview_managerment.repository.RoleRepository;
 import org.mock.interview_managerment.repository.UserRepository;
@@ -72,7 +74,7 @@ public class UserService {
     public void toggleStatus(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         if (user != null) {
-            user.setStatus(user.getStatus().name().equals("ACTIVE") ? StatusEnum.INACTIVE : StatusEnum.ACTIVE);
+            user.setStatus(user.getStatus().name().equals("ACTIVE") ? StatusUserEnum.DEACTIVE : StatusUserEnum.ACTIVE);
             userRepository.save(user);
         }
     }

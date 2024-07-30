@@ -3,7 +3,7 @@ package org.mock.interview_managerment.controller;
 
 import jakarta.validation.Valid;
 
-import org.mock.interview_managerment.DTO.request.CandidateCreateDto;
+import org.mock.interview_managerment.dto.request.CandidateCreateDto;
 import org.mock.interview_managerment.entities.Candidate;
 import org.mock.interview_managerment.entities.User;
 import org.mock.interview_managerment.enums.GenderEnum;

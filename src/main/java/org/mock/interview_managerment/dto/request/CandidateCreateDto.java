@@ -1,4 +1,4 @@
-package org.mock.interview_managerment.DTO.request;
+package org.mock.interview_managerment.dto.request;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.validation.constraints.*;

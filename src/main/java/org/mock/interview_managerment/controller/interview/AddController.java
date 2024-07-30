@@ -5,6 +5,7 @@ import org.mock.interview_managerment.entities.*;
 import org.mock.interview_managerment.entities.pk.ScheduledInterviewId;
 import org.mock.interview_managerment.enums.ResultEnum;
 import org.mock.interview_managerment.enums.StatusEnum;
+import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.mock.interview_managerment.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,7 +45,7 @@ public class AddController {
     @PostMapping("/interview/add")
     public String addNewInterview(@ModelAttribute("newInterview") Interview newInterview) {
         newInterview.setResult(ResultEnum.NA);
-        newInterview.setStatus(StatusEnum.NEW);
+        newInterview.setStatus(StatusInterviewEnum.NEW);
         Interview interview = interviewService.handleSaveInterview(newInterview);
 
         List<Long> selectedInterviewerIds = newInterview.getSelectedInterviewerIds();
@@ -54,7 +55,7 @@ public class AddController {
             scheduledInterviewId.setInterviewerId(selectedInterviewerId);
 
             ScheduledInterview scheduledInterview = new ScheduledInterview();
-            scheduledInterview.setId(scheduledInterviewId);
+            scheduledInterview.setScheduledInterviewId(scheduledInterview.getScheduledInterviewId());
             scheduledInterview.setInterview(interview);
             scheduledInterview.setInterviewer(userService.getByUserId(selectedInterviewerId));
 

@@ -15,12 +15,12 @@
         <h1>Job</h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/job/joblist">Job list</a></li>
+                <li class="breadcrumb-item"><a href="/job">Job list</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Create job</li>
             </ol>
         </nav>
         <h2>Create job</h2>
-        <form action="/job/joblist/create" method="post">
+        <form action="/job/create" method="post">
             <div class="form-group">
                 <label for="title">Job title</label>
                 <input type="text" class="form-control" id="title" name="title" required>
@@ -117,7 +117,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="/job/joblist" class="btn btn-secondary">Cancel</a>
+            <a href="/job" class="btn btn-secondary">Cancel</a>
             <hr>
         </form>
     </div>

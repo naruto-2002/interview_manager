@@ -1,6 +1,6 @@
 package org.mock.interview_managerment.services;
 
-import org.mock.interview_managerment.DTO.request.CandidateCreateDto;
+import org.mock.interview_managerment.dto.request.CandidateCreateDto;
 import org.mock.interview_managerment.entities.Candidate;
 import org.mock.interview_managerment.enums.StatusCandidateEnum;
 import org.mock.interview_managerment.mapper.CandidateMapper;

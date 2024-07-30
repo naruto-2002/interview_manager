@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.mock.interview_managerment.enums.DepartmentEnum;
 import org.mock.interview_managerment.enums.GenderEnum;
 import org.mock.interview_managerment.enums.StatusEnum;
+import org.mock.interview_managerment.enums.StatusUserEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -43,7 +44,7 @@ public class User {
     private GenderEnum gender;
 
     @Enumerated(EnumType.STRING)
-    private StatusEnum status;
+    private StatusUserEnum status;
 
     @ManyToOne
     @JoinColumn(name = "role_id")

@@ -1,7 +1,7 @@
 package org.mock.interview_managerment.mapper;
 
 
-import org.mock.interview_managerment.DTO.request.CandidateCreateDto;
+import org.mock.interview_managerment.dto.request.CandidateCreateDto;
 import org.mock.interview_managerment.entities.Candidate;
 
 public class CandidateMapper {

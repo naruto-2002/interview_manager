@@ -36,6 +36,7 @@ public class Candidate {
     private String cvAttachmentLink;
     @ElementCollection
     private List<String> skills;
+
     private String recruiter;
     private int yearsExperience;
     @Enumerated(EnumType.STRING)
@@ -44,8 +45,10 @@ public class Candidate {
     private Date dob;
     private String note;
     private String address;
+
     @Enumerated(EnumType.STRING)
     private GenderEnum gender;
+
     @CreatedDate()
     @Column(nullable = false, updatable = false)
     private LocalDate createdAt;

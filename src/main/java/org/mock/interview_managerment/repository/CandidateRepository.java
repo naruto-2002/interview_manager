@@ -20,7 +20,7 @@ public interface CandidateRepository extends JpaRepository<Candidate,Long> {
     public Page<Candidate> findByStatus(StatusCandidateEnum status, Pageable pageable);
     List<Candidate> findAll();
 
-    @Query("SELECT c FROM Candidate c WHERE c.candidateId = :candidateId")
+    @Query("SELECT c FROM Candidate c WHERE c.id = :candidateId")
     Candidate findByCandidateId(long candidateId);
 
 }

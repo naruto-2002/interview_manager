@@ -28,14 +28,13 @@ import java.util.List;
 
 @Controller()
 public class CandidateController {
-    private final CandidateRepository candidateRepository;
-    private final CandidateService candidateService;
 
     @Autowired
-    public CandidateController(CandidateService candidateService, CandidateRepository candidateRepository) {
-        this.candidateService = candidateService;
-        this.candidateRepository = candidateRepository;
-    }
+    private CandidateRepository candidateRepository;
+
+    @Autowired
+    private CandidateService candidateService;
+
 
     @GetMapping("/candidate")
     public String getAllCandidate(Model model, @RequestParam(value = "page", defaultValue = "0") int page,RedirectAttributes redirectAttributes) {

@@ -34,9 +34,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="candidate">Candidate:</label>
-                            <form:select path="candidate.candidateId" class="form-control" id="candidate" required="true">
+                            <form:select path="candidate.id" class="form-control" id="candidate" required="true">
                                 <option value="" selected>Select a candidate</option>
-                                <form:options items="${candidates}" itemValue="candidateId" itemLabel="fullName"/>
+                                <form:options items="${candidates}" itemValue="id" itemLabel="fullName"/>
                             </form:select>
                         </div>
                         <div class="form-group">

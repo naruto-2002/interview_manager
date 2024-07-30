@@ -45,11 +45,11 @@ public class SecurityConfiguration {
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
                         .requestMatchers("/","/reset-password" ,"/forgot-password" ,"/login", "/lib/**", "/css/**", "/js/**", "/img/**").permitAll()
 
-                        .requestMatchers("/user/**").hasRole("ADMIN")
-                        .requestMatchers("/candidate/**").hasAnyRole("ADMIN", "RECRUITER")
-                        .requestMatchers("/offer/**").hasAnyRole("ADMIN", "RECRUITER", "MANAGER")
-                        .requestMatchers("/job/**").hasAnyRole("ADMIN", "RECRUITER")
-                        .requestMatchers("/interview/**").hasAnyRole("ADMIN", "RECRUITER", "INTERVIEWER")
+//                        .requestMatchers("/user/**").hasRole("ADMIN")
+////                        .requestMatchers("/candidate/**").hasAnyRole("ADMIN", "RECRUITER")
+//                        .requestMatchers("/offer/**").hasAnyRole("ADMIN", "RECRUITER", "MANAGER")
+//                        .requestMatchers("/job/**").hasAnyRole("ADMIN", "RECRUITER")
+//                        .requestMatchers("/interview/**").hasAnyRole("ADMIN", "RECRUITER", "INTERVIEWER")
 
                         .anyRequest().authenticated())
 

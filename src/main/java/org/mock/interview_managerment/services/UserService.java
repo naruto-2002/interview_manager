@@ -125,5 +125,13 @@ public class UserService {
     public User getByUserId(long userId) {
         return userRepository.findByUserId(userId);
     }
+    public List<User> findByRoleforCandidate() {
+        List<User> list= this.userRepository.findByRole_RoleId(1L);
+        List<User> list2= this.userRepository.findByRole_RoleId(2L);
+        List<User> list3= this.userRepository.findByRole_RoleId(3L);
+        list.addAll(list2);
+        list.addAll(list3);
+        return list;
+    }
 
 }

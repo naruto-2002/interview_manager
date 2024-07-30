@@ -4,7 +4,7 @@ import jakarta.persistence.ElementCollection;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
-
+import org.mock.interview_managerment.entities.User;
 import org.mock.interview_managerment.enums.GenderEnum;
 import org.mock.interview_managerment.enums.HighestLevelEnum;
 import org.mock.interview_managerment.enums.PositionEnum;
@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
+
 @Getter
 @Setter
 public class CandidateCreateDto {
@@ -39,7 +40,6 @@ public class CandidateCreateDto {
     @ElementCollection
     private List<@NotNull(message = "Skill cannot be blank") String> skills;
 
-    private String recruiter;
 
     @Positive(message = "Years of experience must be positive")
     private int yearsExperience;
@@ -59,4 +59,6 @@ public class CandidateCreateDto {
 
     @NotNull(message = "Gender cannot be null")
     private GenderEnum gender;
+
+    private User user;
 }

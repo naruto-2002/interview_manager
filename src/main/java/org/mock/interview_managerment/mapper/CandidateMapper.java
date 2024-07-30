@@ -17,9 +17,9 @@ public class CandidateMapper {
         candidate.setCurrentPosition(candidateCreateDto.getCurrentPosition());
         candidate.setCvAttachmentLink(candidateCreateDto.getCvAttachmentLink());
         candidate.setHighestLevel(candidateCreateDto.getHighestLevel());
-        candidate.setCvAttachmentLink(candidateCreateDto.getCvAttachmentLink());
         candidate.setSkills(candidateCreateDto.getSkills());
         candidate.setYearsExperience(candidateCreateDto.getYearsExperience());
+        candidate.setUser(candidateCreateDto.getUser());
         return candidate;
     }
 }

@@ -1,8 +1,12 @@
 package org.mock.interview_managerment.enums;
 
 public enum HighestLevelEnum {
-    HIGH_SCHOOL,
-    BACHELORS_DEGREE,
-    MASTERS_DEGREE,
-    PHD
+    Highschool ("High school"),
+    BachelorDegree("Bachelor’s Degree"),
+    MasterDegreePhD("Master Degree, PhD");
+
+    HighestLevelEnum(String s) {
+    }
+
 }
+

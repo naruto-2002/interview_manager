@@ -2,13 +2,14 @@ package org.mock.interview_managerment.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.mock.interview_managerment.enums.*;
+import org.mock.interview_managerment.enums.GenderEnum;
+import org.mock.interview_managerment.enums.HighestLevelEnum;
+import org.mock.interview_managerment.enums.PositionEnum;
+import org.mock.interview_managerment.enums.StatusCandidateEnum;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -16,39 +17,38 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "candidates")
-@EntityListeners(AuditingEntityListener.class)
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Candidate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String email;
-    private String phone;
-    @Enumerated(EnumType.STRING)
-    private StatusCandidateEnum status;
-    @Enumerated(EnumType.STRING)
-    private PositionEnum currentPosition;
+    private Date dob;
+    private Integer yearsExperience;
+    private String address;
     private String cvAttachmentLink;
+    private String email;
+    private String name;
+    private String note;
+    private String phone;
     @ElementCollection
     private List<String> skills;
-
-    private String recruiter;
-    private int yearsExperience;
-    @Enumerated(EnumType.STRING)
-    private HighestLevelEnum highestLevel;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dob;
-    private String note;
-    private String address;
 
     @Enumerated(EnumType.STRING)
     private GenderEnum gender;
 
+    @Enumerated(EnumType.STRING)
+    private HighestLevelEnum highestLevel;
+
+    @Enumerated(EnumType.STRING)
+    private PositionEnum currentPosition;
+
+    @Enumerated(EnumType.STRING)
+    private StatusCandidateEnum status;
     @CreatedDate()
     @Column(nullable = false, updatable = false)
     private LocalDate createdAt;
@@ -56,6 +56,9 @@ public class Candidate {
     @LastModifiedDate
     @Column(nullable = false)
     private LocalDate updatedAt;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
 }

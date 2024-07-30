@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.mock.interview_managerment.enums.StatusEnum;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 @Data
 @Entity
@@ -14,18 +17,24 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long jobId;
 
-    private Date endDate;
-    private Double salaryFrom;
-    private Date startDate;
-    private Double salaryTo;
-    private String benefits;
-    private String description;
-    private String levels;
-    private String location;
     private String title;
-    private String workingAddress;
+    private String description;
+    private String requiredSkills;
+    private String level;
+    private Timestamp startDate;
+    private Timestamp endDate;
+    private String location;
+    private String benefits;
+    private String status;
+    private String salaryFrom;
+    private String salaryTo;
 
-    @Enumerated(EnumType.STRING)
-    private StatusEnum status;
+    public LocalDate getStartDateAsLocalDate() {
+        return startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    public LocalDate getEndDateAsLocalDate() {
+        return endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
 
 }

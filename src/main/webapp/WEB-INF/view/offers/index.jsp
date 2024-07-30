@@ -124,7 +124,7 @@
                                                     <span aria-hidden="true">&laquo;</span>
                                                 </a>
                                             </li>
-                                            <c:forEach begin="0" end="${totalPages - 1}" var="i">
+                                            <c:forEach begin="0" end="${totalPages ==0 ? 0 :totalPages - 1}" var="i">
                                                 <li class="page-item ${currentPage == i ? 'active' : ''}">
                                                     <a class="page-link"
                                                        href="/offers?page=${i}&keyword=${keyword}&department=${department}&status=${status}">${i + 1}</a>

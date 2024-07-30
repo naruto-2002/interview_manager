@@ -17,8 +17,8 @@
 </head>
 <body>
 <div class="be-wrapper">
-    <%@include file="../lay_out/header.jsp"%>
-    <%@include file="../lay_out/menu.jsp"%>
+    <%@include file="../layout/header.jsp"%>
+    <%@include file="../layout/left-sidebar.jsp"%>
 
     <div class="be-content">
         <div class="page-head">

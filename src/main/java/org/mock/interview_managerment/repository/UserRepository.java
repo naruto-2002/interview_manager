@@ -30,7 +30,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     public User findByUserId(Long id);
 
-    public User findByUsername(String username);
+    public  Optional<User> findByUsername(String username);
 
     @Query("SELECT u FROM User u WHERE " +
             "LOWER(u.email) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
@@ -38,6 +38,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "LOWER(u.phoneNumber) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<User> search(@Param("keyword") String keyword);
 
+    @Query("SELECT u FROM User u WHERE u.role.roleName = :roleName")
+    List<User> findByRoleName(String roleName);
 
     @Query("SELECT u FROM User u WHERE u.role.roleName = 'MANAGER'")
     List<User> findByRoleRoleName(String roleName);

@@ -1,0 +1,17 @@
+*{
+    color: black;
+}
+.bs-grid-block {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+.card {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.btn-width {
+    width: 108px;
+}

@@ -2,13 +2,15 @@ package org.mock.interview_managerment.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.mock.interview_managerment.enums.ResultEnum;
 import org.mock.interview_managerment.enums.StatusEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
-
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -37,7 +39,7 @@ public class Interview {
     private StatusEnum status;
 
     @ManyToOne
-    @JoinColumn(name = "recuriter_id")
+    @JoinColumn(name = "recruiter_id") // Đảm bảo tên cột đúng trong bảng cơ sở dữ liệu
     private User recruiter;
 
     @ManyToOne
@@ -48,7 +50,12 @@ public class Interview {
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "interview")
-    private Set<ScheduledInterview> scheduleInterviews;
+    @OneToMany(mappedBy = "interview", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<ScheduledInterview> scheduledInterviews = new ArrayList<>();
+
+    @Transient
+    private List<Long> selectedInterviewerIds = new ArrayList<>();
 
 }

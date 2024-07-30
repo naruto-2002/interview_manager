@@ -10,24 +10,6 @@
     <link rel="stylesheet" type="text/css"
           href="/lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
-    <script type="text/javascript">
-        function updateInterviewers() {
-            var selectedSchedule = document.getElementById("scheduledInterview").value;
-            var interviewers = document.getElementById("interviewers");
-
-            interviewers.innerHTML = "";
-
-            var schedules = ${scheduledInterviews};
-            for (var i = 0; i < schedules.length; i++) {
-                if (schedules[i].scheduledInterviewId == selectedSchedule) {
-                    var interviewer = schedules[i].interviewer;
-                    var li = document.createElement("li");
-                    li.innerHTML = interviewer.fullName;
-                    interviewers.appendChild(li);
-                }
-            }
-        }
-    </script>
 </head>
 <body>
 <jsp:include page="../layout/header.jsp"/>
@@ -71,14 +53,13 @@
                             </form:select>
                         </div>
                         <div class="form-group">
-                            <label for="scheduledInterview">Interview Schedule:</label>
-                            <form:select path="scheduledInterview.scheduledInterviewId" class="form-control"
-                                         id="scheduledInterview"
-                                         required="true"
-                                         onchange="updateInterviewers()">
-                                <form:option value="" label="Select Interview Schedule"/>
-                                <form:options items="${scheduledInterviews}" itemValue="scheduledInterviewId"
-                                              itemLabel="interview.title"/>
+                            <label for="interview">Interview Schedule:</label>
+                            <form:select path="interview.interviewId" class="form-control"
+                                         id="interview"
+                                         required="true">
+                                <form:option value="" label="Select Interview"/>
+                                <form:options items="${interviews}" itemValue="interviewId"
+                                              itemLabel="title"/>
                             </form:select>
                         </div>
                         <div class="form-group">

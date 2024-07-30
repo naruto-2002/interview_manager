@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,72 +31,68 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Candidate:</label>
+                        <label for="candidate">Candidate:</label>
                         <p>${offer.candidate.fullName}</p>
                     </div>
                     <div class="form-group">
-                        <label>Position:</label>
+                        <label for="position">Position:</label>
                         <p>${offer.position}</p>
                     </div>
                     <div class="form-group">
-                        <label>Approved by:</label>
+                        <label for="manager">Approved by:</label>
                         <p>${offer.approver.fullName}</p>
                     </div>
                     <div class="form-group">
-                        <label>Interview Schedule:</label>
-                        <p>${offer.scheduledInterview.interview.title}</p>
+                        <label for="interview">Interview Schedule:</label>
+                        <p>${offer.interview.title}</p>
                     </div>
                     <div class="form-group">
                         <label>Start Contract:</label>
-                        <p>${offer.startContract}</p>
+                        <p>From ${offer.startContract} To ${offer.endContract}</p>
                     </div>
                     <div class="form-group">
-                        <label>End Contract:</label>
-                        <p>${offer.endContract}</p>
-                    </div>
-                    <div class="form-group">
-                        <label>Due Date:</label>
+                        <label for="dueDate">Due Date:</label>
                         <p>${offer.dueDate}</p>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Contract Type:</label>
+                        <label for="contractType">Contract Type:</label>
                         <p>${offer.contractType}</p>
                     </div>
                     <div class="form-group">
-                        <label>Level:</label>
+                        <label for="level">Level:</label>
                         <p>${offer.level}</p>
                     </div>
                     <div class="form-group">
-                        <label>Department:</label>
+                        <label for="department">Department:</label>
                         <p>${offer.department}</p>
                     </div>
                     <div class="form-group">
-                        <label>Recruiter:</label>
+                        <label for="recruiter">Recruiter:</label>
                         <p>${offer.recruiter.fullNameWithAccountName}</p>
                     </div>
                     <div class="form-group">
-                        <label>Basic Salary:</label>
+                        <label for="basicSalary">Basic Salary:</label>
                         <p>${offer.basicSalary}</p>
                     </div>
                     <div class="form-group">
-                        <label>Status:</label>
+                        <label for="status">Status:</label>
                         <p>${offer.status}</p>
                     </div>
                     <div class="form-group">
-                        <label>Note:</label>
+                        <label for="note">Note:</label>
                         <p>${offer.note}</p>
                     </div>
                 </div>
             </div>
 
             <div class="row d-f justify-content-center">
-
-                <a href="${pageContext.request.contextPath}/offers/edit/${offer.offerId}"
-                   class="btn btn-info p-2 px-6 text-center">Edit Offer</a>
+                <a href="${pageContext.request.contextPath}/offers/edit/${offer.offerId}" class="btn btn-info p-2 px-6 text-center">Edit</a>
                 <span class="m-2"></span>
-                <button class="btn btn-secondary p-2 px-6 text-center" onclick="window.history.back();">Back</button>
+                <button type="button" class="btn btn-secondary p-2 px-6 text-center"
+                        onclick="window.history.back();">Back
+                </button>
             </div>
         </div>
     </div>

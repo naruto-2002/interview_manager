@@ -2,10 +2,7 @@ package org.mock.interview_managerment.controller;
 
 import org.mock.interview_managerment.entities.Offer;
 import org.mock.interview_managerment.enums.*;
-import org.mock.interview_managerment.services.CandidateService;
-import org.mock.interview_managerment.services.OfferService;
-import org.mock.interview_managerment.services.ScheduledInterviewService;
-import org.mock.interview_managerment.services.UserService;
+import org.mock.interview_managerment.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +27,7 @@ public class OfferController {
     @Autowired
     private UserService userService;
     @Autowired
-    private ScheduledInterviewService scheduledInterviewService;
+    private InterviewService interviewService;
 
     @GetMapping
     public String listOffers(Model model,
@@ -138,7 +135,7 @@ public class OfferController {
         model.addAttribute("positions", PositionEnum.values());
         model.addAttribute("statuses", OfferStatusEnum.values());
         model.addAttribute("candidates", candidateService.getAllActiveCandidates());
-        model.addAttribute("scheduledInterviews", scheduledInterviewService.getAllScheduledInterviews());
+        model.addAttribute("interviews", interviewService.getAllInterviews());
         model.addAttribute("managers", userService.getManagers());
         model.addAttribute("recruiters", userService.getRecruiters());
     }

@@ -48,11 +48,6 @@ public class Offer {
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
 
-
-    @ManyToOne
-    @JoinColumn(name = "scheduled_interview_id")
-    private ScheduledInterview scheduledInterview;
-
     @ManyToOne
     @JoinColumn(name = "recruiter_id")
     private User recruiter;

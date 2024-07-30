@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,7 +63,7 @@ public class UserService {
         user.setUsername(UserNameValid.genUserName(user.getFullName(), user.getUserId()));
 
         // send password to email
-//        sendEmailService.sendPasswordCreate(user.getEmail(), user.getUsername(), password);
+        sendEmailService.sendPasswordCreate(user.getEmail(), user.getUsername(), password);
 
         return userRepository.save(user);
     }
@@ -98,7 +99,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User getUserByUsername(String username) {
+    public Optional<User> getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -116,5 +117,13 @@ public class UserService {
         return userRepository.findByRoleRoleName("RECRUITER");
     }
 
+
+    public List<User> getUsersByRoleName(String roleName) {
+        return userRepository.findByRoleName(roleName);
+    }
+
+    public User getByUserId(long userId) {
+        return userRepository.findByUserId(userId);
+    }
 
 }

@@ -1,5 +1,5 @@
 package org.mock.interview_managerment.enums;
 
 public enum StatusEnum {
-    ACTIVE, INACTIVE
+    ACTIVE, INACTIVE, NEW, INTERVIEWED, INVITED, CANCELLED
 }

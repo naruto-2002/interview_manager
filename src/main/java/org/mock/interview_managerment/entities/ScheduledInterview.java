@@ -3,12 +3,12 @@ package org.mock.interview_managerment.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Set;
+import java.io.Serializable;
 
 @Data
 @Entity
 @Table(name = "scheduled_interviews")
-public class ScheduledInterview {
+public class ScheduledInterview implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,6 @@ public class ScheduledInterview {
     @ManyToOne
     @JoinColumn(name = "interview_id")
     private Interview interview;
-
 
     @ManyToOne
     @JoinColumn(name = "interviewer_id")

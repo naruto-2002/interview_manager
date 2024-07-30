@@ -42,18 +42,15 @@ public class SecurityConfiguration {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                                .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
-                                .anyRequest().permitAll()
-//                        .requestMatchers("/","/reset-password" ,"/forgot-password" ,"/login", "/lib/**", "/css/**", "/js/**", "/img/**").permitAll()
-//
-//                        .requestMatchers("/user/**").hasRole("ADMIN")
-//                        .requestMatchers("/candidate/**").hasAnyRole("ADMIN", "RECRUITER")
-//                        .requestMatchers("/offers/**").hasAnyRole("ADMIN", "RECRUITER", "MANAGER")
-//                        .requestMatchers("/job/**").hasAnyRole("ADMIN", "RECRUITER")
-//                        .requestMatchers("/interview/**").hasAnyRole("ADMIN", "RECRUITER", "INTERVIEWER")
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
+                        .requestMatchers("/","/reset-password" ,"/forgot-password" ,"/login", "/lib/**", "/css/**", "/js/**", "/img/**").permitAll()
 
-//                        .anyRequest().authenticated()
-                )
+                        .requestMatchers("/user/**").hasRole("ADMIN")
+                        .requestMatchers("/candidate/**").hasAnyRole("ADMIN", "RECRUITER")
+                        .requestMatchers("/offer/**").hasAnyRole("ADMIN", "RECRUITER", "MANAGER")
+                        .requestMatchers("/job/**").hasAnyRole("ADMIN", "RECRUITER")
+                        .requestMatchers("/interview/**").hasAnyRole("ADMIN", "RECRUITER", "INTERVIEWER")
+                        .anyRequest().authenticated())
 
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")

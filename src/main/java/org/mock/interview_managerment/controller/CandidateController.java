@@ -5,12 +5,14 @@ import jakarta.validation.Valid;
 
 import org.mock.interview_managerment.DTO.request.CandidateCreateDto;
 import org.mock.interview_managerment.entities.Candidate;
+import org.mock.interview_managerment.entities.User;
 import org.mock.interview_managerment.enums.GenderEnum;
 import org.mock.interview_managerment.enums.HighestLevelEnum;
 import org.mock.interview_managerment.enums.PositionEnum;
 import org.mock.interview_managerment.enums.StatusCandidateEnum;
 import org.mock.interview_managerment.repository.CandidateRepository;
 import org.mock.interview_managerment.services.CandidateService;
+import org.mock.interview_managerment.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,7 +20,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
@@ -28,13 +33,12 @@ import java.util.List;
 
 @Controller()
 public class CandidateController {
-
     @Autowired
     private CandidateRepository candidateRepository;
-
     @Autowired
     private CandidateService candidateService;
-
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/candidate")
     public String getAllCandidate(Model model, @RequestParam(value = "page", defaultValue = "0") int page,RedirectAttributes redirectAttributes) {
@@ -94,7 +98,9 @@ public class CandidateController {
         Candidate candidate = new Candidate();
         model.addAttribute("status", StatusCandidateEnum.values());
         model.addAttribute("candidate", candidate);
-        return "Candidate_view/add-candidate";
+        List<User> users= userService.findByRoleforCandidate();
+        model.addAttribute("recruiters",users);
+        return "/Candidate_view/add-candidate";
     }
 
     @PostMapping("/candidate/addCandidate")
@@ -103,13 +109,13 @@ public class CandidateController {
             System.out.println(bindingResult.getAllErrors());
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("message", "Failed to created candidate");
-            return "Candidate_view/add-candidate";
+            return "/Candidate_view/add-candidate";
         }
         try {
             candidateService.create(candidateCreateDto);
         }catch (Exception e){
             redirectAttributes.addAttribute("message", "Failed to created candidate");
-            return "Candidate_view/add-candidate";
+            return "/Candidate_view/add-candidate";
         }
         redirectAttributes.addFlashAttribute("message2", "Successfully created candidate");
         return "redirect:/candidate";
@@ -120,14 +126,14 @@ public class CandidateController {
     public String viewDetail(@RequestParam("id") Long id, Model model) {
         Candidate candidate = candidateService.getById(id).getBody();
         model.addAttribute("candidate", candidate);
-        return "Candidate_view/candidate-details";
+        return "/Candidate_view/candidate-details";
     }
 
     @GetMapping("/candidate/updateForward")
     public String updateForward(@RequestParam("id") Long id, Model model) {
         Candidate candidate = candidateService.getById(id).getBody();
         model.addAttribute("candidate", candidate);
-        return "Candidate_view/update-candidate";
+        return "/Candidate_view/update-candidate";
     }
 
     @PostMapping("/candidate/updateCandidate")

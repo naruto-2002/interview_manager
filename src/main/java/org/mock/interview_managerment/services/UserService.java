@@ -105,14 +105,6 @@ public class UserService {
         return userRepository.findByRoleRoleName("RECRUITER");
     }
 
-
-    public List<User> getUsersByRoleName(String roleName) {
-        return userRepository.findByRoleName(roleName);
-    }
-
-    public User getByUserId(long userId) {
-        return userRepository.findByUserId(userId);
-    }
     public List<User> findByRoleforCandidate() {
         List<User> list= this.userRepository.findByRole_RoleId(1L);
         List<User> list2= this.userRepository.findByRole_RoleId(2L);
@@ -120,6 +112,15 @@ public class UserService {
         list.addAll(list2);
         list.addAll(list3);
         return list;
+    }
+
+    //    Code van
+    public List<User> getUsersByRoleName(String roleName) {
+        return userRepository.findByRoleName(roleName);
+    }
+
+    public User getByUserId(long userId) {
+        return userRepository.findByUserId(userId);
     }
 
 }

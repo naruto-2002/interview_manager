@@ -7,7 +7,10 @@ import org.mock.interview_managerment.enums.StatusCandidateEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface CandidateRepository extends JpaRepository<Candidate,Long> {
@@ -17,4 +20,13 @@ public interface CandidateRepository extends JpaRepository<Candidate,Long> {
     public Page<Candidate> findByNameContainingOrEmailContainingOrPhoneContaining(String name, String email, String phone, Pageable pageable);;
     public Candidate getById(Long id);
     public Page<Candidate> findByStatus(StatusCandidateEnum status, Pageable pageable);
+
+    //    code van
+    List<Candidate> findAll();
+
+    @Query("SELECT c FROM Candidate c WHERE c.id = :id")
+    default Candidate findByCandidateId(long id) {
+        return null;
+    }
+
 }

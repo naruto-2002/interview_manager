@@ -33,11 +33,13 @@
                 <div class="col-sm-12">
                     <div class="card card-table">
                         <div class="card-header">
-                            <div class="d-flex justify-content-end">
-                                <a href="/interview/add">
-                                    <button class="btn btn-space btn-secondary btn-width active">Add new</button>
-                                </a>
-                            </div>
+                            <c:if test = "${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
+                                <div class="d-flex justify-content-end">
+                                    <a href="/interview/add">
+                                        <button class="btn btn-space btn-secondary btn-width active">Add new</button>
+                                    </a>
+                                </div>
+                            </c:if>
                         </div>
                         <div class="card-body">
                             <table class="table table-striped table-hover table-bordered " id="table1">
@@ -80,6 +82,8 @@
                                                     <span class="mdi mdi-edit"></span>
                                                 </a>
                                             </div>
+
+
                                         </td>
                                     </tr>
                                 </c:forEach>

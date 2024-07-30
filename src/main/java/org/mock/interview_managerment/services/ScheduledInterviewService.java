@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ScheduledInterviewService {
+    // code van
     private final ScheduledInterviewRepository scheduledInterviewRepository;
     private final InterviewService interviewService;
     private final UserService userService;
@@ -25,9 +26,5 @@ public class ScheduledInterviewService {
 
     public void deleteScheduledInterviewByInterviewId(long interviewId) {
         scheduledInterviewRepository.deleteByInterviewId(interviewId);
-    }
-
-    public List<ScheduledInterview> getAllScheduledInterviews() {
-        return scheduledInterviewRepository.findAll();
     }
 }

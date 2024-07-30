@@ -1,10 +1,5 @@
 package org.mock.interview_managerment.services;
 
-
-
-
-
-
 import org.mock.interview_managerment.DTO.request.CandidateCreateDto;
 import org.mock.interview_managerment.entities.Candidate;
 import org.mock.interview_managerment.enums.StatusCandidateEnum;
@@ -72,9 +67,7 @@ public class CandidateService {
         candidate.setStatus(StatusCandidateEnum.valueOf("BANNED"));
         candidateRepository.save(candidate);
     }
-    public List<Candidate> getAllCandidates(){
-        return candidateRepository.findAll();
-    }
+
     private int getStatusIndex(String status) {
         switch (status) {
             case "Waiting_for_interview":
@@ -111,6 +104,10 @@ public class CandidateService {
         return candidateRepository.findAll().stream()
                 .filter(candidate -> !candidate.getStatus().equals(StatusCandidateEnum.BANNED))
                 .collect(Collectors.toList());
+    }
+    //code van
+    public List<Candidate> getAllCandidates() {
+        return candidateRepository.findAll();
     }
 
 }

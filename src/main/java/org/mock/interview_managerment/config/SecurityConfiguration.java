@@ -44,7 +44,7 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
-                        .requestMatchers("/" ,"/login", "/lib/**", "/css/**", "/js/**", "/img/**").permitAll()
+                        .requestMatchers("/", "/login", "/lib/**", "/css/**", "/js/**", "/img/**").permitAll()
 
                         .requestMatchers("/forgot-password/**").permitAll()
 
@@ -59,7 +59,9 @@ public class SecurityConfiguration {
                         .loginPage("/login")
                         .failureUrl("/login?error")
                         .permitAll())
-                .csrf(AbstractHttpConfigurer::disable);;
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .accessDeniedPage("/403"))
+                .csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }
 }

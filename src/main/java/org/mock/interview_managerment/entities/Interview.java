@@ -59,4 +59,6 @@ public class Interview {
     private List<Long> selectedInterviewerIds = new ArrayList<>();
 
 
+
+
 }

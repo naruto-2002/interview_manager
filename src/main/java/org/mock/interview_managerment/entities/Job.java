@@ -35,4 +35,9 @@ public class Job {
         return endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
+
+    @ManyToOne
+    @JoinColumn(name = "candidate_id")
+    private Candidate candidate;
+
 }

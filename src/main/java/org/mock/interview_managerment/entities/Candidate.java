@@ -56,7 +56,13 @@ public class Candidate {
     @LastModifiedDate
     @Column(nullable = false)
     private LocalDate updatedAt;
+
+    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
+    @ToString.Exclude // Không sử dụng trong toString()
+    private List<Job> jos;
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "recruiter_id")
+    private User recruiter;
 }

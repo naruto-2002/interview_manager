@@ -24,6 +24,9 @@
                         <c:if test="${param.error != null}">
                             <div class="my-2" style="color: red;">Invalid email or password.</div>
                         </c:if>
+                        <c:if test="${message != null}">
+                            <div class="my-2" style="color: green;">${message}.</div>
+                        </c:if>
                     </div>
                     <div class="card-body">
                         <form action="/login" method="post">

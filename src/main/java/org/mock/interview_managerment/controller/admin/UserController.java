@@ -39,7 +39,7 @@ public class UserController {
         Pageable pageable = PageRequest.of(page, 5);
         Page<UserListDto> userPage = userService.handleGetAllUsers(pageable);
 
-        populateModelAttributes(model);
+        
         model.addAttribute("listRole", roleService.handleGetAllRole());
         model.addAttribute("userPage", userPage);
         model.addAttribute("page", userPage.getNumber() + 1);
@@ -51,7 +51,6 @@ public class UserController {
     @GetMapping("/user/create")
     public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new UserCreateDto());
-        populateModelAttributes(model);
         return "user/create";
     }
 
@@ -62,6 +61,7 @@ public class UserController {
             return "user/create";
         }
 
+        System.out.println(request);
         userService.handleSaveUser(request);
         return "redirect:/user";
     }
@@ -69,14 +69,14 @@ public class UserController {
     @GetMapping("/user/detail/{userId}")
     public String getUserDetailPage(@PathVariable("userId") Long userId, Model model) {
 
-        populateModelAttributes(model);
+        
         UserDetailDto userDetail = userService.handleGetUserDetail(userId);
         System.out.println(userDetail);
         model.addAttribute("userDetail", userDetail);
         return "user/detail";
     }
 
-    @PostMapping("/update-status")
+    @PostMapping("/user/update-status")
     public ResponseEntity<Void> updateStatus(@RequestBody Map<String, String> requestBody) {
         Long userId = Long.valueOf(requestBody.get("userId"));
 
@@ -91,7 +91,7 @@ public class UserController {
 
         UserUpdateDto userUpdateDto = userService.handleGetUserById(userId);
         System.out.println(userUpdateDto);
-        populateModelAttributes(model);
+        
         model.addAttribute("user", userUpdateDto);
         return "user/update";
     }
@@ -110,7 +110,7 @@ public class UserController {
     @GetMapping("/user/search")
     public String searchByKeyword(@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, Model model) {
         model.addAttribute("userPage", userService.search(keyword));
-        populateModelAttributes(model);
+        
         return "user/list";
     }
 
@@ -119,30 +119,5 @@ public class UserController {
         return "auth/login";
     }
 
-    @GetMapping("/forgot-password")
-    public String getPageForgotPassword() {
-
-        return "auth/forgot-password";
-    }
-
-    @GetMapping("/reset-password")
-    public String resetPassword(@RequestParam(name = "email") String email) {
-        System.out.println(email);
-        return "auth/forgot-password";
-    }
-    private void populateModelAttributes(Model model) {
-        model.addAttribute("benefits", BenefitEnum.values());
-        model.addAttribute("contractTypes", ContractTypeEnum.values());
-        model.addAttribute("departments", DepartmentEnum.values());
-        model.addAttribute("genders", GenderEnum.values());
-        model.addAttribute("highestLevels", HighestLevelEnum.values());
-        model.addAttribute("levels", LevelEnum.values());
-        model.addAttribute("offerStatuses", OfferStatusEnum.values());
-        model.addAttribute("positions", PositionEnum.values());
-        model.addAttribute("results", ResultEnum.values());
-        model.addAttribute("roles", RoleEnum.values());
-        model.addAttribute("skills", SkillEnum.values());
-        model.addAttribute("statuses", StatusEnum.values());
-    }
 
 }

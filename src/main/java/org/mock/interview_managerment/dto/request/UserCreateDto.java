@@ -14,6 +14,7 @@ import org.mock.interview_managerment.enums.GenderEnum;
 import org.mock.interview_managerment.enums.StatusEnum;
 import org.mock.interview_managerment.enums.StatusUserEnum;
 import org.mock.interview_managerment.validator.FullNameChecked;
+import org.mock.interview_managerment.validator.UniqueEmail;
 
 import java.time.LocalDate;
 
@@ -27,7 +28,9 @@ public class UserCreateDto {
     @FullNameChecked
     private String fullName;
 
+    @NotNull(message = "Email cannot be null")
     @Email(message = "Email không hợp lệ", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    @UniqueEmail
     private String email;
     @NotBlank(message = "Full name is required")
     private String phoneNumber;

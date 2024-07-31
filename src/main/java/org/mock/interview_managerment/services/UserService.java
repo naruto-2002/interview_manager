@@ -25,20 +25,23 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private PasswordService passwordService;
+    private final PasswordService passwordService;
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private final EmailService emailService;
 
-    @Autowired
-    private SendEmailService sendEmailService;
+    private final UserMapper userMapper;
 
-    @Autowired
-    private UserMapper userMapper;
+    public UserService(UserRepository userRepository,
+                       PasswordService passwordService,
+                       EmailService emailService,
+                       UserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.passwordService = passwordService;
+        this.emailService = emailService;
+        this.userMapper = userMapper;
+    }
 
     public User handleSaveUser(UserCreateDto request) {
         // mapper entity
@@ -53,7 +56,7 @@ public class UserService {
         user.setUsername(UserNameValid.genUserName(user.getFullName(), user.getUserId()));
 
         // send password to email
-        sendEmailService.sendPasswordCreate(user.getEmail(), user.getUsername(), password);
+        emailService.sendPasswordCreate(user.getEmail(), user.getUsername(), hashPasword);
 
         return userRepository.save(user);
     }
@@ -74,7 +77,7 @@ public class UserService {
     public void toggleStatus(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         if (user != null) {
-            user.setStatus(user.getStatus().name().equals("ACTIVE") ? StatusUserEnum.DEACTIVE : StatusUserEnum.ACTIVE);
+            user.setStatus(user.getStatus().name().equals("ACTIVE") ? StatusUserEnum.INACTIVE : StatusUserEnum.ACTIVE);
             userRepository.save(user);
         }
     }
@@ -84,8 +87,16 @@ public class UserService {
     }
 
     public User handleUpdateUser(UserUpdateDto request) {
+        Optional<User> existingUserOptional = userRepository.findById(request.getUserId());
+
+        if (existingUserOptional.isEmpty()) {
+            throw new RuntimeException("User not found");
+        }
+
+        User existingUser = existingUserOptional.get();
         User user = userMapper.toUser(request);
-        user.setUsername(UserNameValid.genUserName(user.getFullName(), user.getUserId()));
+        user.setPassword(existingUser.getPassword());
+        user.setUsername(existingUser.getUsername());
         return userRepository.save(user);
     }
 
@@ -108,12 +119,27 @@ public class UserService {
     }
 
     public List<User> findByRoleforCandidate() {
-        List<User> list= this.userRepository.findByRole_RoleId(1L);
-        List<User> list2= this.userRepository.findByRole_RoleId(2L);
-        List<User> list3= this.userRepository.findByRole_RoleId(3L);
+        List<User> list = this.userRepository.findByRole_RoleId(1L);
+        List<User> list2 = this.userRepository.findByRole_RoleId(2L);
+        List<User> list3 = this.userRepository.findByRole_RoleId(3L);
         list.addAll(list2);
         list.addAll(list3);
         return list;
+    }
+
+    public boolean checkEmailExist(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    public User handleGetUserByEmail(String email) {
+
+        return userRepository.findByEmail(email);
+    }
+
+    public void handleResetPassword(User user, String newPass) {
+
+        user.setPassword(passwordService.encryptPassword(newPass));
+        userRepository.save(user);
     }
 
     //    Code van

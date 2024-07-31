@@ -8,15 +8,14 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SendEmailService {
-
+public class EmailService {
     private final JavaMailSender javaMailSender;
 
     @Value("${spring.mail.username}")
     private String fromEmail;
 
 
-    public SendEmailService(JavaMailSender javaMailSender) {
+    public EmailService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
 
@@ -50,4 +49,32 @@ public class SendEmailService {
             throw new RuntimeException(e);
         }
     }
+
+    public void sendPasswordResetEmail(String toEmail, String resetPasswordUrl) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setFrom(fromEmail);
+            helper.setTo(toEmail);
+            helper.setSubject("Password Reset");
+            helper.setText(String.format(
+                    "<html>" +
+                            "  <body>" +
+                            "    <p>We have just received a password reset request for <b>%s</b>.</p>" +
+                            "    <p>Please click <a href=\"%s\">here</a> to reset your password.</p>" +
+                            "    <p>For your security, the link will expire in 24 hours or immediately after you reset your password.</p>" +
+                            "    <p>Thanks & Regards!</p>" +
+                            "    <p>IMS Team.</p>" +
+                            "  </body>" +
+                            "</html>",
+                    toEmail, resetPasswordUrl
+            ), true);
+
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

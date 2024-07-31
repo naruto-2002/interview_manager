@@ -63,6 +63,6 @@ public class Candidate {
     private List<Job> jos;
 
     @ManyToOne
-    @JoinColumn(name = "recruiter_id")
-    private User recruiter;
+    @JoinColumn(name = "user_id")
+    private User user;
 }

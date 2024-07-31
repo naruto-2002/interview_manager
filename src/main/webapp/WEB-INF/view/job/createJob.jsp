@@ -7,11 +7,16 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/css/app.css" type="text/css">
     <title>Create Job</title>
 </head>
 
 <body>
-    <div class="container">
+
+<jsp:include page="../layout/header.jsp"/>
+<jsp:include page="../layout/left-sidebar.jsp"/>
+<div class="be-content">
+    <div class="main-content container-fluid">
         <h1>Job</h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -59,12 +64,12 @@
                 <div class="form-group col-md-6">
                     <label for="salaryFrom">Salary range from</label>
                     <input type="text" class="form-control" id="salaryFrom" name="salaryFrom"
-                        oninput="formatSalary(this)">
+                           oninput="formatSalary(this)">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="salaryTo">To</label>
                     <input type="text" class="form-control" id="salaryTo" name="salaryTo" oninput="formatSalary(this)"
-                        required>
+                           required>
                 </div>
             </div>
             <!-- Address -->
@@ -121,107 +126,117 @@
             <hr>
         </form>
     </div>
+</div>
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-    <!-- FontAwesome JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
-    <script>
-        function initializeDropdown(dropdownId, menuId, selectedId, hiddenFieldId) {
-            var dropdown = document.getElementById(dropdownId);
-            var menu = document.getElementById(menuId);
-            var selectedElement = document.getElementById(selectedId);
-            var hiddenField = document.getElementById(hiddenFieldId);
+<script src="/lib/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="/lib/perfect-scrollbar/js/perfect-scrollbar.min.js" type="text/javascript"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<script src="/js/app.js" type="text/javascript"></script>
+<script src="/lib/jquery.sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
+<script src="/lib/countup/countUp.min.js" type="text/javascript"></script>
+<script src="/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/lib/jqvmap/jquery.vmap.min.js" type="text/javascript"></script>
+<script src="/lib/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<!-- FontAwesome JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+<script>
+    function initializeDropdown(dropdownId, menuId, selectedId, hiddenFieldId) {
+        var dropdown = document.getElementById(dropdownId);
+        var menu = document.getElementById(menuId);
+        var selectedElement = document.getElementById(selectedId);
+        var hiddenField = document.getElementById(hiddenFieldId);
 
-            dropdown.addEventListener('click', function () {
-                menu.classList.toggle('show');
-            });
-
-            document.querySelectorAll('#' + menuId + ' .dropdown-item').forEach(function (item) {
-                item.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    var value = this.getAttribute('data-value');
-                    var text = this.innerText;
-
-                    // Check if the item is already selected
-                    var existingItems = selectedElement.getElementsByClassName('selected-item');
-                    for (var i = 0; i < existingItems.length; i++) {
-                        if (existingItems[i].getAttribute('data-value') === value) {
-                            return; // Prevent duplicate selection
-                        }
-                    }
-
-                    var element = document.createElement('span');
-                    element.setAttribute('class', 'selected-item badge badge-primary mr-2');
-                    element.setAttribute('data-value', value);
-                    element.innerHTML = text + ' <i class="fas fa-times remove-item"></i>';
-
-                    // Add event listener to the 'x' button after creating the element
-                    element.querySelector('.remove-item').addEventListener('click', function () {
-                        this.parentNode.remove();
-                        updateHiddenField();
-                    });
-
-                    selectedElement.appendChild(element);
-                    updateHiddenField();
-                    menu.classList.remove('show');
-                });
-            });
-
-            // Logic for removing selected items
-            selectedElement.addEventListener('click', function (event) {
-                if (event.target.classList.contains('remove-item')) {
-                    event.target.parentNode.remove();
-                    updateHiddenField();
-                }
-            });
-
-            function updateHiddenField() {
-                var values = [];
-                selectedElement.querySelectorAll('.selected-item').forEach(function (item) {
-                    values.push(item.getAttribute('data-value'));
-                });
-                hiddenField.value = values.join(',');
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            initializeDropdown('skillsDropdown', 'skillsMenu', 'selectedSkills', 'skills');
-            initializeDropdown('benefitsDropdown', 'benefitsMenu', 'selectedBenefits', 'benefits');
-            initializeDropdown('levelsDropdown', 'levelsMenu', 'selectedLevels', 'level');
+        dropdown.addEventListener('click', function () {
+            menu.classList.toggle('show');
         });
 
-        function formatSalary(input) {
-            // Remove non-digit characters except for commas
-            let value = input.value.replace(/\D/g, '');
+        document.querySelectorAll('#' + menuId + ' .dropdown-item').forEach(function (item) {
+            item.addEventListener('click', function (event) {
+                event.preventDefault();
+                var value = this.getAttribute('data-value');
+                var text = this.innerText;
 
-            // Format the value with commas as thousand separators
-            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                // Check if the item is already selected
+                var existingItems = selectedElement.getElementsByClassName('selected-item');
+                for (var i = 0; i < existingItems.length; i++) {
+                    if (existingItems[i].getAttribute('data-value') === value) {
+                        return; // Prevent duplicate selection
+                    }
+                }
 
-            // Set the formatted value back to the input
-            input.value = value;
+                var element = document.createElement('span');
+                element.setAttribute('class', 'selected-item badge badge-primary mr-2');
+                element.setAttribute('data-value', value);
+                element.innerHTML = text + ' <i class="fas fa-times remove-item"></i>';
+
+                // Add event listener to the 'x' button after creating the element
+                element.querySelector('.remove-item').addEventListener('click', function () {
+                    this.parentNode.remove();
+                    updateHiddenField();
+                });
+
+                selectedElement.appendChild(element);
+                updateHiddenField();
+                menu.classList.remove('show');
+            });
+        });
+
+        // Logic for removing selected items
+        selectedElement.addEventListener('click', function (event) {
+            if (event.target.classList.contains('remove-item')) {
+                event.target.parentNode.remove();
+                updateHiddenField();
+            }
+        });
+
+        function updateHiddenField() {
+            var values = [];
+            selectedElement.querySelectorAll('.selected-item').forEach(function (item) {
+                values.push(item.getAttribute('data-value'));
+            });
+            hiddenField.value = values.join(',');
         }
+    }
 
-    </script>
-    <style>
-        .selected-item {
-            display: inline-block;
-            background-color: #007bff;
-            color: #fff;
-            padding: 5px 10px;
-            margin-right: 5px;
-            margin-bottom: 5px;
-            border-radius: 20px;
-        }
+    document.addEventListener('DOMContentLoaded', function () {
+        initializeDropdown('skillsDropdown', 'skillsMenu', 'selectedSkills', 'skills');
+        initializeDropdown('benefitsDropdown', 'benefitsMenu', 'selectedBenefits', 'benefits');
+        initializeDropdown('levelsDropdown', 'levelsMenu', 'selectedLevels', 'level');
+    });
 
-        .remove-item {
-            cursor: pointer;
-            margin-left: 5px;
-            color: #dc3545;
-        }
-    </style>
+    function formatSalary(input) {
+        // Remove non-digit characters except for commas
+        let value = input.value.replace(/\D/g, '');
+
+        // Format the value with commas as thousand separators
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+        // Set the formatted value back to the input
+        input.value = value;
+    }
+
+</script>
+<style>
+    .selected-item {
+        display: inline-block;
+        background-color: #007bff;
+        color: #fff;
+        padding: 5px 10px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        border-radius: 20px;
+    }
+
+    .remove-item {
+        cursor: pointer;
+        margin-left: 5px;
+        color: #dc3545;
+    }
+</style>
 
 </body>
 

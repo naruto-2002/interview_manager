@@ -74,7 +74,7 @@ public class UserService {
     public void toggleStatus(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         if (user != null) {
-            user.setStatus(user.getStatus().name().equals("ACTIVE") ? StatusUserEnum.DEACTIVE : StatusUserEnum.ACTIVE);
+            user.setStatus(user.getStatus().name().equals("ACTIVE") ? StatusUserEnum.INACTIVE : StatusUserEnum.ACTIVE);
             userRepository.save(user);
         }
     }

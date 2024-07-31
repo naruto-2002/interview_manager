@@ -20,7 +20,7 @@
 
 <div class="be-content" style="margin-top: 60px;">
     <div class="main-content container-fluid">
-        <div class="page-head" style="margin-top: 60px;">
+        <div class="page-head mt-0 px-0" style="margin-top: 60px;">
             <h2 class="page-head-title">Offer</h2>
             <nav aria-label="breadcrumb mt-2" role="navigation">
                 <ol class="breadcrumb page-head-nav">
@@ -31,7 +31,6 @@
         </div>
 
         <div class="">
-            <h1>Create Offer</h1>
             <form:form action="${pageContext.request.contextPath}/offers" method="post" modelAttribute="offer">
                 <div class="row">
                     <div class="col-md-6">

@@ -19,8 +19,8 @@
 
 <div class="be-content" style="margin-top: 60px;">
     <div class="main-content container-fluid">
-        <div class="page-head">
-            <h2 class="page-head-title">Offer Management</h2>
+        <div class="" style="margin-top: 0px">
+            <h2 class="">Offer Management</h2>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb page-head-nav">
                     <li class="breadcrumb-item active">Offer List</li>

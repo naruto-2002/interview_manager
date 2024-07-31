@@ -13,12 +13,15 @@
                 <link rel="stylesheet" type="text/css" href="/css/jobListCss.css">
                 <link rel="stylesheet"
                     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+                <link rel="stylesheet" href="/css/app.css" type="text/css">
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
             </head>
 
             <body>
-                <div class="container mt-5">
-                    <div class="row">
+            <jsp:include page="../layout/header.jsp"/>
+            <jsp:include page="../layout/left-sidebar.jsp"/>
+                <div class="be-content mt-5">
+                    <div class="main-content container-fluid">
                         <div class="col-12 mx-auto">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h3>Job List</h3>
@@ -119,6 +122,15 @@
                         </div>
                     </div>
                 </div>
+            <script src="/lib/jquery/jquery.min.js" type="text/javascript"></script>
+            <script src="/lib/perfect-scrollbar/js/perfect-scrollbar.min.js" type="text/javascript"></script>
+            <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+            <script src="/js/app.js" type="text/javascript"></script>
+            <script src="/lib/jquery.sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
+            <script src="/lib/countup/countUp.min.js" type="text/javascript"></script>
+            <script src="/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+            <script src="/lib/jqvmap/jquery.vmap.min.js" type="text/javascript"></script>
+            <script src="/lib/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
             </body>
             <style>
                 .search-box {

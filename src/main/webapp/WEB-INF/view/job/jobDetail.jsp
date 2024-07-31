@@ -12,6 +12,7 @@
                 <!-- Latest compiled and minified CSS -->
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
+                <link rel="stylesheet" href="/css/app.css" type="text/css">
                 <!-- Latest compiled JavaScript -->
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -22,8 +23,10 @@
             </head>
 
             <body>
-                <div class="container mt-5">
-                    <div class="row">
+            <jsp:include page="../layout/header.jsp"/>
+            <jsp:include page="../layout/left-sidebar.jsp"/>
+                <div class="be-content mt-5">1
+                    <div class="main-content container-fluid">
                         <div class="col-12 mx-auto">
                             <div class="d-flex justify-content-between">
                                 <h3>Job Detail ${jobdetail.jobId}</h3>
@@ -106,6 +109,15 @@
                     </div>
                 </div>
 
+            <script src="/lib/jquery/jquery.min.js" type="text/javascript"></script>
+            <script src="/lib/perfect-scrollbar/js/perfect-scrollbar.min.js" type="text/javascript"></script>
+            <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+            <script src="/js/app.js" type="text/javascript"></script>
+            <script src="/lib/jquery.sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
+            <script src="/lib/countup/countUp.min.js" type="text/javascript"></script>
+            <script src="/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+            <script src="/lib/jqvmap/jquery.vmap.min.js" type="text/javascript"></script>
+            <script src="/lib/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
             </body>
             <style>
                 .table th,

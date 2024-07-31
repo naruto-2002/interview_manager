@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.mock.interview_managerment.entities.*;
 import org.mock.interview_managerment.entities.pk.ScheduledInterviewId;
 import org.mock.interview_managerment.enums.ResultEnum;
+import org.mock.interview_managerment.enums.ResultInterviewEnum;
 import org.mock.interview_managerment.enums.StatusEnum;
 import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.mock.interview_managerment.services.*;
@@ -44,7 +45,7 @@ public class AddController {
 
     @PostMapping("/interview/add")
     public String addNewInterview(@ModelAttribute("newInterview") Interview newInterview) {
-        newInterview.setResult(ResultEnum.NA);
+        newInterview.setResult(ResultInterviewEnum.NA);
         newInterview.setStatus(StatusInterviewEnum.NEW);
         Interview interview = interviewService.handleSaveInterview(newInterview);
 
@@ -55,7 +56,7 @@ public class AddController {
             scheduledInterviewId.setInterviewerId(selectedInterviewerId);
 
             ScheduledInterview scheduledInterview = new ScheduledInterview();
-            scheduledInterview.setScheduledInterviewId(scheduledInterview.getScheduledInterviewId());
+            scheduledInterview.setScheduledInterviewId(scheduledInterviewId);
             scheduledInterview.setInterview(interview);
             scheduledInterview.setInterviewer(userService.getByUserId(selectedInterviewerId));
 

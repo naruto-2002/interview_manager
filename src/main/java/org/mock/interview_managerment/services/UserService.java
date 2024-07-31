@@ -142,13 +142,10 @@ public class UserService {
         userRepository.save(user);
     }
 
-    //    Code van
     public List<User> getUsersByRoleName(String roleName) {
         return userRepository.findByRoleName(roleName);
     }
-
     public User getByUserId(long userId) {
         return userRepository.findByUserId(userId);
     }
-
 }

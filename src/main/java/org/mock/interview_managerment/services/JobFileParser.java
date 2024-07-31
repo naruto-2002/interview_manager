@@ -3,6 +3,7 @@ package org.mock.interview_managerment.services;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.mock.interview_managerment.entities.Job;
+import org.mock.interview_managerment.enums.StatusJobEnum;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
@@ -40,7 +41,7 @@ public class JobFileParser {
 
                 job.setLocation(getCellValue(row.getCell(6)));
                 job.setBenefits(getCellValue(row.getCell(7)));
-                job.setStatus(getCellValue(row.getCell(8)));
+                job.setStatus(StatusJobEnum.valueOf(getCellValue(row.getCell(8))));
                 job.setSalaryFrom((getCellValue(row.getCell(9))).toString());
                 job.setSalaryTo((getCellValue(row.getCell(10))).toString());
 

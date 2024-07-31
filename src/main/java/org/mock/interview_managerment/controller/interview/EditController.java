@@ -3,8 +3,8 @@ package org.mock.interview_managerment.controller.interview;
 import lombok.RequiredArgsConstructor;
 import org.mock.interview_managerment.entities.*;
 import org.mock.interview_managerment.entities.pk.ScheduledInterviewId;
-import org.mock.interview_managerment.enums.ResultEnum;
-import org.mock.interview_managerment.enums.StatusEnum;
+import org.mock.interview_managerment.enums.ResultInterviewEnum;
+import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.mock.interview_managerment.services.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,8 +46,8 @@ public class EditController {
         model.addAttribute("interviewers", interviewers);
         model.addAttribute("recruiters", recruiters);
         model.addAttribute("interview", interview);
-        model.addAttribute("results", ResultEnum.values());
-        model.addAttribute("states", StatusEnum.values());
+        model.addAttribute("results", ResultInterviewEnum.values());
+        model.addAttribute("states", StatusInterviewEnum.values());
 
         model.addAttribute("newInterview", interview);
 
@@ -85,7 +85,7 @@ public class EditController {
             scheduledInterviewId.setInterviewerId(selectedInterviewerId);
 
             ScheduledInterview scheduledInterview = new ScheduledInterview();
-            scheduledInterview.setScheduledInterviewId(scheduledInterview.getScheduledInterviewId());
+            scheduledInterview.setScheduledInterviewId(scheduledInterviewId);
             scheduledInterview.setInterview(newInterview);
             scheduledInterview.setInterviewer(userService.getByUserId(selectedInterviewerId));
 

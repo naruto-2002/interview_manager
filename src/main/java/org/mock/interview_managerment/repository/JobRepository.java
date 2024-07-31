@@ -1,10 +1,9 @@
 package org.mock.interview_managerment.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.mock.interview_managerment.entities.Job;
-import org.mock.interview_managerment.enums.StatusEnum;
+import org.mock.interview_managerment.enums.StatusJobEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JobRepository extends JpaRepository<Job, Long> {
-    List<Job> findAll();
 
     @Query("SELECT j FROM Job j WHERE "
             + "(j.title LIKE %:keyword% OR j.description LIKE %:keyword% OR "
@@ -26,9 +24,10 @@ public interface JobRepository extends JpaRepository<Job, Long> {
                                      @Param("status") String status,
                                      Pageable pageable);
 
+
+    List<Job> findAll();
     @Query("SELECT j FROM Job j WHERE j.jobId = :jobId")
     Job findByJobId(long jobId);
-
     @Query("SELECT j FROM Job j WHERE j.status = :status")
-    List<Job> findAllByStatus(StatusEnum status);
+    List<Job> findAllByStatus(StatusJobEnum status);
 }

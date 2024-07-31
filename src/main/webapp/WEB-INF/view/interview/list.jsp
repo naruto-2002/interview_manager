@@ -63,8 +63,8 @@
                                         <td>${interview.title}</td>
                                         <td>${interview.candidate.name}</td>
                                         <td>
-                                            <c:forEach var="scheduledInterview" items="${interview.scheduledInterviews}">
-                                                ${scheduledInterview.interviewer.username}
+                                            <c:forEach var="scheduledInterview" items="${interview.scheduledInterviews}" varStatus="status">
+                                                ${scheduledInterview.interviewer.fullName}<c:if test="${!status.last}">, </c:if>
                                             </c:forEach>
                                         </td>
                                         <td>${interview.date} ${interview.startTime} - ${interview.endTime}</td>
@@ -82,8 +82,6 @@
                                                     <span class="mdi mdi-edit"></span>
                                                 </a>
                                             </div>
-
-
                                         </td>
                                     </tr>
                                 </c:forEach>

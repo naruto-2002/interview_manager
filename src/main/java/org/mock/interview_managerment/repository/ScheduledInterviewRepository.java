@@ -12,8 +12,10 @@ import java.util.List;
 @Repository
 public interface ScheduledInterviewRepository extends JpaRepository<ScheduledInterview, Long> {
     List<ScheduledInterview> findAll();
+
     @Query("SELECT s FROM ScheduledInterview s WHERE s.interview.interviewId = :interviewId")
     List<ScheduledInterview> findByInterviewId(long interviewId);
+
     @Modifying
     @Transactional
     @Query("DELETE FROM ScheduledInterview s WHERE s.interview.interviewId = :interviewId")

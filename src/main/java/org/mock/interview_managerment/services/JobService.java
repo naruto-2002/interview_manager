@@ -21,12 +21,20 @@ public class JobService {
     private JobRepository jobRepository;
 
     public Page<Job> getJobs(Pageable pageable) {
-        return jobRepository.findAll(pageable);
+        return jobRepository.findAllByIsDeletedFalse(pageable);
+        // return jobRepository.findAll(pageable);
     }
 
+    // public List<Job> getJobs() {
+    // return jobRepository.findAll();
+    // }
 
-    public Page<Job> searchJobs(String keyword, String status, Pageable pageable) {
-        return jobRepository.findByKeywordAndStatus(keyword, status, pageable);
+    public Page<Job> searchJobs(String keyword, StatusJobEnum status, Pageable pageable) {
+        return jobRepository.findByKeywordAndStatus(keyword, StatusJobEnum.valueOf(String.valueOf(status)), pageable);
+    }
+
+    public Page<Job> searchJobsStatusNull(String keyword, Pageable pageable) {
+        return jobRepository.findByKeyword(keyword, pageable);
     }
 
     public List<Job> getAllJobs() {
@@ -68,6 +76,13 @@ public class JobService {
         jobRepository.saveAll(jobs);
     }
 
+    public void softDeleteJobById(long id) {
+        jobRepository.findById(id).ifPresent(job -> {
+            job.setIsDeleted(true);
+            jobRepository.save(job);
+        });
+    }
+
     public void updateJobStatus(Page<Job> jobPage) {
         LocalDate today = LocalDate.now();
 
@@ -86,6 +101,14 @@ public class JobService {
         jobRepository.saveAll(jobPage.getContent());
     }
 
+    public void updateJobIsDeleted(Page<Job> jobPage) {
+        for (Job job : jobPage.getContent()) {
+            job.setIsDeleted(false);
+        }
+        jobRepository.saveAll(jobPage.getContent());
+
+    }
+
     public void updateStatusJob(Job job) {
         LocalDate today = LocalDate.now();
         LocalDate startDate = job.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -102,6 +125,7 @@ public class JobService {
     public List<Job> getJobs() {
         return jobRepository.findAll();
     }
+
     public List<Job> getJobsByStatusOpen() {
         return jobRepository.findAllByStatus(StatusJobEnum.OPEN);
     }

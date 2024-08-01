@@ -35,13 +35,19 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String getListUsersPage(@RequestParam(name = "page", defaultValue = "0") Integer page, Model model) {
-        Pageable pageable = PageRequest.of(page, 5);
-        Page<UserListDto> userPage = userService.handleGetAllUsers(pageable);
+    public String getListUsersPage(
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "keyword", required = false) String keyword,
+            @RequestParam(name = "roleId", required = false) Long roleId,
+            Model model) {
 
-        
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<UserListDto> userPage = userService.handleSearchAndFilterUsers(keyword, roleId, pageable);
+
         model.addAttribute("listRole", roleService.handleGetAllRole());
         model.addAttribute("userPage", userPage);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("roleId", roleId);
         model.addAttribute("page", userPage.getNumber() + 1);
         model.addAttribute("pageSize", userPage.getTotalPages());
 
@@ -56,7 +62,7 @@ public class UserController {
 
     @PostMapping("/user/create")
     public String createUser(@Valid @ModelAttribute("newUser") UserCreateDto request,
-                             BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "user/create";
         }
@@ -69,7 +75,6 @@ public class UserController {
     @GetMapping("/user/detail/{userId}")
     public String getUserDetailPage(@PathVariable("userId") Long userId, Model model) {
 
-        
         UserDetailDto userDetail = userService.handleGetUserDetail(userId);
         System.out.println(userDetail);
         model.addAttribute("userDetail", userDetail);
@@ -91,14 +96,14 @@ public class UserController {
 
         UserUpdateDto userUpdateDto = userService.handleGetUserById(userId);
         System.out.println(userUpdateDto);
-        
+
         model.addAttribute("user", userUpdateDto);
         return "user/update";
     }
 
     @PostMapping("/user/update")
     public String updateUser(@Valid @ModelAttribute("user") UserUpdateDto request,
-                             BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "user/update";
         }
@@ -107,17 +112,9 @@ public class UserController {
         return "redirect:/user";
     }
 
-    @GetMapping("/user/search")
-    public String searchByKeyword(@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword, Model model) {
-        model.addAttribute("userPage", userService.search(keyword));
-        
-        return "user/list";
-    }
-
     @GetMapping("/login")
     public String getPageLogin() {
         return "auth/login";
     }
-
 
 }

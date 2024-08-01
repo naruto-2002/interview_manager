@@ -61,6 +61,10 @@ public class JobController {
             page = jobService.getJobs(pageable);
         }
 
+        if (page.isEmpty()) {
+            model.addAttribute("message", "No item matches with your search data. Please try again");
+        }
+
         jobService.updateJobStatus(page);
         model.addAttribute("keyword", keyword);
         model.addAttribute("status", status);

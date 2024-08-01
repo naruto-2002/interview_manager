@@ -34,9 +34,9 @@ public class UserService {
     private final UserMapper userMapper;
 
     public UserService(UserRepository userRepository,
-                       PasswordService passwordService,
-                       EmailService emailService,
-                       UserMapper userMapper) {
+            PasswordService passwordService,
+            EmailService emailService,
+            UserMapper userMapper) {
         this.userRepository = userRepository;
         this.passwordService = passwordService;
         this.emailService = emailService;
@@ -47,7 +47,7 @@ public class UserService {
         // mapper entity
         User user = userMapper.toUser(request);
 
-        //gen password
+        // gen password
         String password = passwordService.autoGeneratePassword();
         String hashPasword = passwordService.encryptPassword(password);
         user.setPassword(hashPasword);
@@ -104,10 +104,13 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public List<UserListDto> search(String keyword) {
-        return userRepository.search(keyword).stream()
+    public Page<UserListDto> handleSearchAndFilterUsers(String keyword, Long roleId, Pageable pageable) {
+        Page<User> userPage = userRepository.searchAndFilterUsers(keyword, roleId, pageable);
+        List<UserListDto> userListDtos = userPage.getContent().stream()
                 .map(userMapper::toUserListDto)
                 .collect(Collectors.toList());
+
+        return new PageImpl<>(userListDtos, pageable, userPage.getTotalElements());
     }
 
     public List<User> getManagers() {
@@ -145,6 +148,7 @@ public class UserService {
     public List<User> getUsersByRoleName(String roleName) {
         return userRepository.findByRoleName(roleName);
     }
+
     public User getByUserId(long userId) {
         return userRepository.findByUserId(userId);
     }

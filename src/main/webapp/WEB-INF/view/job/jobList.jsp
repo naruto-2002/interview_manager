@@ -60,6 +60,12 @@
                                             </div>
                                             <button type="submit" class="btn btn-info">Search</button>
                                         </form>
+                                        <% String alertMessage=(String) request.getAttribute("message"); %>
+                                            <% if (alertMessage !=null) { %>
+                                                <div class="alert alert-info text-center" role="alert">
+                                                    <%= alertMessage %>
+                                                </div>
+                                                <% } %>
                                     </div>
 
                                     <hr />
@@ -76,25 +82,37 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach var="job" items="${listjobs.content}">
-                                                <tr>
-                                                    <td>${job.title}</td>
-                                                    <td>${job.requiredSkills}</td>
-                                                    <td>${job.startDate}</td>
-                                                    <td>${job.endDate}</td>
-                                                    <td>${job.level}</td>
-                                                    <td>${job.status}</td>
-                                                    <td>
-                                                        <a href="/job/detail/${job.jobId}"
-                                                            class="btn btn-success">View</a>
-                                                        <a href="/job/update/${job.jobId}"
-                                                            class="btn btn-warning mx-2">Update</a>
-                                                        <a href="/job/delete/${job.jobId}"
-                                                            class="btn btn-danger">Delete</a>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
+                                            <c:choose>
+                                                <c:when
+                                                    test="${listjobs.content != null && not empty listjobs.content}">
+                                                    <c:forEach var="job" items="${listjobs.content}">
+                                                        <tr>
+                                                            <td>${job.title}</td>
+                                                            <td>${job.requiredSkills}</td>
+                                                            <td>${job.startDate}</td>
+                                                            <td>${job.endDate}</td>
+                                                            <td>${job.level}</td>
+                                                            <td>${job.status}</td>
+                                                            <td>
+                                                                <a href="/job/detail/${job.jobId}"
+                                                                    class="btn btn-success">View</a>
+                                                                <a href="/job/update/${job.jobId}"
+                                                                    class="btn btn-warning mx-2">Update</a>
+                                                                <a href="/job/delete/${job.jobId}"
+                                                                    class="btn btn-danger">Delete</a>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <tr>
+                                                        <td colspan="7">No jobs available</td>
+                                                    </tr>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </tbody>
+
+
                                     </table>
                                     <nav aria-label="Page navigation example">
                                         <ul class="pagination">

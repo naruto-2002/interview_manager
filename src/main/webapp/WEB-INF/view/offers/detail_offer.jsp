@@ -10,6 +10,12 @@
     <link rel="stylesheet" type="text/css"
           href="/lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
+    <style>
+        p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="../layout/header.jsp"/>
@@ -32,58 +38,35 @@
                 <div class="col-lg-12">
                     <c:choose>
                         <c:when test="${offer.status == 'WAITING_FOR_APPROVAL'}">
-<%--                            <sec:authorize access="hasAnyRole('RECRUITER', 'MANAGER', 'ADMIN')">--%>
-                                <form action="${pageContext.request.contextPath}/offers/edit/${offer.offerId}" method="get">
-                                    <button type="submit" class="btn btn-info">Edit</button>
-                                </form>
-                                <form action="${pageContext.request.contextPath}/offers/cancel/${offer.offerId}" method="post">
-                                    <button type="submit" class="btn btn-danger">Cancel Offer</button>
-                                </form>
-<%--                            </sec:authorize>--%>
-<%--                            <sec:authorize access="hasAnyRole('MANAGER', 'ADMIN')">--%>
-                                <form action="${pageContext.request.contextPath}/offers/approve/${offer.offerId}" method="post">
-                                    <button type="submit" class="btn btn-success">Approve</button>
-                                </form>
-                                <form action="${pageContext.request.contextPath}/offers/reject/${offer.offerId}" method="post">
-                                    <button type="submit" class="btn btn-warning">Reject</button>
-                                </form>
-<%--                            </sec:authorize>--%>
+                            <sec:authorize access="hasAnyRole('HR_MANAGER', 'ADMIN')">
+                                <a href="${pageContext.request.contextPath}/offers/approve/${offer.offerId}"
+                                   class="btn btn-success">Approve</a>
+                                <a href="${pageContext.request.contextPath}/offers/reject/${offer.offerId}"
+                                   class="btn btn-danger">Reject</a>
+                            </sec:authorize>
+                            <sec:authorize access="hasAnyRole('RECRUITER', 'HR_MANAGER', 'ADMIN')">
+                                <a href="${pageContext.request.contextPath}/offers/cancel/${offer.offerId}"
+                                   class="btn btn-warning">Cancel Offer</a>
+                            </sec:authorize>
                         </c:when>
 
-                        <c:when test="${offer.status == 'APPROVED'}">
-<%--                            <sec:authorize access="hasAnyRole('RECRUITER', 'MANAGER', 'ADMIN')">--%>
-                                <form action="${pageContext.request.contextPath}/offers/mark-sent/${offer.offerId}" method="post">
-                                    <button type="submit" class="btn btn-primary">Mark as sent to candidate</button>
-                                </form>
-                                <form action="${pageContext.request.contextPath}/offers/cancel/${offer.offerId}" method="post">
-                                    <button type="submit" class="btn btn-danger">Cancel Offer</button>
-                                </form>
-<%--                            </sec:authorize>--%>
-                        </c:when>
-
-                        <c:when test="${offer.status == 'REJECTED'}">
-                            <!-- No buttons -->
+                        <c:when test="${offer.status == 'WAITING_FOR_APPROVAL'}">
+                            <sec:authorize access="hasAnyRole('RECRUITER', 'HR_MANAGER', 'ADMIN')">
+                                <a href="${pageContext.request.contextPath}/offers/send/${offer.offerId}"
+                                   class="btn btn-info">Mark as Sent to Candidate</a>
+                                <a href="${pageContext.request.contextPath}/offers/cancel/${offer.offerId}"
+                                   class="btn btn-warning">Cancel Offer</a>
+                            </sec:authorize>
                         </c:when>
 
                         <c:when test="${offer.status == 'ACCEPTED'}">
-<%--                            <sec:authorize access="hasAnyRole('RECRUITER', 'MANAGER', 'ADMIN')">--%>
-                                <form action="${pageContext.request.contextPath}/offers/decline/${offer.offerId}" method="post">
-                                    <button type="submit" class="btn btn-danger">Declined Offer</button>
-                                </form>
-                                <form action="${pageContext.request.contextPath}/offers/cancel/${offer.offerId}" method="post">
-                                    <button type="submit" class="btn btn-danger">Cancel Offer</button>
-                                </form>
-<%--                            </sec:authorize>--%>
-                        </c:when>
-
-                        <c:when test="${offer.status == 'DECLINED'}">
-                            <!-- No buttons -->
-                        </c:when>
-
-                        <c:when test="${offer.status == 'CANCELLED'}">
-                            <!-- No buttons -->
+                            <sec:authorize access="hasAnyRole('RECRUITER', 'HR_MANAGER', 'ADMIN')">
+                                <a href="${pageContext.request.contextPath}/offers/cancel/${offer.offerId}"
+                                   class="btn btn-warning">Cancel Offer</a>
+                            </sec:authorize>
                         </c:when>
                     </c:choose>
+
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -103,12 +86,18 @@
                         <p>${offer.interview.title}</p>
                     </div>
                     <div class="form-group">
-                        <label>Start Contract:</label>
-                        <p>From ${offer.startContract} To ${offer.endContract}</p>
+                        <label>Contract:</label>
+                        <span style="display: block">
+
+                        From
+                        <p style="display: inline">${startDate}</p>
+                        To
+                        <p style="display: inline">${endDate}</p>
+                        </span>
                     </div>
                     <div class="form-group">
                         <label>Due Date:</label>
-                        <p>${offer.dueDate}</p>
+                        <p>${dueDate}</p>
                     </div>
                 </div>
                 <div class="col-md-6">

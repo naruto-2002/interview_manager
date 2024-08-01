@@ -43,7 +43,7 @@
                         </div>
                         <div class="form-group">
                             <label for="position">Position: <span class="required">*</span></label>
-                            <form:select path="position" class="form-control" id="position"  required="true">
+                            <form:select path="position" class="form-control" id="position" required="true">
                                 <form:options items="${positions}"/>
                             </form:select>
                         </div>
@@ -82,6 +82,11 @@
                             <label for="dueDate">Due Date: <span class="required">*</span></label>
                             <form:input path="dueDate" class="form-control" id="dueDate" type="date" required="true"/>
                         </div>
+
+                        <div class="form-group">
+                            <label>Status:</label>
+                            <p>WAITING_FOR_APPROVAL</p>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
@@ -92,13 +97,13 @@
                         </div>
                         <div class="form-group">
                             <label for="level">Level: <span class="required">*</span></label>
-                            <form:select path="level" class="form-control" id="level"  required="true">
+                            <form:select path="level" class="form-control" id="level" required="true">
                                 <form:options items="${levels}"/>
                             </form:select>
                         </div>
                         <div class="form-group">
                             <label for="department">Department:<span class="required">*</span></label>
-                            <form:select path="department" class="form-control" id="department"  required="true">
+                            <form:select path="department" class="form-control" id="department" required="true">
                                 <form:options items="${departments}"/>
                             </form:select>
                         </div>
@@ -112,13 +117,7 @@
                         </div>
                         <div class="form-group">
                             <label for="basicSalary">Basic Salary:<span class="required">*</span></label>
-                            <form:input path="basicSalary" class="form-control" id="basicSalary"  required="true"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="status">Status:<span class="required">*</span></label>
-                            <form:select path="status" class="form-control" id="status"  required="true">
-                                <form:options items="${statuses}"/>
-                            </form:select>
+                            <form:input path="basicSalary" class="form-control" id="basicSalary" required="true"/>
                         </div>
                         <div class="form-group">
                             <label for="note">Note:</label>

@@ -8,6 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 //import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +35,7 @@ public class OfferController {
     private InterviewService interviewService;
 
     @GetMapping
+    @PreAuthorize("hasRole('MANAGER')")
     public String listOffers(Model model,
                              @RequestParam(defaultValue = "0") int page,
                              @RequestParam(defaultValue = "10") int size,
@@ -71,40 +76,36 @@ public class OfferController {
         return "redirect:/offers";
     }
 
-    @PostMapping("/cancel/{id}")
-////    @Secured({"RECRUITER", "MANAGER", "ADMIN"})
+    @GetMapping("/cancel/{id}")
     public String cancelOffer(@PathVariable Long id) {
         offerService.cancelOffer(id);
         return "redirect:/offers"; // redirect to offer list
     }
 
-    @PostMapping("/approve/{id}")
-//    @Secured({"MANAGER", "ADMIN"})
+    @GetMapping("/approve/{id}")
     public String approveOffer(@PathVariable Long id) {
         offerService.approveOffer(id);
         return "redirect:/offers"; // redirect to offer list
     }
 
-    @PostMapping("/reject/{id}")
-//    @Secured({"MANAGER", "ADMIN"})
+    @GetMapping("/reject/{id}")
     public String rejectOffer(@PathVariable Long id) {
         offerService.rejectOffer(id);
         return "redirect:/offers"; // redirect to offer list
     }
 
-    @PostMapping("/mark-asSent/{id}")
-//    @Secured({"RECRUITER", "MANAGER", "ADMIN"})
+    @GetMapping("/send/{id}")
     public String markAsSent(@PathVariable Long id) {
         offerService.markAsSent(id);
         return "redirect:/offers"; // redirect to offer list
     }
 
-    @PostMapping("/decline/{id}")
-//    @Secured({"RECRUITER", "MANAGER", "ADMIN"})
+    @GetMapping("/decline/{id}")
     public String declineOffer(@PathVariable Long id) {
         offerService.declineOffer(id);
         return "redirect:/offers"; // redirect to offer list
     }
+
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -126,6 +127,20 @@ public class OfferController {
             populateModelAttributes(model);
             return "offers/create_offer";
         }
+        // Kiểm tra logic: startContract trước endContract
+        if (offer.getStartContract().after(offer.getEndContract())) {
+            result.rejectValue("startContract", "error.offer", "Start date must be before end date.");
+            populateModelAttributes(model);
+            return "offers/create_offer";
+        }
+
+        // Kiểm tra logic: dueDate trong tương lai
+        if (offer.getDueDate().before(new Date())) {
+            result.rejectValue("dueDate", "error.offer", "Due date must be in the future.");
+            populateModelAttributes(model);
+            return "offers/create_offer";
+        }
+        offer.setStatus(OfferStatusEnum.WAITING_FOR_APPROVAL);
         offerService.saveOffer(offer);
         return "redirect:/offers";
     }
@@ -138,6 +153,7 @@ public class OfferController {
             populateModelAttributes(model);
             return "offers/edit_offer";
         }
+
         return "redirect:/offers";
     }
 
@@ -148,16 +164,41 @@ public class OfferController {
             populateModelAttributes(model);
             return "offers/edit_offer";
         }
+
+        // Kiểm tra logic: startContract trước endContract
+        if (offer.getStartContract().after(offer.getEndContract())) {
+            result.rejectValue("startContract", "error.offer", "Start date must be before end date.");
+            populateModelAttributes(model);
+            return "offers/create_offer";
+        }
+
+        // Kiểm tra logic: dueDate trong tương lai
+        if (offer.getDueDate().before(new Date())) {
+            result.rejectValue("dueDate", "error.offer", "Due date must be in the future.");
+            populateModelAttributes(model);
+            return "offers/create_offer";
+        }
         offer.setOfferId(id);
         offerService.saveOffer(offer);
         return "redirect:/offers";
     }
 
     @GetMapping("/detail/{id}")
-    public String viewOfferDetail(@PathVariable Long id, Model model) {
+    public String viewOfferDetail(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         Offer offer = offerService.getOfferById(id);
+        model.addAttribute("user", userDetails.getClass());
         if (offer != null) {
             model.addAttribute("offer", offer);
+
+            // Định dạng ngày
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+            String startDate = dateFormat.format(offer.getStartContract());
+            String endDate = dateFormat.format(offer.getEndContract());
+            String dueDate = dateFormat.format(offer.getDueDate());
+
+            model.addAttribute("startDate", startDate);
+            model.addAttribute("endDate", endDate);
+            model.addAttribute("dueDate", endDate);
             return "offers/detail_offer";
         }
         return "redirect:/offers";

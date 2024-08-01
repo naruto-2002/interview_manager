@@ -63,7 +63,7 @@ public class OfferService {
 
     public void approveOffer(Long id) {
         Offer offer = findById(id);
-        offer.setStatus(OfferStatusEnum.APPROVED);
+        offer.setStatus(OfferStatusEnum.WAITTING_FOR_RESPONSE);
         offerRepository.save(offer);
     }
 

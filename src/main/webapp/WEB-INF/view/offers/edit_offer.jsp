@@ -10,6 +10,17 @@
     <link rel="stylesheet" type="text/css"
           href="/lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
+    <style>
+        .error-input {
+            border-color: red;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.875em;
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="../layout/header.jsp"/>
@@ -18,7 +29,7 @@
 <div class="be-content" style="margin-top: 60px;">
     <div class="main-content container-fluid">
         <div class="page-head mt-0 px-0" style="margin-top: 60px;">
-            <h2 class="page-head-title">Offer</h2>
+            <h2 class="page-head-title">Update Offer</h2>
             <nav aria-label="breadcrumb mt-2" role="navigation">
                 <ol class="breadcrumb page-head-nav">
                     <li class="breadcrumb-item"><a href="/offers">Offer List</a></li>
@@ -28,8 +39,9 @@
         </div>
 
         <div class="">
-            <h1>Update Offer</h1>
-            <form:form action="${pageContext.request.contextPath}/offers/${offer.offerId}" method="post" modelAttribute="offer">
+
+            <form:form action="${pageContext.request.contextPath}/offers/${offer.offerId}" method="post"
+                       modelAttribute="offer" onsubmit="return validateForm();">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -65,18 +77,33 @@
                             <label>Start Contract:</label>
                             <div class="row">
                                 <div class="col-md-6">
-                                    From
-                                    <form:input path="startContract" class="form-control" id="startContract" type="date"/>
+                                    <form:input path="startContract" class="form-control" id="startContract"
+                                                type="date"/>
+                                    <span id="startContractError" class="error-message">Start date must be before end date.</span>
+
+                                    <!-- Hiển thị lỗi cho trường startContract -->
+                                    <form:errors path="startContract" cssClass="error"/>
                                 </div>
                                 <div class="col-md-6">
-                                    To
                                     <form:input path="endContract" class="form-control" id="endContract" type="date"/>
+                                    <!-- Hiển thị lỗi cho trường startContract -->
+                                    <span id="endContractError"
+                                          class="error-message">End date must be after start date.</span>
+                                    <form:errors path="endContract" cssClass="error"/>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="dueDate">Due Date:</label>
                             <form:input path="dueDate" class="form-control" id="dueDate" type="date"/>
+                            <form:errors path="dueDate" cssClass="error"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status:</label>
+                            <p>${offer.status}</p>
+                            <form:select path="status" class="form-control" id="status">
+                                <form:options items="${statuses}"/>
+                            </form:select>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -102,7 +129,8 @@
                             <label for="recruiter">Recruiter:</label>
                             <form:select path="recruiter" class="form-control" id="recruiter" required="true">
                                 <form:option value="" label="Select Recruiter"/>
-                                <form:options items="${recruiters}" itemValue="userId" itemLabel="fullNameWithAccountName"/>
+                                <form:options items="${recruiters}" itemValue="userId"
+                                              itemLabel="fullNameWithAccountName"/>
                             </form:select>
                         </div>
                         <div class="form-group">
@@ -110,14 +138,9 @@
                             <form:input path="basicSalary" class="form-control" id="basicSalary"/>
                         </div>
                         <div class="form-group">
-                            <label for="status">Status:</label>
-                            <form:select path="status" class="form-control" id="status">
-                                <form:options items="${statuses}"/>
-                            </form:select>
-                        </div>
-                        <div class="form-group">
                             <label for="note">Note:</label>
-                            <form:textarea class="form-control" path="note" id="note" maxlength="500" rows="4" cols="50"/>
+                            <form:textarea class="form-control" path="note" id="note" maxlength="500" rows="4"
+                                           cols="50"/>
                         </div>
                     </div>
                 </div>
@@ -143,5 +166,34 @@
 <script src="/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <script src="/lib/jqvmap/jquery.vmap.min.js" type="text/javascript"></script>
 <script src="/lib/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+<!-- Các script khác của bạn -->
+<script>
+    function validateForm(event) {
+        var startContract = document.getElementById("startContract").value;
+        var endContract = document.getElementById("endContract").value;
+
+        if (startContract !== "" && endContract !== "") {
+            var startDate = new Date(startContract);
+            var endDate = new Date(endContract);
+
+            if (startDate > endDate) {
+                event.preventDefault();
+                document.getElementById("startContractError").style.display = "block";
+                document.getElementById("endContractError").style.display = "none";
+                return false;
+            } else if (startDate < endDate) {
+                document.getElementById("startContractError").style.display = "none";
+                document.getElementById("endContractError").style.display = "none";
+            } else {
+                // Ngày bắt đầu và ngày kết thúc trùng nhau
+                document.getElementById("startContractError").style.display = "none";
+                document.getElementById("endContractError").style.display = "none";
+            }
+        }
+
+        return true;
+    }
+
+</script>
 </body>
 </html>

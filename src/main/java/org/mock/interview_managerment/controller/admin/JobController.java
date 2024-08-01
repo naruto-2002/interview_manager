@@ -61,14 +61,12 @@ public class JobController {
             page = jobService.getJobs(pageable);
         }
 
-        if (page.isEmpty()) {
-            model.addAttribute("message", "No item matches with your search data. Please try again");
-        }
-
         jobService.updateJobStatus(page);
         model.addAttribute("keyword", keyword);
         model.addAttribute("status", status);
         model.addAttribute("listjobs", page);
+        System.out.println(page);
+        System.out.println(page.getSize());
         return "job/jobList";
     }
 
@@ -93,7 +91,7 @@ public class JobController {
         } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("errorMessage", "Không thể import vì file không đúng định dạng.");
-            return "redirect:/job";
+            return "redirect:/job/import";
         }
 
         return "redirect:/job";

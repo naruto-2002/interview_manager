@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Excel File</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="/css/app.css" type="text/css">
 </head>
 
@@ -16,6 +15,14 @@
     <div class="be-content">
         <div class="main-content container">
             <h2 class="mb-4 text-center">Upload Excel File</h2>
+
+            <!-- Hiển thị thông báo lỗi nếu có -->
+            <c:if test="${not empty errorMessage}">
+                <div class="alert alert-danger" role="alert">
+                    ${errorMessage}
+                </div>
+            </c:if>
+
             <form id="uploadForm" action="/job/import" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <div class="custom-file">
@@ -83,7 +90,6 @@
         });
     </script>
 
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -97,7 +103,6 @@
     <script src="/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
     <script src="/lib/jqvmap/jquery.vmap.min.js" type="text/javascript"></script>
     <script src="/lib/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
-
 </body>
 
 </html>

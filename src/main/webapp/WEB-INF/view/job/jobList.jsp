@@ -10,11 +10,13 @@
                 <title>Job List</title>
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-                <link rel="stylesheet" type="text/css" href="/css/jobListCss.css">
+
                 <link rel="stylesheet"
                     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
                 <link rel="stylesheet" href="/css/app.css" type="text/css">
+                <link rel="stylesheet" type="text/css" href="/css/list.css">
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
             </head>
 
             <body>
@@ -83,38 +85,38 @@
                                         </thead>
                                         <tbody>
                                             <c:choose>
-                                                <c:when
-                                                    test="${listjobs.content != null && not empty listjobs.content}">
-                                                    <c:forEach var="job" items="${listjobs.content}">
+                                                <c:when test="${not empty listjobs.content}">
+                                                    <!-- Hiển thị danh sách công việc nếu có dữ liệu -->
+                                                    <c:forEach var="index" begin="0"
+                                                        end="${listjobs.content.size() -1}">
                                                         <tr>
-                                                            <td>${job.title}</td>
-                                                            <td>${job.requiredSkills}</td>
-                                                            <td>${job.startDate}</td>
-                                                            <td>${job.endDate}</td>
-                                                            <td>${job.level}</td>
-                                                            <td>${job.status}</td>
+                                                            <td>${listjobs.content[index].title}</td>
+                                                            <td>${listjobs.content[index].requiredSkills}</td>
+                                                            <td>${listjobs.content[index].startDate}</td>
+                                                            <td>${listjobs.content[index].endDate}</td>
+                                                            <td>${listjobs.content[index].level}</td>
+                                                            <td>${listjobs.content[index].status}</td>
                                                             <td>
-                                                                <a href="/job/detail/${job.jobId}"
+                                                                <a href="/job/detail/${listjobs.content[index].jobId}"
                                                                     class="btn btn-success">View</a>
-                                                                <a href="/job/update/${job.jobId}"
+                                                                <a href="/job/update/${listjobs.content[index].jobId}"
                                                                     class="btn btn-warning mx-2">Update</a>
-                                                                <a href="/job/delete/${job.jobId}"
+                                                                <a href="/job/delete/${listjobs.content[index].jobId}"
                                                                     class="btn btn-danger">Delete</a>
                                                             </td>
                                                         </tr>
                                                     </c:forEach>
                                                 </c:when>
-                                                <c:otherwise>
-                                                    <tr>
-                                                        <td colspan="7">No jobs available</td>
-                                                    </tr>
-                                                </c:otherwise>
+
                                             </c:choose>
                                         </tbody>
 
 
+
+
+
                                     </table>
-                                    <nav aria-label="Page navigation example">
+                                    <nav class="pagination-container" aria-label="Page navigation example">
                                         <ul class="pagination">
                                             <c:choose>
                                                 <c:when test="${listjobs.number > 0}">
@@ -132,20 +134,31 @@
                                             </c:choose> -->
 
                                             <!-- Hiển thị số trang -->
-                                            <c:forEach var="page" begin="0" end="${listjobs.totalPages - 1}">
-                                                <c:choose>
-                                                    <c:when test="${page == listjobs.number}">
-                                                        <li class="page-item active">
-                                                            <span class="page-link">${page + 1}</span>
-                                                        </li>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <li class="page-item">
-                                                            <a class="page-link" href="/job?p=${page}">${page + 1}</a>
-                                                        </li>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </c:forEach>
+                                            <c:choose>
+                                                <c:when test="${listjobs.totalPages > 0}">
+                                                    <c:forEach var="page" begin="0" end="${listjobs.totalPages - 1}">
+                                                        <c:choose>
+                                                            <c:when test="${page == listjobs.number}">
+                                                                <li class="page-item active">
+                                                                    <span class="page-link">${page + 1}</span>
+                                                                </li>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <li class="page-item">
+                                                                    <a class="page-link" href="/job?p=${page}">${page +
+                                                                        1}</a>
+                                                                </li>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:forEach>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <li class="page-item disabled">
+                                                        <span class="page-link">No pages available</span>
+                                                    </li>
+                                                </c:otherwise>
+                                            </c:choose>
+
 
                                             <!-- <c:choose>
                                                 <c:when test="${listjobs.number < listjobs.totalPages - 1}">
@@ -179,53 +192,69 @@
                         <script src="/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
                         <script src="/lib/jqvmap/jquery.vmap.min.js" type="text/javascript"></script>
                         <script src="/lib/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+                        <style>
+                            .search-box {
+                                position: relative;
+                                width: 50%;
+                                /* Adjust width as needed */
+                            }
+
+                            .search-box input {
+                                width: 100%;
+                                padding-left: 2.5rem;
+                                /* Make space for the icon */
+                            }
+
+                            .search-box .fa-search {
+                                position: absolute;
+                                left: 10px;
+                                top: 50%;
+                                transform: translateY(-50%);
+                                color: #aaa;
+                            }
+
+                            .custom-select-arrow {
+                                position: relative;
+                                display: inline-block;
+                                width: 100%;
+                            }
+
+                            .custom-select-arrow select {
+                                appearance: none;
+                                -webkit-appearance: none;
+                                -moz-appearance: none;
+                                width: 100%;
+                                padding-right: 2rem;
+                                /* Adjust padding to make space for the arrow */
+                            }
+
+                            .custom-select-arrow::after {
+                                content: '▼';
+                                /* Unicode for down arrow */
+                                position: absolute;
+                                right: 10px;
+                                top: 50%;
+                                transform: translateY(-50%);
+                                pointer-events: none;
+                                font-size: 12px;
+                            }
+
+                            .pagination-container {
+                                position: fixed;
+                                bottom: 50px;
+                                left: 0;
+                                width: 100%;
+
+
+                                padding: 10px;
+                                z-index: 1000;
+
+                                display: flex;
+                                justify-content: center;
+
+                            }
+                        </style>
             </body>
-            <style>
-                .search-box {
-                    position: relative;
-                    width: 50%;
-                    /* Adjust width as needed */
-                }
 
-                .search-box input {
-                    width: 100%;
-                    padding-left: 2.5rem;
-                    /* Make space for the icon */
-                }
-
-                .search-box .fa-search {
-                    position: absolute;
-                    left: 10px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    color: #aaa;
-                }
-
-                .custom-select-arrow {
-                    position: relative;
-                    display: inline-block;
-                    width: 100%;
-                }
-
-                .custom-select-arrow select {
-                    appearance: none;
-                    -webkit-appearance: none;
-                    -moz-appearance: none;
-                    width: 100%;
-                    padding-right: 2rem;
-                    /* Adjust padding to make space for the arrow */
-                }
-
-                .custom-select-arrow::after {
-                    content: '▼';
-                    /* Unicode for down arrow */
-                    position: absolute;
-                    right: 10px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    pointer-events: none;
-                    font-size: 12px;
-                }
-            </style>
 
             </html>

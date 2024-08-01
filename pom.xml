@@ -81,6 +81,7 @@
             <artifactId>jakarta.servlet.jsp.jstl</artifactId>
         </dependency>
 
+
         <!-- JWT Dependencies -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

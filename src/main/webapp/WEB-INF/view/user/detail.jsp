@@ -161,8 +161,7 @@
 
         var xhr = new XMLHttpRequest();
 
-        xhr.open('POST', '/update-status', true);
-
+        xhr.open('POST', '/user/update-status', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
 
         var data = {
@@ -170,7 +169,6 @@
         };
 
         xhr.send(JSON.stringify(data));
-
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 location.reload();

@@ -105,7 +105,7 @@ public class CandidateService {
                 .filter(candidate -> !candidate.getStatus().equals(StatusCandidateEnum.BANNED))
                 .collect(Collectors.toList());
     }
-    //code van
+
     public List<Candidate> getAllCandidates() {
         return candidateRepository.findAll();
     }

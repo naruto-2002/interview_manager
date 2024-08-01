@@ -16,6 +16,10 @@ public class HomeController {
         return "home"; // Điều hướng đến trang home
     }
 
+    @GetMapping("/403")
+    public String getAccessDeniedPage(Model model) {
+        return "auth/pages-403";
+    }
 
 
     public void getUserInfor(Model model) {

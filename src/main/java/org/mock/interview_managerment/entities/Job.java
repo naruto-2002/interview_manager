@@ -2,9 +2,8 @@ package org.mock.interview_managerment.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.mock.interview_managerment.enums.StatusEnum;
+import org.mock.interview_managerment.enums.StatusJobEnum;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -25,9 +24,14 @@ public class Job {
     private Timestamp endDate;
     private String location;
     private String benefits;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private StatusJobEnum status;
+
     private String salaryFrom;
     private String salaryTo;
+    private Boolean isDeleted = false;
 
     public LocalDate getStartDateAsLocalDate() {
         return startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();

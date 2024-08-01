@@ -25,26 +25,29 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private PasswordService passwordService;
+    private final PasswordService passwordService;
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private final EmailService emailService;
 
-    @Autowired
-    private SendEmailService sendEmailService;
+    private final UserMapper userMapper;
 
-    @Autowired
-    private UserMapper userMapper;
+    public UserService(UserRepository userRepository,
+            PasswordService passwordService,
+            EmailService emailService,
+            UserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.passwordService = passwordService;
+        this.emailService = emailService;
+        this.userMapper = userMapper;
+    }
 
     public User handleSaveUser(UserCreateDto request) {
         // mapper entity
         User user = userMapper.toUser(request);
 
-        //gen password
+        // gen password
         String password = passwordService.autoGeneratePassword();
         String hashPasword = passwordService.encryptPassword(password);
         user.setPassword(hashPasword);
@@ -53,7 +56,7 @@ public class UserService {
         user.setUsername(UserNameValid.genUserName(user.getFullName(), user.getUserId()));
 
         // send password to email
-        sendEmailService.sendPasswordCreate(user.getEmail(), user.getUsername(), password);
+        emailService.sendPasswordCreate(user.getEmail(), user.getUsername(), hashPasword);
 
         return userRepository.save(user);
     }
@@ -84,8 +87,16 @@ public class UserService {
     }
 
     public User handleUpdateUser(UserUpdateDto request) {
+        Optional<User> existingUserOptional = userRepository.findById(request.getUserId());
+
+        if (existingUserOptional.isEmpty()) {
+            throw new RuntimeException("User not found");
+        }
+
+        User existingUser = existingUserOptional.get();
         User user = userMapper.toUser(request);
-        user.setUsername(UserNameValid.genUserName(user.getFullName(), user.getUserId()));
+        user.setPassword(existingUser.getPassword());
+        user.setUsername(existingUser.getUsername());
         return userRepository.save(user);
     }
 
@@ -93,10 +104,13 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public List<UserListDto> search(String keyword) {
-        return userRepository.search(keyword).stream()
+    public Page<UserListDto> handleSearchAndFilterUsers(String keyword, Long roleId, Pageable pageable) {
+        Page<User> userPage = userRepository.searchAndFilterUsers(keyword, roleId, pageable);
+        List<UserListDto> userListDtos = userPage.getContent().stream()
                 .map(userMapper::toUserListDto)
                 .collect(Collectors.toList());
+
+        return new PageImpl<>(userListDtos, pageable, userPage.getTotalElements());
     }
 
     public List<User> getManagers() {
@@ -108,15 +122,29 @@ public class UserService {
     }
 
     public List<User> findByRoleforCandidate() {
-        List<User> list= this.userRepository.findByRole_RoleId(1L);
-        List<User> list2= this.userRepository.findByRole_RoleId(2L);
-        List<User> list3= this.userRepository.findByRole_RoleId(3L);
+        List<User> list = this.userRepository.findByRole_RoleId(1L);
+        List<User> list2 = this.userRepository.findByRole_RoleId(2L);
+        List<User> list3 = this.userRepository.findByRole_RoleId(3L);
         list.addAll(list2);
         list.addAll(list3);
         return list;
     }
 
-    //    Code van
+    public boolean checkEmailExist(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    public User handleGetUserByEmail(String email) {
+
+        return userRepository.findByEmail(email);
+    }
+
+    public void handleResetPassword(User user, String newPass) {
+
+        user.setPassword(passwordService.encryptPassword(newPass));
+        userRepository.save(user);
+    }
+
     public List<User> getUsersByRoleName(String roleName) {
         return userRepository.findByRoleName(roleName);
     }
@@ -124,5 +152,4 @@ public class UserService {
     public User getByUserId(long userId) {
         return userRepository.findByUserId(userId);
     }
-
 }

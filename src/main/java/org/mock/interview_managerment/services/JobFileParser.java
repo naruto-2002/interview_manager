@@ -3,6 +3,8 @@ package org.mock.interview_managerment.services;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.mock.interview_managerment.entities.Job;
+import org.mock.interview_managerment.enums.StatusJobEnum;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
@@ -12,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class JobFileParser {
 
     public List<Job> parseExcelFile(MultipartFile file) throws Exception {
@@ -33,31 +36,28 @@ public class JobFileParser {
                 job.setRequiredSkills(getCellValue(row.getCell(2)));
                 job.setLevel(getCellValue(row.getCell(3)));
 
-                // Chuyển đổi chuỗi sang Timestamp
-
                 job.setStartDate(convertToTimestamp(getCellValue(row.getCell(4))));
                 job.setEndDate(convertToTimestamp(getCellValue(row.getCell(5))));
 
                 job.setLocation(getCellValue(row.getCell(6)));
                 job.setBenefits(getCellValue(row.getCell(7)));
-                job.setStatus(getCellValue(row.getCell(8)));
-                job.setSalaryFrom((getCellValue(row.getCell(9))).toString());
-                job.setSalaryTo((getCellValue(row.getCell(10))).toString());
+                job.setStatus(StatusJobEnum.valueOf(getCellValue(row.getCell(8)).toUpperCase()));
+                job.setSalaryFrom(getCellValue(row.getCell(9)));
+                job.setSalaryTo(getCellValue(row.getCell(10)));
 
-                System.out.println("Đã thêm job: " + job);
                 jobs.add(job);
             }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Đã xảy ra lỗi khi đọc file Excel: " + e.getMessage());
-            throw e; // Rethrow hoặc xử lý lỗi tại đây
+            throw e;
         }
         return jobs;
     }
 
     private Timestamp convertToTimestamp(String dateStr) {
         if (dateStr == null || dateStr.trim().isEmpty()) {
-            return null; // Xử lý khi chuỗi trống
+            return null;
         }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy H:mm");
@@ -74,10 +74,9 @@ public class JobFileParser {
                 return cell.getStringCellValue();
             case NUMERIC:
                 if (DateUtil.isCellDateFormatted(cell)) {
-                    // Chuyển đổi số thành chuỗi ngày tháng
-                    return cell.getLocalDateTimeCellValue().format(DateTimeFormatter.ofPattern("M/d/yyyy h:mm"));
+                    return cell.getLocalDateTimeCellValue().format(DateTimeFormatter.ofPattern("M/d/yyyy H:mm"));
                 } else {
-                    return String.valueOf(cell.getNumericCellValue());
+                    return String.valueOf((long) cell.getNumericCellValue());
                 }
             case BOOLEAN:
                 return String.valueOf(cell.getBooleanCellValue());

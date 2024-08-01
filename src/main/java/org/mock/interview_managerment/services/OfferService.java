@@ -85,4 +85,8 @@ public class OfferService {
         offer.setStatus(OfferStatusEnum.DECLINED);
         offerRepository.save(offer);
     }
+
+    public void deleteOfferByInterviewId(Long interviewId) {
+        offerRepository.deleteByInterviewId(interviewId);
+    }
 }

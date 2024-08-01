@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="/lib/datetimepicker/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" href="/lib/select2/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap-slider/css/bootstrap-slider.min.css">
-    
+
     <link rel="stylesheet" href="/css/app.css" type="text/css">
     <link rel="stylesheet" href="/css/interview/details.css">
 </head>
@@ -48,7 +48,6 @@
                             <div class="bs-grid-block">
                                 <div class="card">
                                     <div class="card-body">
-
                                         <form>
                                             <div class="form-group row">
                                                 <div class="col-12 col-sm-8 col-lg-6 text-sm-left">
@@ -70,7 +69,7 @@
                                                                 <li>Date of birth: <span>${interview.candidate.dob}</span></li>
                                                                 <li>Address: <span>${interview.candidate.address}</span></li>
                                                                 <li>Email: <span>${interview.candidate.email}</span></li>
-                                                                <li>Phone number: <span>${interview.candidate.phone}</span></li>
+                                                                <li>Phone: <span>${interview.candidate.phone}</span></li>
                                                                 <li>Skills: <span>${interview.candidate.skills}</span></li>
                                                                 <li>Position: <span>${interview.candidate.currentPosition}</span></li>
                                                             </ul>
@@ -125,7 +124,7 @@
                                                             <ul class="list-unstyled">
                                                                 <li>Title: <span>${interview.job.title}</span></li>
                                                                 <li>Location: <span>${interview.job.location}</span></li>
-                                                                <li>level: <span>${interview.job.level}</span></li>
+                                                                <li>Level: <span>${interview.job.level}</span></li>
                                                                 <li>Status: <span>${interview.job.status}</span></li>
                                                             </ul>
                                                         </div>
@@ -183,6 +182,9 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+
+
                                             <div class="form-group row">
                                                 <div class="col-12 col-sm-8 col-lg-6 text-sm-left">
                                                     <div class="card" style="padding: 0; margin: 0">

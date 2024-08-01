@@ -21,9 +21,7 @@ public interface CandidateRepository extends JpaRepository<Candidate,Long> {
     public Candidate getById(Long id);
     public Page<Candidate> findByStatus(StatusCandidateEnum status, Pageable pageable);
 
-    //    code van
     List<Candidate> findAll();
-
     @Query("SELECT c FROM Candidate c WHERE c.id = :id")
     default Candidate findByCandidateId(long id) {
         return null;

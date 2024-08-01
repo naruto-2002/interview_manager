@@ -56,7 +56,13 @@ public class Candidate {
     @LastModifiedDate
     @Column(nullable = false)
     private LocalDate updatedAt;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "candidate", cascade = CascadeType.MERGE)
+    @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
+    @ToString.Exclude // Không sử dụng trong toString()
+    private List<CandidateJob> candidateJob;
 }

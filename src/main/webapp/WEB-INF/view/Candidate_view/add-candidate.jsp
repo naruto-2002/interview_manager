@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="/lib/datetimepicker/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" href="/lib/select2/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap-slider/css/bootstrap-slider.min.css">
-    <link rel="stylesheet" type="text/css" href="/multiselect/css/multi-select.css">
+    <link rel="stylesheet" type="text/css" href="/lib/multiselect/css/multi-select.css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
     <link rel="stylesheet" href="/css/virtual-select.min.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -95,7 +95,7 @@
                         <label>Recruiter:</label><br>
                         <form:select path="user" id="recruiter">
                             <form:option value="" selected="true">Choose Recruiter</form:option>
-                            <form:options items="${recruiters}" itemValue="id" itemLabel="fullName"  />
+                            <form:options items="${recruiters}" itemValue="userId" itemLabel="fullName"  />
 
                         </form:select>
                         <form:errors path="user" cssClass="text-danger"></form:errors>
@@ -170,7 +170,7 @@
     <!-- Right sidebar -->
 </div>
 </div>
-<script src="assets\js\virtual-select.min.js"></script>
+<script src="/js/virtual-select.min.js"></script>
 <script>
     VirtualSelect.init({
         ele: 'select'

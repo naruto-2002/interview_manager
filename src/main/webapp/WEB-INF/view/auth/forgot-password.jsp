@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 
@@ -23,15 +24,20 @@
                     <div class="card-header"><img class="logo-img" src="\img\login_img.png" alt="logo"
                                                   width="130" height="40"><span class="splash-description">Forgot your
                                 password?</span></div>
+                    <c:if test="${not empty error}">
+                        <h4 class="text-danger text-center font-weight-bold">${error}</h4>
+                    </c:if>
                     <div class="card-body">
-                        <form method="get" action="/reset-password">
+                        <form method="get" action="/forgot-password/send-email">
                             <p>Don't worry, we'll send you an email to reset your password.</p>
+
                             <div class="form-group pt-4">
                                 <input class="form-control" type="email" name="email" required=""
                                        placeholder="Your Email" autocomplete="off">
                             </div>
-                            <div class="form-group pt-1">
-                                <button class="btn btn-block btn-primary btn-xl">Reset Password</button>
+                            <div class="form-group pt-3 d-flex justify-content-around">
+                                <button class="btn btn-primary btn-md me-3">Send</button>
+                                <a href="/login" class="btn btn-outline-primary btn-md">Cancel</a>
                             </div>
                         </form>
                     </div>

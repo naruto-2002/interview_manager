@@ -1,7 +1,8 @@
-package org.mock.interview_managerment.entities;
+package org.mock.interview_managerment.services;
 
 import lombok.RequiredArgsConstructor;
-import org.mock.interview_managerment.enums.StatusEnum;
+import org.mock.interview_managerment.entities.Job;
+import org.mock.interview_managerment.enums.StatusJobEnum;
 import org.mock.interview_managerment.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,16 +21,20 @@ public class JobService {
     private JobRepository jobRepository;
 
     public Page<Job> getJobs(Pageable pageable) {
-        return jobRepository.findAll(pageable);
+        return jobRepository.findAllByIsDeletedFalse(pageable);
+        // return jobRepository.findAll(pageable);
     }
 
-//    public List<Job> getJobs() {
-//        return jobRepository.findAll();
-//    }
+    // public List<Job> getJobs() {
+    // return jobRepository.findAll();
+    // }
 
+    public Page<Job> searchJobs(String keyword, StatusJobEnum status, Pageable pageable) {
+        return jobRepository.findByKeywordAndStatus(keyword, StatusJobEnum.valueOf(String.valueOf(status)), pageable);
+    }
 
-    public Page<Job> searchJobs(String keyword, String status, Pageable pageable) {
-        return jobRepository.findByKeywordAndStatus(keyword, status, pageable);
+    public Page<Job> searchJobsStatusNull(String keyword, Pageable pageable) {
+        return jobRepository.findByKeyword(keyword, pageable);
     }
 
     public List<Job> getAllJobs() {
@@ -62,13 +67,20 @@ public class JobService {
 
             if (today.isAfter(startDate) && today.isBefore(endDate) || today.isEqual(startDate)
                     || today.isEqual(endDate)) {
-                job.setStatus("Open");
+                job.setStatus(StatusJobEnum.OPEN);
             } else {
-                job.setStatus("Close");
+                job.setStatus(StatusJobEnum.CLOSE);
             }
         }
 
         jobRepository.saveAll(jobs);
+    }
+
+    public void softDeleteJobById(long id) {
+        jobRepository.findById(id).ifPresent(job -> {
+            job.setIsDeleted(true);
+            jobRepository.save(job);
+        });
     }
 
     public void updateJobStatus(Page<Job> jobPage) {
@@ -80,13 +92,21 @@ public class JobService {
 
             if (today.isAfter(startDate) && today.isBefore(endDate) || today.isEqual(startDate)
                     || today.isEqual(endDate)) {
-                job.setStatus("Open");
+                job.setStatus(StatusJobEnum.OPEN);
             } else {
-                job.setStatus("Close");
+                job.setStatus(StatusJobEnum.CLOSE);
             }
         }
 
         jobRepository.saveAll(jobPage.getContent());
+    }
+
+    public void updateJobIsDeleted(Page<Job> jobPage) {
+        for (Job job : jobPage.getContent()) {
+            job.setIsDeleted(false);
+        }
+        jobRepository.saveAll(jobPage.getContent());
+
     }
 
     public void updateStatusJob(Job job) {
@@ -96,18 +116,17 @@ public class JobService {
 
         if (today.isAfter(startDate) && today.isBefore(endDate) || today.isEqual(startDate)
                 || today.isEqual(endDate)) {
-            job.setStatus("Open");
+            job.setStatus(StatusJobEnum.OPEN);
         } else {
-            job.setStatus("Close");
+            job.setStatus(StatusJobEnum.CLOSE);
         }
     }
-
 
     public List<Job> getJobs() {
         return jobRepository.findAll();
     }
 
     public List<Job> getJobsByStatusOpen() {
-        return jobRepository.findAllByStatus(StatusEnum.OPEN);
+        return jobRepository.findAllByStatus(StatusJobEnum.OPEN);
     }
 }

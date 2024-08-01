@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class ScheduledInterview implements Serializable {
 
     @EmbeddedId
-    private ScheduledInterviewId id;
+    private ScheduledInterviewId ScheduledInterviewId;
 
     @ManyToOne
     @MapsId("interviewId")

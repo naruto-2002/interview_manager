@@ -1,23 +1,23 @@
 package org.mock.interview_managerment.controller.admin;
 
 import org.mock.interview_managerment.entities.Job;
-import org.mock.interview_managerment.entities.JobService;
+import org.mock.interview_managerment.enums.StatusJobEnum;
+import org.mock.interview_managerment.services.JobService;
 import org.mock.interview_managerment.services.JobFileParser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -25,55 +25,82 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class JobController {
     @Autowired
     private JobService jobService;
+    @Autowired
+    private JobFileParser jobFileParser;
 
-    @GetMapping("/job")
+    @RequestMapping("/job")
     public String listJobs(Model model,
             @RequestParam("p") Optional<Integer> p,
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "status", required = false) String status) {
+
         int pageNumber = p.orElse(0);
         Pageable pageable = PageRequest.of(pageNumber, 10);
         Page<Job> page;
-        if ((keyword != null && !keyword.isEmpty()) || (status != null && !status.isEmpty())) {
-            page = jobService.searchJobs(keyword, status, pageable);
 
+        StatusJobEnum statusEnum = null;
+        if (status != null && !status.isEmpty()) {
+            try {
+                statusEnum = StatusJobEnum.valueOf(status.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                model.addAttribute("error", "Invalid status value: " + status);
+                return "job/jobList";
+            }
+        }
+
+        if (statusEnum == null && (keyword != null && !keyword.isEmpty())) {
+            page = jobService.searchJobsStatusNull(keyword, pageable);
+        } else if (statusEnum != null) {
+            page = jobService.searchJobs(keyword, statusEnum, pageable);
         } else {
             page = jobService.getJobs(pageable);
         }
+
         jobService.updateJobStatus(page);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("status", status);
         model.addAttribute("listjobs", page);
+        System.out.println(page);
+        System.out.println(page.getSize());
         return "job/jobList";
     }
 
     @GetMapping("/job/import")
     public String showImportPage() {
-        return "job/import"; // Tên của trang HTML để tải lên file
+        return "job/import";
     }
 
     @PostMapping("/job/import")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file) {
+    public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         try {
-            JobFileParser parser = new JobFileParser();
-            List<Job> jobs = parser.parseExcelFile(file);
+            // Kiểm tra định dạng tệp và nội dung
+            if (!file.getOriginalFilename().endsWith(".xls") && !file.getOriginalFilename().endsWith(".xlsx")) {
+                redirectAttributes.addFlashAttribute("errorMessage", "File không đúng định dạng Excel.");
+                return "redirect:/job";
+            }
+
+            // Phân tích tệp và lưu danh sách job
+            List<Job> jobs = jobFileParser.parseExcelFile(file);
             jobService.saveListJob(jobs);
-            System.out.println("đây là jobs" + jobs);
+
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("lỗi controller: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Không thể import vì file không đúng định dạng.");
+            return "redirect:/job/import";
         }
+
         return "redirect:/job";
     }
 
     @GetMapping("/job/create")
     public String showCreateJobForm(Model model) {
         model.addAttribute("job", new Job());
-        return "/job/createJob";
+        return "job/createJob";
     }
 
     @PostMapping("/job/create")
@@ -137,7 +164,7 @@ public class JobController {
 
     @RequestMapping("/job/delete/{id}")
     public String getDeleteJob(Model model, @PathVariable long id) {
-        jobService.deleteJobById(id);
+        jobService.softDeleteJobById(id);
         return "redirect:/job";
     }
 
@@ -150,7 +177,7 @@ public class JobController {
     }
 
     @PostMapping("/job/update")
-    public String updateJob(@RequestParam Long id,
+    public String updateJob(@RequestParam Long jobId,
             @RequestParam String title,
             @RequestParam String description,
             @RequestParam String requiredSkills,
@@ -173,7 +200,7 @@ public class JobController {
             Timestamp endTimestamp = new Timestamp(end.getTime());
 
             // Create new Job entity
-            Job job = this.jobService.getJobById(id);
+            Job job = this.jobService.getJobById(jobId);
             job.setTitle(title);
             job.setDescription(description);
             job.setRequiredSkills(requiredSkills);

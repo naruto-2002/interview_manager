@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.mock.interview_managerment.enums.ResultEnum;
-import org.mock.interview_managerment.enums.StatusEnum;
+import org.mock.interview_managerment.enums.ResultInterviewEnum;
 import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -33,14 +32,14 @@ public class Interview {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private ResultEnum result;
+    private ResultInterviewEnum result;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private StatusInterviewEnum status;
 
     @ManyToOne
-    @JoinColumn(name = "recruiter_id") // Đảm bảo tên cột đúng trong bảng cơ sở dữ liệu
+    @JoinColumn(name = "recruiter_id")
     private User recruiter;
 
     @ManyToOne
@@ -52,11 +51,14 @@ public class Interview {
     private Candidate candidate;
 
     @OneToMany(mappedBy = "interview", cascade = CascadeType.ALL)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private List<ScheduledInterview> scheduledInterviews = new ArrayList<>();
+    @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
+    @ToString.Exclude // Không sử dụng trong toString()
+    private List<ScheduledInterview> scheduledInterviews;
 
-    @Transient
+    @Transient // Chú thích này để JPA không lưu trữ trường này vào cơ sở dữ liệu
     private List<Long> selectedInterviewerIds = new ArrayList<>();
+
+
+
 
 }

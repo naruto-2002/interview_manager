@@ -73,16 +73,20 @@
                     <div class="form-group">
                         <label for="role">Role:</label>
                         <form:select class="form-control" id="role" path="role.roleName">
-                            <form:options items="${roles}" itemValue="name" itemLabel="name"/>
+                            <form:option value="ADMIN">Admin</form:option>
+                            <form:option value="RECUITER">Recruiter</form:option>
+                            <form:option value="INTERVIEWER">Interviewer</form:option>
+                            <form:option value="MANAGER">Manager</form:option>
                         </form:select>
-
                     </div>
                     <div class="form-group">
                         <label for="status">Status:</label>
                         <form:select class="form-control" id="status" path="status">
-                            <form:options items="${statuses}" itemValue="name" itemLabel="name"/>
+                            <form:option value="ACTIVE">Active</form:option>
+                            <form:option value="INACTIVE">Inactive</form:option>
                         </form:select>
                     </div>
+
 
 
                 </div>

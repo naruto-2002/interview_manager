@@ -1,6 +1,5 @@
 package org.mock.interview_managerment.repository;
 
-import org.mock.interview_managerment.dto.response.UserListDto;
 import org.mock.interview_managerment.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +19,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findOneByEmail(String email);
 
+    public Optional<User> findById(Long id);
+
     List<User> findAll();
 
     User findById(long id); // null
@@ -30,19 +31,24 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     public User findByUserId(Long id);
 
-    public  Optional<User> findByUsername(String username);
+    public Optional<User> findByUsername(String username);
 
     @Query("SELECT u FROM User u WHERE " +
-            "LOWER(u.email) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-            "LOWER(u.username) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-            "LOWER(u.phoneNumber) LIKE LOWER(CONCAT('%', :keyword, '%'))")
-    List<User> search(@Param("keyword") String keyword);
+            "(?1 IS NULL OR u.username LIKE %?1% OR " +
+            "u.email LIKE %?1% OR " +
+            "u.fullName LIKE %?1% OR " +
+            "u.address LIKE %?1% OR " +
+            "u.note LIKE %?1% OR " +
+            "u.phoneNumber LIKE %?1% OR " +
+            "u.role.roleName LIKE %?1%) AND " +
+            "(?2 IS NULL OR u.role.roleId = ?2)")
+    Page<User> searchAndFilterUsers(String keyword, Long roleId, Pageable pageable);
 
     @Query("SELECT u FROM User u WHERE u.role.roleName = 'MANAGER'")
     List<User> findByRoleRoleName(String roleName);
+
     List<User> findByRole_RoleId(Long roleId);
 
-    //    Code van
     @Query("SELECT u FROM User u WHERE u.role.roleName = :roleName")
     List<User> findByRoleName(String roleName);
 

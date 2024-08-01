@@ -51,33 +51,20 @@
                                                 <div class="form-group row">
                                                     <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Candidate name</label>
                                                     <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
-                                                        <form:select class="select2" id="candidate" path="candidate.id" onchange="updateCandidateInfo()">
+                                                        <form:select class="select2" id="candidate" path="candidate.id">
                                                             <option value="" disabled selected>Select a candidate</option>
                                                             <c:forEach var="candidate" items="${candidates}">
                                                                 <form:option value="${candidate.id}"
                                                                              data-dob="${candidate.dob}"
                                                                              data-address="${candidate.address}"
                                                                              data-email="${candidate.email}"
-                                                                             data-phone-number="${candidate.phone}"
-                                                                             data-skill="${candidate.skills}"
+                                                                             data-phone="${candidate.phone}"
+                                                                             data-skills="${candidate.skills}"
                                                                              data-position="${candidate.currentPosition}">
                                                                     ${candidate.name}
                                                                 </form:option>
                                                             </c:forEach>
                                                         </form:select>
-
-                                                        <div class="card" style="padding: 0; margin: 0; margin-top: 5px">
-                                                            <div class="card-body" style="padding: 0; margin: 0; font-size: 12px; padding-left: 16px">
-                                                                <ul class="list-unstyled" style="line-height: 26px">
-                                                                    <li>Date of birth: <span id="candidate-dob"></span></li>
-                                                                    <li>Address: <span id="candidate-address"></span></li>
-                                                                    <li>Email: <span id="candidate-email"></span></li>
-                                                                    <li>Phone number: <span id="candidate-phone-number"></span></li>
-                                                                    <li>Skills: <span id="candidate-skill"></span></li>
-                                                                    <li>Position: <span id="candidate-position"></span></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -115,11 +102,11 @@
                                                             <div class="card-header card-header-divider" style="padding: 0; margin: 0; font-weight: 400; font-size: 20px">Candidate</div>
                                                             <div class="card-body" style="padding: 0; margin: 0; font-size: 14px; font-weight: 400">
                                                                 <ul class="list-unstyled">
-                                                                    <li>Full name: <span>${interview.candidate.name}</span></li>
+                                                                    <li>Name: <span>${interview.candidate.name}</span></li>
                                                                     <li>Date of birth: <span>${interview.candidate.dob}</span></li>
                                                                     <li>Address: <span>${interview.candidate.address}</span></li>
                                                                     <li>Email: <span>${interview.candidate.email}</span></li>
-                                                                    <li>Phone number: <span>${interview.candidate.phone}</span></li>
+                                                                    <li>Phone: <span>${interview.candidate.phone}</span></li>
                                                                     <li>Skills: <span>${interview.candidate.skills}</span></li>
                                                                     <li>Position: <span>${interview.candidate.currentPosition}</span></li>
                                                                 </ul>
@@ -164,7 +151,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Job</label>
                                                     <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
-                                                        <form:select class="select2" id="job" path="job.jobId" onchange="updateJobInfo()">
+                                                        <form:select class="select2" id="job" path="job.jobId">
                                                             <option value="" disabled selected>Select a job</option>
                                                             <c:forEach var="job" items="${jobs}">
                                                                 <form:option value="${job.jobId}"
@@ -175,16 +162,6 @@
                                                                 </form:option>
                                                             </c:forEach>
                                                         </form:select>
-                                                        <div class="card" style="padding: 0; margin: 0; margin-top: 5px">
-                                                            <div class="card-body" style="padding: 0; margin: 0; font-size: 12px; padding-left: 16px">
-                                                                <ul class="list-unstyled" style="line-height: 26px">
-                                                                    <li>Location: <span id="job-location"></span></li>
-                                                                    <li>Working address: <span id="job-working-address"></span></li>
-                                                                    <li>Levels: <span id="job-levels"></span></li>
-                                                                    <li>Status: <span id="job-status"></span></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -226,29 +203,19 @@
                                                 <div class="form-group row">
                                                     <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Recruiter owner</label>
                                                     <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
-                                                        <form:select class="select2" id="recruiter" path="recruiter.userId" onchange="updateRecruiterInfo()">
+                                                        <form:select class="select2" id="recruiter" path="recruiter.userId">
                                                             <option value="" disabled selected>Select a recruiter</option>
                                                             <c:forEach var="recruiter" items="${recruiters}">
                                                                 <form:option value="${recruiter.userId}"
                                                                              data-dob="${recruiter.dob}"
                                                                              data-address="${recruiter.address}"
                                                                              data-email="${recruiter.email}"
-                                                                             data-phone="${recruiter.phoneNumber}"
+                                                                             data-phone-number="${recruiter.phoneNumber}"
                                                                              data-department="${recruiter.department}">
                                                                     ${recruiter.fullName} | ${recruiter.department}
                                                                 </form:option>
                                                             </c:forEach>
                                                         </form:select>
-                                                        <div class="card" style="padding: 0; margin: 0; margin-top: 5px">
-                                                            <div class="card-body" style="padding: 0; margin: 0; font-size: 12px; padding-left: 16px">
-                                                                <ul class="list-unstyled" style="line-height: 26px">
-                                                                    <li>Date of birth: <span id="recruiter-dob"></span></li>
-                                                                    <li>Address: <span id="recruiter-address"></span></li>
-                                                                    <li>Email: <span id="recruiter-email"></span></li>
-                                                                    <li>Phone number: <span id="recruiter-phone"></span></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -267,7 +234,7 @@
                                                                 <ul class="list-unstyled">
                                                                     <li>Title: <span>${interview.job.title}</span></li>
                                                                     <li>Location: <span>${interview.job.location}</span></li>
-                                                                    <li>level: <span>${interview.job.level}</span></li>
+                                                                    <li>Level: <span>${interview.job.level}</span></li>
                                                                     <li>Status: <span>${interview.job.status}</span></li>
                                                                 </ul>
                                                             </div>
@@ -333,7 +300,7 @@
                                                     <form:select class="select2" id="result" path="result">
                                                         <option value="" disabled selected>Select a result</option>
                                                         <c:forEach var="result" items="${results}">
-                                                            <form:option value="${result.name()}">${result.name().toString()}</form:option>
+                                                            <form:option value="${result}">${result}</form:option>
                                                         </c:forEach>
                                                     </form:select>
                                                 </div>
@@ -346,7 +313,7 @@
                                                         <form:select class="select2" id="status" path="status">
                                                             <option value="" disabled selected>Select a status</option>
                                                             <c:forEach var="status" items="${states}">
-                                                                <form:option value="${status.name()}">${status.name().toString()}</form:option>
+                                                                <form:option value="${status}">${status}</form:option>
                                                             </c:forEach>
                                                         </form:select>
                                                     </div>
@@ -359,14 +326,12 @@
                                                         <div class="card" style="padding: 0; margin: 0">
                                                             <div class="card-header card-header-divider" style="padding: 0; margin: 0; font-weight: 400; font-size: 20px">Status</div>
                                                             <div class="card-body" style="padding: 0; margin: 0; font-size: 14px; font-weight: 400">
-                                                                <span>${interview.status.name().toString()}</span>
+                                                                <span>${interview.status}</span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </c:if>
-
-
                                         </div>
                                     </div>
                                 </div>

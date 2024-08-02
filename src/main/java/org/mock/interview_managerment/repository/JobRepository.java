@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JobRepository extends JpaRepository<Job, Long> {
-        List<Job> findAll();
 
         @Query("SELECT j FROM Job j WHERE j.isDeleted = false AND "
                         + "(j.title LIKE %:keyword% OR j.description LIKE %:keyword% OR "
@@ -32,11 +31,13 @@ public interface JobRepository extends JpaRepository<Job, Long> {
                         + "j.salaryFrom LIKE %:keyword% OR j.salaryTo LIKE %:keyword%)")
         Page<Job> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
-        @Query("SELECT j FROM Job j WHERE j.jobId = :jobId")
-        Job findByJobId(long jobId);
 
-        @Query("SELECT j FROM Job j WHERE j.status = :status")
-        List<Job> findAllByStatus(StatusJobEnum status);
 
         Page<Job> findAllByIsDeletedFalse(Pageable pageable);
+
+        List<Job> findAll();
+        @Query("SELECT j FROM Job j WHERE j.jobId = :jobId")
+        Job findByJobId(long jobId);
+        @Query("SELECT j FROM Job j WHERE j.status = :status")
+        List<Job> findAllByStatus(StatusJobEnum status);
 }

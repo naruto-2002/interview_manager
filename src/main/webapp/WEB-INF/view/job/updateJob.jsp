@@ -11,6 +11,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/perfect-scrollbar/css/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="/lib/material-design-icons/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
     <title>Update Job</title>
 </head>
@@ -173,6 +175,11 @@
 <!-- FontAwesome JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
 <script>
+    $(document).ready(function(){
+        //-initialize the javascript
+        App.init();
+    });
+
     function initializeDropdown(dropdownId, menuId, selectedId, hiddenFieldId) {
         var dropdown = document.getElementById(dropdownId);
         var menu = document.getElementById(menuId);

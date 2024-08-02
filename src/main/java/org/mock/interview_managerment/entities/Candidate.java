@@ -64,5 +64,5 @@ public class Candidate {
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.MERGE)
     @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
     @ToString.Exclude // Không sử dụng trong toString()
-    private List<CandidateJob> candidateJob;
+    private List<CandidateJob> candidateJobs;
 }

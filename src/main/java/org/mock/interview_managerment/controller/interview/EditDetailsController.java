@@ -6,9 +6,6 @@ import org.mock.interview_managerment.entities.pk.ScheduledInterviewId;
 import org.mock.interview_managerment.enums.ResultInterviewEnum;
 import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.mock.interview_managerment.services.*;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,52 +17,45 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class EditController {
+public class EditDetailsController {
+
     private final UserService userService;
-    private final JobService jobService;
     private final CandidateService candidateService;
     private final InterviewService interviewService;
     private final ScheduledInterviewService scheduledInterviewService;
-    @GetMapping("/interview/edit")
-    public String getEditInterviewPage(@RequestParam("interview_id") long interviewId, Model model) {
-        getUserInfor(model);
+    private final CandidateJobService candidateJobService;
 
-        List<Candidate> candidates = candidateService.getAllCandidates();
-        List<Job> jobs = jobService.getJobs();
+    @GetMapping("/interview/edit_details")
+    public String getEditDetails(@RequestParam("interviewId") long interviewId, @RequestParam("candidateId") long candidateId, Model model) {
         List<User> interviewers = userService.getUsersByRoleName("INTERVIEWER");
-        List<User> recruiters = userService.getUsersByRoleName("RECRUITER");
+        List<CandidateJob> candidateJobs = candidateJobService.getAllByCandidateId(candidateId);
+        Candidate candidate = candidateService.getCandidateById(candidateId);
         Interview interview = interviewService.getByInterviewId(interviewId);
 
-        List<ScheduledInterview> scheduledInterviews = scheduledInterviewService.getAllScheduledInterview();
+        List<ScheduledInterview> scheduledInterviews = scheduledInterviewService.getScheduledInterviewByInterviewId(interviewId);
         for(ScheduledInterview s: scheduledInterviews) {
             interview.getSelectedInterviewerIds().add(s.getInterviewer().getUserId());
         }
 
-        model.addAttribute("candidates", candidates);
-        model.addAttribute("jobs", jobs);
+        model.addAttribute("username", userService.getCurrentUsername());
+        model.addAttribute("roleName", userService.getCurrentUserRole());
         model.addAttribute("interviewers", interviewers);
-        model.addAttribute("recruiters", recruiters);
-        model.addAttribute("interview", interview);
+        model.addAttribute("candidateJobs", candidateJobs);
+        model.addAttribute("candidate", candidate);
         model.addAttribute("results", ResultInterviewEnum.values());
         model.addAttribute("states", StatusInterviewEnum.values());
-
+        model.addAttribute("interview", interview);
         model.addAttribute("newInterview", interview);
 
-        return "interview/edit";
+
+
+        return "interview/edit_details";
     }
 
-    @PostMapping("/interview/edit")
-    public String editInterview(@ModelAttribute("newInterview") Interview newInterview) {
-        // Lấy thông tin người dùng từ SecurityContextHolder
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = authentication.getPrincipal();
-        String roleName = "";
-        if (principal instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) principal;
-            roleName = getRoleName(userDetails.getAuthorities().toString());
-        }
+    @PostMapping("/interview/edit_details")
+    public String postEditDetails(@ModelAttribute("newInterview") Interview newInterview) {
+        String roleName = userService.getCurrentUserRole();
 
-        //"ADMIN", "RECRUITER", "INTERVIEWER", "MANAGER"
         if(roleName.equals("recruiter") || roleName.equals("admin") || roleName.equals("manager")) {
             scheduledInterviewService.deleteScheduledInterviewByInterviewId(newInterview.getInterviewId());
             interviewService.updateInterview(newInterview);
@@ -94,40 +84,4 @@ public class EditController {
 
         return "redirect:/interview/list";
     }
-
-    public void getUserInfor(Model model) {
-        // Lấy thông tin người dùng từ SecurityContextHolder
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = authentication.getPrincipal();
-
-        if (principal instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) principal;
-            model.addAttribute("username", userDetails.getUsername());
-            String roleName = getRoleName(userDetails.getAuthorities().toString());
-            model.addAttribute("roleName", roleName);
-        } else {
-            model.addAttribute("username", principal.toString());
-        }
-    }
-
-    //"ADMIN", "RECRUITER", "INTERVIEWER", "MANAGER"
-    public String getRoleName(String authority) {
-        switch(authority) {
-            case "[ROLE_INTERVIEWER]":
-                return "interviewer";
-            case "[ROLE_ADMIN]":
-                return "admin";
-            case "[ROLE_RECRUITER]":
-                return "recruiter";
-            case "[ROLE_MANAGER]":
-                return "manager";
-
-            default:
-                return "Unknown role";
-        }
-    }
-
-
 }
-
-

@@ -34,7 +34,7 @@
         <div class="main-content container-fluid">
             <div class="card text-center">
                 <div class="card-body">
-                    <form:form action="/interview/add" method="post" modelAttribute="newInterview">
+                    <form:form action="/interview/add_details" method="post" modelAttribute="newInterview">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="bs-grid-block">
@@ -47,25 +47,12 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Candidate name</label>
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star" for="candidate">Candidate name</label>
                                                 <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
-                                                    <form:select class="select2" id="candidate" path="candidate.id" onchange="updateCandidateInfo()">
-                                                        <option value="" disabled selected>Select a candidate</option>
-                                                        <c:forEach var="candidate" items="${candidates}">
-                                                            <form:option value="${candidate.id}"
-                                                                         data-dob="${candidate.dob}"
-                                                                         data-address="${candidate.address}"
-                                                                         data-email="${candidate.email}"
-                                                                         data-phone="${candidate.phone}"
-                                                                         data-skills="${candidate.skills}"
-                                                                         data-position="${candidate.currentPosition}">
-                                                                ${candidate.name}
-                                                            </form:option>
-                                                        </c:forEach>
-                                                    </form:select>
+                                                    <form:input type="text" class="d-none" id="title" path="candidate.id" value="${candidate.id}" />
+                                                    <input class="form-control" id="candidate" type="text" readonly="readonly" value="${candidate.name}"/>
                                                 </div>
                                             </div>
-
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Schedule Time</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
@@ -89,9 +76,7 @@
                                                     <form:textarea class="form-control" id="note" path="note"/>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -104,18 +89,14 @@
                                                 <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
                                                     <form:select class="select2" id="job" path="job.jobId">
                                                         <option value="" disabled selected>Select a job</option>
-                                                        <c:forEach var="job" items="${jobs}">
-                                                            <form:option value="${job.jobId}"
-                                                                         data-location="${job.location}"
-                                                                         data-level="${job.level}"
-                                                                         data-status="${job.status}">
-                                                                ${job.title}
+                                                        <c:forEach var="candidateJob" items="${candidateJobs}">
+                                                            <form:option value="${candidateJob.job.jobId}">
+                                                                ${candidateJob.job.title} | ${candidateJob.job.status}
                                                             </form:option>
                                                         </c:forEach>
                                                     </form:select>
                                                 </div>
                                             </div>
-
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Interviewer</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
@@ -135,30 +116,18 @@
                                                         </table>
                                                     </div>
                                                 </div>
-
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star" for="recruiter">Recruiter owner</label>
+                                                <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
+                                                    <form:input type="text" class="d-none" id="title" path="recruiter.userId" value="${candidate.user.userId}" />
+                                                    <input class="form-control" id="recruiter" type="text" readonly="readonly" value="${candidate.user.fullName}"/>
+                                                </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="location">Location</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
                                                     <form:input class="form-control" id="location" path="location" type="text"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Recruiter owner</label>
-                                                <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
-                                                    <form:select class="select2" id="recruiter" path="recruiter.userId">
-                                                        <option value="" disabled selected>Select a recruiter</option>
-                                                        <c:forEach var="recruiter" items="${recruiters}">
-                                                            <form:option value="${recruiter.userId}"
-                                                                         data-dob="${recruiter.dob}"
-                                                                         data-address="${recruiter.address}"
-                                                                         data-email="${recruiter.email}"
-                                                                         data-phone-number="${recruiter.phoneNumber}"
-                                                                         data-department="${recruiter.department}">
-                                                                ${recruiter.fullName} | ${recruiter.department}
-                                                            </form:option>
-                                                        </c:forEach>
-                                                    </form:select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -178,19 +147,19 @@
                                     <div class="card text-center">
                                         <div class="d-flex justify-content-center align-items-center card-body">
                                             <div class="">
-                                                <button type="submit" class="mr-6 btn btn-space btn-secondary btn-width active">Submit</button>
+                                                <a href="/interview/add_candidate">
+                                                    <button type="button" class="ml-6 btn btn-space btn-secondary btn-width active">Back</button>
+                                                </a>
+                                                <button type="submit" class="ml-6 btn btn-space btn-secondary btn-width active">Submit</button>
                                                 <a href="/interview/list">
                                                     <button type="button" class="ml-6 btn btn-space btn-secondary btn-width active">Cancel</button>
                                                 </a>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                     </form:form>
                 </div>
             </div>

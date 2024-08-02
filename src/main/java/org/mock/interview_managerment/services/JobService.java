@@ -125,7 +125,6 @@ public class JobService {
     public List<Job> getJobs() {
         return jobRepository.findAll();
     }
-
     public List<Job> getJobsByStatusOpen() {
         return jobRepository.findAllByStatus(StatusJobEnum.OPEN);
     }

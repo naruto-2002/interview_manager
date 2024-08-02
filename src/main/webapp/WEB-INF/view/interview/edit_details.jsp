@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap-slider/css/bootstrap-slider.min.css">
     <link rel="stylesheet" type="text/css" href="/multiselect/css/multi-select.css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
-    <link rel="stylesheet" href="/css/interview/edit.css">
+    <link rel="stylesheet" href="/css/interview/add.css">
 </head>
 <body>
 <div class="be-wrapper">
@@ -34,44 +34,32 @@
         <div class="main-content container-fluid">
             <div class="card text-center">
                 <div class="card-body">
-                    <form:form action="/interview/edit" method="post" modelAttribute="newInterview">
+                    <form:form action="/interview/edit_details" method="post" modelAttribute="newInterview">
+                        <form:input type="text" class="d-none" id="title" path="interviewId" value="${newInterview.interviewId}" />
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="bs-grid-block">
                                     <div class="card">
                                         <div class="card-body">
-                                            <form:input type="text" class="d-none" id="title" path="interviewId" value="${interview.interviewId}" />
                                             <c:if test = "${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
                                                 <div class="form-group row">
                                                     <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star" for="title">Schedule title</label>
                                                     <div class="col-12 col-sm-8 col-lg-8">
-                                                        <form:input type="text" class="form-control" id="title" path="title" value="${interview.title}" />
+                                                        <form:input type="text" class="form-control" id="title" path="title" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Candidate name</label>
+                                                    <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star" for="candidate">Candidate name</label>
                                                     <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
-                                                        <form:select class="select2" id="candidate" path="candidate.id">
-                                                            <option value="" disabled selected>Select a candidate</option>
-                                                            <c:forEach var="candidate" items="${candidates}">
-                                                                <form:option value="${candidate.id}"
-                                                                             data-dob="${candidate.dob}"
-                                                                             data-address="${candidate.address}"
-                                                                             data-email="${candidate.email}"
-                                                                             data-phone="${candidate.phone}"
-                                                                             data-skills="${candidate.skills}"
-                                                                             data-position="${candidate.currentPosition}">
-                                                                    ${candidate.name}
-                                                                </form:option>
-                                                            </c:forEach>
-                                                        </form:select>
+                                                        <form:input type="text" class="d-none" id="title" path="candidate.id" value="${candidate.id}" />
+                                                        <input class="form-control" id="candidate" type="text" readonly="readonly" value="${candidate.name}"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Schedule Time</label>
                                                     <div class="col-12 col-sm-8 col-lg-8">
                                                         <div class="input-group date datetimepicker" data-min-view="2" data-date-format="yyyy-mm-dd">
-                                                            <form:input type="text" class="form-control" id="date" path="date" value="${interview.date}" />
+                                                            <form:input type="text" class="form-control" id="date" path="date" />
                                                             <div class="input-group-append">
                                                                 <button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
                                                             </div>
@@ -80,11 +68,12 @@
                                                 </div>
                                                 <div class=" form-group row d-flex justify-content-center">
                                                     <label class="col-form-label text-sm-right mr-2" for="startTime">From:</label>
-                                                    <form:input class="col-2 form-control input-spacing mr-4" id="startTime" path="startTime" type="text" value="${interview.startTime}"/>
+                                                    <form:input class="col-2 form-control input-spacing mr-4" id="startTime" path="startTime" type="text" />
                                                     <label class="col-form-label text-sm-right mr-2" for="endTime">To:</label>
-                                                    <form:input class="col-2 form-control mr-6" id="endTime" path="endTime" type="text" value="${interview.endTime}"/>
+                                                    <form:input class="col-2 form-control mr-6" id="endTime" path="endTime" type="text" />
                                                 </div>
                                             </c:if>
+
                                             <c:if test = "${roleName == 'interviewer'}">
                                                 <div class="form-group row">
                                                     <div class="col-12 col-sm-8 col-lg-6 text-sm-left">
@@ -107,7 +96,6 @@
                                                                     <li>Address: <span>${interview.candidate.address}</span></li>
                                                                     <li>Email: <span>${interview.candidate.email}</span></li>
                                                                     <li>Phone: <span>${interview.candidate.phone}</span></li>
-                                                                    <li>Skills: <span>${interview.candidate.skills}</span></li>
                                                                     <li>Position: <span>${interview.candidate.currentPosition}</span></li>
                                                                 </ul>
                                                             </div>
@@ -132,14 +120,14 @@
                                                     </div>
                                                 </div>
                                             </c:if>
+
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 " for="note">Notes    </label>
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 " for="note">Notes</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
-                                                    <form:textarea class="form-control" id="note" path="note"></form:textarea>
+                                                    <form:textarea class="form-control" id="note" path="note"/>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -153,12 +141,9 @@
                                                     <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
                                                         <form:select class="select2" id="job" path="job.jobId">
                                                             <option value="" disabled selected>Select a job</option>
-                                                            <c:forEach var="job" items="${jobs}">
-                                                                <form:option value="${job.jobId}"
-                                                                             data-location="${job.location}"
-                                                                             data-level="${job.level}"
-                                                                             data-status="${job.status}">
-                                                                    ${job.title}
+                                                            <c:forEach var="candidateJob" items="${candidateJobs}">
+                                                                <form:option value="${candidateJob.job.jobId}">
+                                                                    ${candidateJob.job.title} | ${candidateJob.job.status}
                                                                 </form:option>
                                                             </c:forEach>
                                                         </form:select>
@@ -173,17 +158,18 @@
                                                                     <td>
                                                                         <form:select id="searchable" multiple="multiple" path="selectedInterviewerIds">
                                                                             <c:forEach var="interviewer" items="${interviewers}">
-                                                                                <c:if test="${interview.selectedInterviewerIds.contains(interviewer.userId)}">
-                                                                                    <form:option value="${interviewer.userId}" selected="true">
-                                                                                        ${interviewer.fullName} | ${interviewer.department}
-                                                                                    </form:option>
-                                                                                </c:if>
-                                                                                <c:if test="${!interview.selectedInterviewerIds.contains(interviewer.userId)}">
-                                                                                    <form:option value="${interviewer.userId}">
-                                                                                        ${interviewer.fullName} | ${interviewer.department}
-                                                                                    </form:option>
-                                                                                </c:if>
-
+                                                                                <c:choose>
+                                                                                    <c:when test="${newInterview.selectedInterviewerIds != null && newInterview.selectedInterviewerIds.contains(interviewer.userId)}">
+                                                                                        <form:option value="${interviewer.userId}" selected="true">
+                                                                                            ${interviewer.fullName} | ${interviewer.department}
+                                                                                        </form:option>
+                                                                                    </c:when>
+                                                                                    <c:otherwise>
+                                                                                        <form:option value="${interviewer.userId}">
+                                                                                            ${interviewer.fullName} | ${interviewer.department}
+                                                                                        </form:option>
+                                                                                    </c:otherwise>
+                                                                                </c:choose>
                                                                             </c:forEach>
                                                                         </form:select>
 
@@ -195,33 +181,22 @@
 
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="location">Location</label>
-                                                    <div class="col-12 col-sm-8 col-lg-8">
-                                                        <form:input class="form-control" id="location" path="location" type="text" value="${interview.location}"/>
+                                                    <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star" for="recruiter">Recruiter owner</label>
+                                                    <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
+                                                        <form:input type="text" class="d-none" id="title" path="recruiter.userId" value="${candidate.user.userId}" />
+                                                        <input class="form-control" id="recruiter" type="text" readonly="readonly" value="${candidate.user.fullName}"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Recruiter owner</label>
-                                                    <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
-                                                        <form:select class="select2" id="recruiter" path="recruiter.userId">
-                                                            <option value="" disabled selected>Select a recruiter</option>
-                                                            <c:forEach var="recruiter" items="${recruiters}">
-                                                                <form:option value="${recruiter.userId}"
-                                                                             data-dob="${recruiter.dob}"
-                                                                             data-address="${recruiter.address}"
-                                                                             data-email="${recruiter.email}"
-                                                                             data-phone-number="${recruiter.phoneNumber}"
-                                                                             data-department="${recruiter.department}">
-                                                                    ${recruiter.fullName} | ${recruiter.department}
-                                                                </form:option>
-                                                            </c:forEach>
-                                                        </form:select>
+                                                    <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="location">Location</label>
+                                                    <div class="col-12 col-sm-8 col-lg-8">
+                                                        <form:input class="form-control" id="location" path="location" type="text"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="meetingId">Meeting ID</label>
                                                     <div class="col-12 col-sm-8 col-lg-8">
-                                                        <form:input class="form-control" id="meetingId" path="meetingId" type="text" value="${interview.meetingId}"/>
+                                                        <form:input class="form-control" id="meetingId" path="meetingId" type="text"/>
                                                     </div>
                                                 </div>
                                             </c:if>
@@ -293,10 +268,9 @@
                                                     </div>
                                                 </div>
                                             </c:if>
-
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Result</label>
-                                                <div class="col-12 col-sm-8 col-lg-8">
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4">Result</label>
+                                                <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
                                                     <form:select class="select2" id="result" path="result">
                                                         <option value="" disabled selected>Select a result</option>
                                                         <c:forEach var="result" items="${results}">
@@ -305,11 +279,10 @@
                                                     </form:select>
                                                 </div>
                                             </div>
-
                                             <c:if test = "${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
                                                 <div class="form-group row">
-                                                    <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Status</label>
-                                                    <div class="col-12 col-sm-8 col-lg-8">
+                                                    <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4">Status</label>
+                                                    <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
                                                         <form:select class="select2" id="status" path="status">
                                                             <option value="" disabled selected>Select a status</option>
                                                             <c:forEach var="status" items="${states}">
@@ -319,14 +292,13 @@
                                                     </div>
                                                 </div>
                                             </c:if>
-
                                             <c:if test = "${roleName == 'interviewer'}">
                                                 <div class="form-group row">
                                                     <div class="col-12 col-sm-8 col-lg-6 text-sm-left">
                                                         <div class="card" style="padding: 0; margin: 0">
                                                             <div class="card-header card-header-divider" style="padding: 0; margin: 0; font-weight: 400; font-size: 20px">Status</div>
                                                             <div class="card-body" style="padding: 0; margin: 0; font-size: 14px; font-weight: 400">
-                                                                <span>${interview.status}</span>
+                                                                <span>${interview.status.name().toString()}</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -344,24 +316,28 @@
                                         <div class="d-flex justify-content-center align-items-center card-body">
                                             <div class="">
                                                 <c:if test = "${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
-                                                    <button type="submit" class="mr-6 btn btn-space btn-secondary btn-width active">Submit</button>
+                                                    <a href="/interview/add_candidate">
+                                                        <button type="button" class="ml-6 btn btn-space btn-secondary btn-width active">Back</button>
+                                                    </a>
+                                                    <button type="submit" class="ml-6 btn btn-space btn-secondary btn-width active">Submit</button>
+                                                    <a href="/interview/list">
+                                                        <button type="button" class="ml-6 btn btn-space btn-secondary btn-width active">Cancel</button>
+                                                    </a>
                                                 </c:if>
 
                                                 <c:if test = "${roleName == 'interviewer'}">
-                                                    <button type="submit" class="mr-6 btn btn-space btn-secondary btn-width active">Submit Result</button>
+                                                    <button type="submit" class="ml-6 btn btn-space btn-secondary btn-width active">Submit</button>
+                                                    <a href="/interview/list">
+                                                        <button type="button" class="ml-6 btn btn-space btn-secondary btn-width active">Cancel</button>
+                                                    </a>
                                                 </c:if>
 
-                                                <a href="/interview/list">
-                                                    <button type="button" class="ml-6 btn btn-space btn-secondary btn-width active">Cancel</button>
-                                                </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                     </form:form>
                 </div>
             </div>
@@ -390,7 +366,9 @@
 <script src="/lib/quicksearch/jquery.quicksearch.min.js" type="text/javascript"></script>
 <script src="/lib/select2/js/select2.min.js" type="text/javascript"></script>
 <script src="/lib/select2/js/select2.full.min.js" type="text/javascript"></script>
-<script src="/js/interview/edit.js"></script>
+<script src="/lib/bootstrap-slider/bootstrap-slider.min.js" type="text/javascript"></script>
+<script src="/lib/bs-custom-file-input/bs-custom-file-input.js" type="text/javascript"></script>
+<script src="/js/interview/add.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         //-initialize the javascript

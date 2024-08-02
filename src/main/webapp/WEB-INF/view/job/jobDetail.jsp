@@ -9,6 +9,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Detail</title>
+    <link rel="stylesheet" type="text/css" href="/lib/perfect-scrollbar/css/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="/lib/material-design-icons/css/material-design-iconic-font.min.css">
     <!-- Latest compiled and minified CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -81,6 +83,12 @@
 <script src="/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <script src="/lib/jqvmap/jquery.vmap.min.js" type="text/javascript"></script>
 <script src="/lib/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        //-initialize the javascript
+        App.init();
+    });
+</script>
 </body>
 <style>
     .table th,

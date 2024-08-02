@@ -23,4 +23,7 @@ public class ScheduledInterviewService {
     public void deleteScheduledInterviewByInterviewId(long interviewId) {
         scheduledInterviewRepository.deleteByInterviewId(interviewId);
     }
+    public List<ScheduledInterview> getScheduledInterviewByInterviewId(long interviewId) {
+        return scheduledInterviewRepository.findByInterviewId(interviewId);
+    }
 }

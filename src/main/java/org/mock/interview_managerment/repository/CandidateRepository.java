@@ -23,8 +23,6 @@ public interface CandidateRepository extends JpaRepository<Candidate,Long> {
 
     List<Candidate> findAll();
     @Query("SELECT c FROM Candidate c WHERE c.id = :id")
-    default Candidate findByCandidateId(long id) {
-        return null;
-    }
+    Candidate findByCandidateId(long id);
 
 }

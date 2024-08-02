@@ -109,5 +109,7 @@ public class CandidateService {
     public List<Candidate> getAllCandidates() {
         return candidateRepository.findAll();
     }
-
+    public Candidate getCandidateById(long id){
+        return candidateRepository.findByCandidateId(id);
+    }
 }

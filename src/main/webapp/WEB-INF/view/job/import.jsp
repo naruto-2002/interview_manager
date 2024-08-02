@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Excel File</title>
+    <link rel="stylesheet" type="text/css" href="/lib/perfect-scrollbar/css/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="/lib/material-design-icons/css/material-design-iconic-font.min.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
 </head>
@@ -64,6 +66,10 @@
 </style>
 
 <script>
+    $(document).ready(function(){
+        //-initialize the javascript
+        App.init();
+    });
     // Cập nhật tên tệp khi chọn tệp
     document.querySelector(".custom-file-input").addEventListener("change", function () {
         var fileName = this.value.split("\\").pop();

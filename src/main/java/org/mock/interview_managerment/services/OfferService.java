@@ -2,14 +2,18 @@ package org.mock.interview_managerment.services;
 
 import org.mock.interview_managerment.entities.Offer;
 import org.mock.interview_managerment.entities.User;
+import org.mock.interview_managerment.enums.DepartmentEnum;
 import org.mock.interview_managerment.enums.OfferStatusEnum;
 import org.mock.interview_managerment.repository.OfferRepository;
 import org.mock.interview_managerment.repository.UserRepository;
+import org.mock.interview_managerment.util.OfferSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class OfferService {
@@ -36,6 +40,10 @@ public class OfferService {
         return offerRepository.findAllActiveOffers(pageable);
     }
 
+    public Page<Offer> findOffersByDepartmentAndStatusAndSearchKey(DepartmentEnum department, OfferStatusEnum status, String searchKey, Pageable pageable) {
+        OfferSpecification specification = new OfferSpecification(department, status, searchKey);
+        return offerRepository.findAll(specification, pageable);
+    }
 
     public Offer saveOffer(Offer offer) {
         return offerRepository.save(offer);

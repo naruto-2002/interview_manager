@@ -4,6 +4,7 @@ import org.mock.interview_managerment.entities.Job;
 import org.mock.interview_managerment.entities.Offer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +16,7 @@ import java.util.List;
 public interface OfferRepository extends JpaRepository<Offer, Long> {
     Page<Offer> findAll(Pageable pageable);
 
+    Page<Offer> findAll(Specification<Offer> spec, Pageable pageable);
     @Query("SELECT o FROM Offer o WHERE o.deleted = false")
     Page<Offer> findAllActiveOffers(Pageable pageable);
 

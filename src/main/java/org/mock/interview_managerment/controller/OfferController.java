@@ -1,8 +1,10 @@
 package org.mock.interview_managerment.controller;
 
+import io.micrometer.common.util.StringUtils;
 import org.mock.interview_managerment.entities.Offer;
 import org.mock.interview_managerment.enums.*;
 import org.mock.interview_managerment.services.*;
+import org.mock.interview_managerment.util.OfferSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,15 +42,13 @@ public class OfferController {
                              @RequestParam(defaultValue = "0") int page,
                              @RequestParam(defaultValue = "10") int size,
                              @RequestParam(required = false) String keyword,
-                             @RequestParam(required = false) String department,
-                             @RequestParam(required = false) String status) {
+                             @RequestParam(required = false) DepartmentEnum department,
+                             @RequestParam(required = false) OfferStatusEnum status) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Offer> offerPage;
 
-        if ((keyword != null && !keyword.trim().isEmpty()) ||
-                (department != null && !department.isEmpty()) ||
-                (status != null && !status.isEmpty())) {
-            offerPage = offerService.searchOffers(keyword, department, status, pageable);
+        if (StringUtils.isNotBlank(keyword) || department != null || status != null) {
+            offerPage = offerService.findOffersByDepartmentAndStatusAndSearchKey(department, status, keyword, pageable);
             model.addAttribute("keyword", keyword);
             model.addAttribute("department", department);
             model.addAttribute("status", status);
@@ -56,13 +56,7 @@ public class OfferController {
             offerPage = offerService.getAllOffers(pageable);
         }
 
-        // Handle the case where no valid offers are found
-        if (offerPage.isEmpty()) {
-            model.addAttribute("offerPage", Page.empty());
-        } else {
-            model.addAttribute("offerPage", offerPage);
-        }
-
+        model.addAttribute("offerPage", offerPage);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", offerPage.getTotalPages());
         model.addAttribute("departments", DepartmentEnum.values());

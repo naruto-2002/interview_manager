@@ -5,6 +5,7 @@
 <head>
     <title>Edit Offer</title>
     <link rel="stylesheet" href="/css/app.css" type="text/css">
+    <link rel="stylesheet" href="/css/offer/index.css" type="text/css">
     <style>
         .required {
             color: red;

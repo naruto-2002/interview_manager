@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css"
           href="/lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
+    <link rel="stylesheet" href="/css/offer/index.css" type="text/css">
 </head>
 <body>
 <jsp:include page="../layout/header.jsp"/>
@@ -34,13 +35,13 @@
                     <div class="input-group input-search">
                         <input class="form-control" type="text" name="keyword" placeholder="Search" value="${keyword}">
                         <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="submit"><i class="icon mdi mdi-search"></i></button>
+                            <button class="btn btn-primary" type="submit"><i class="icon mdi mdi-search text-white"></i></button>
                         </span>
                     </div>
                 </div>
 
                 <div class="col-12 col-sm-5 col-lg-3 mb-2 mb-sm-0">
-                    <select name="department" class="select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true"
+                    <select name="department" class="form-control" tabindex="-1" aria-hidden="true"
                             style="width: 100%; height: 100%">
                         <option value="">Select Department</option>
                         <c:forEach items="${departments}" var="dept">
@@ -50,7 +51,7 @@
                 </div>
 
                 <div class="col-12 col-sm-2 col-lg-3 mb-2 mb-sm-0">
-                    <select name="status" class="select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true"
+                    <select name="status" class="form-control" tabindex="-1" aria-hidden="true"
                             style="width: 100%; height: 100%">
                         <option value="">Select Status</option>
                         <c:forEach items="${statuses}" var="stat">
@@ -59,10 +60,16 @@
                     </select>
                 </div>
 
-                <div class="col-12 col-sm-2 col-lg-2 d-flex justify-content-end">
-                    <a href="/offers/new" class="btn d-flex justify-content-center align-items-center"
-                       style="border-radius: 50%; border: 1px #000 solid;width: 40px; height: 40px">
-                        <img src="/img/add-user.png" style="width: 20px; height: 20px"/>
+                <div class="col-12 col-sm-2 col-lg-2 d-flex justify-content-between align-items-center">
+                    <a href="/offers" class="btn btn-warning p-2 px-6 text-center" style="border-radius: 4px"
+                       title="Clear search">
+                        Clear
+                    </a>
+                    <a href="/offers/new"
+                       class="btn d-flex justify-content-center align-items-center bg-success text-white border-success"
+                       style="border-radius: 50%; border: 1px #000 solid;width: 40px; height: 40px" title="Add Offer">
+                        <span class="mdi mdi-plus text-white font-weight-bold font-weight-bold"
+                              style="font-size: 20px"></span>
                     </a>
                 </div>
             </form>
@@ -99,12 +106,27 @@
                                             <td class="text-center">${offer.position}</td>
                                             <td class="text-center">${offer.status}</td>
                                             <td class="text-center">
-                                                <a href="/offers/edit/${offer.offerId}" class="btn btn-info">Edit</a>
-                                                <button class="btn btn-danger"
-                                                        onclick="showDeleteModal('${offer.offerId}')">Delete
-                                                </button>
                                                 <a href="/offers/detail/${offer.offerId}"
-                                                   class="btn btn-primary">View</a>
+                                                   class="btn btn-info" title="View Offer">
+
+                                                    <span class="mdi mdi-eye"
+                                                          style="border-radius: 4px">
+                                                    </span>
+                                                </a>
+                                                <a href="/offers/edit/${offer.offerId}" class="btn btn-warning"
+                                                   title="Edit Offer"
+                                                   style="border-radius: 4px">
+                                                    <span
+                                                            class="mdi mdi-edit">
+                                                    </span>
+                                                </a>
+                                                <a class="btn btn-danger" style="border-radius: 4px"
+                                                   title="Delete Offer"
+                                                   onclick="showDeleteModal('${offer.offerId}')">
+                                                    <span
+                                                            class="mdi mdi-delete text-white">
+                                                    </span>
+                                                </a>
                                             </td>
                                         </tr>
                                     </c:forEach>

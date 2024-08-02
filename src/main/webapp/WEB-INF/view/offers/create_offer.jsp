@@ -6,6 +6,7 @@
     <title>Create Offer</title>
     <!-- Các liên kết CSS khác -->
     <link rel="stylesheet" href="/css/app.css" type="text/css">
+    <link rel="stylesheet" href="/css/offer/index.css" type="text/css">
     <style>
         .required {
             color: red;
@@ -130,7 +131,7 @@
                 <div class="row d-f justify-content-center">
                     <button class="btn btn-info p-2 px-6 text-center" type="submit">Submit</button>
                     <span class="m-2"></span>
-                    <button type="button" class="btn btn-secondary p-2 px-6 text-center"
+                    <button type="button" class="btn btn-info p-2 px-6 text-center"
                             onclick="window.history.back();">Cancel
                     </button>
                 </div>

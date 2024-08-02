@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css"
           href="/lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
+    <link rel="stylesheet" href="/css/offer/index.css" type="text/css">
     <style>
         p {
             font-size: 18px;
@@ -45,8 +46,8 @@
                                    class="btn btn-danger">Reject</a>
                             </sec:authorize>
                             <sec:authorize access="hasAnyRole('RECRUITER', 'HR_MANAGER', 'ADMIN')">
-                                <a href="${pageContext.request.contextPath}/offers/cancel/${offer.offerId}"
-                                   class="btn btn-warning">Cancel Offer</a>
+                                <a onclick="showCancelModal('${offer.offerId}')"
+                                   class="btn btn-warning text-white">Cancel Offer</a>
                             </sec:authorize>
                         </c:when>
 
@@ -56,7 +57,7 @@
                                    class="btn btn-info">Mark as Sent to Candidate</a>
                                 <a
                                         onclick="showCancelModal('${offer.offerId}')"
-                                        class="btn btn-warning">Cancel Offer</a>
+                                        class="btn btn-warning text-white">Cancel Offer</a>
                             </sec:authorize>
                         </c:when>
 
@@ -69,7 +70,7 @@
                                    class="btn btn-info">DECLINED</a>
                                 <a
                                         onclick="showCancelModal('${offer.offerId}')"
-                                        class="btn btn-warning">Cancel Offer</a>
+                                        class="btn btn-warning text-white">Cancel Offer</a>
                             </sec:authorize>
                         </c:when>
 

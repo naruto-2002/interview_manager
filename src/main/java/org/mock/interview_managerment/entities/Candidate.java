@@ -65,4 +65,11 @@ public class Candidate {
     @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
     @ToString.Exclude // Không sử dụng trong toString()
     private List<CandidateJob> candidateJob;
+
+    /// thêm của Quang
+    @OneToMany(mappedBy = "candidate")
+    @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
+    @ToString.Exclude
+    private List<Interview> interviews;
+
 }

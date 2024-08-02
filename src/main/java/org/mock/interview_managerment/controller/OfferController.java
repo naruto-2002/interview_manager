@@ -210,7 +210,7 @@ public class OfferController {
         model.addAttribute("levels", LevelEnum.values());
         model.addAttribute("positions", PositionEnum.values());
         model.addAttribute("statuses", OfferStatusEnum.values());
-        model.addAttribute("candidates", candidateService.getAllActiveCandidates());
+        model.addAttribute("candidates", candidateService.getCandidatesWithPassedInterview());
         model.addAttribute("interviews", interviewService.getAllInterviews());
         model.addAttribute("managers", userService.getManagers());
         model.addAttribute("recruiters", userService.getRecruiters());

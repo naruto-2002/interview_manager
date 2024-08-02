@@ -34,9 +34,9 @@ public class UserService {
     private final UserMapper userMapper;
 
     public UserService(UserRepository userRepository,
-            PasswordService passwordService,
-            EmailService emailService,
-            UserMapper userMapper) {
+                       PasswordService passwordService,
+                       EmailService emailService,
+                       UserMapper userMapper) {
         this.userRepository = userRepository;
         this.passwordService = passwordService;
         this.emailService = emailService;
@@ -47,7 +47,7 @@ public class UserService {
         // mapper entity
         User user = userMapper.toUser(request);
 
-        // gen password
+        //gen password
         String password = passwordService.autoGeneratePassword();
         String hashPasword = passwordService.encryptPassword(password);
         user.setPassword(hashPasword);
@@ -56,7 +56,7 @@ public class UserService {
         user.setUsername(UserNameValid.genUserName(user.getFullName(), user.getUserId()));
 
         // send password to email
-        emailService.sendPasswordCreate(user.getEmail(), user.getUsername(), hashPasword);
+        emailService.sendPasswordCreate(user.getEmail(), user.getUsername(), password);
 
         return userRepository.save(user);
     }
@@ -104,13 +104,10 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public Page<UserListDto> handleSearchAndFilterUsers(String keyword, Long roleId, Pageable pageable) {
-        Page<User> userPage = userRepository.searchAndFilterUsers(keyword, roleId, pageable);
-        List<UserListDto> userListDtos = userPage.getContent().stream()
+    public List<UserListDto> search(String keyword) {
+        return userRepository.search(keyword).stream()
                 .map(userMapper::toUserListDto)
                 .collect(Collectors.toList());
-
-        return new PageImpl<>(userListDtos, pageable, userPage.getTotalElements());
     }
 
     public List<User> getManagers() {
@@ -145,6 +142,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    //    Code van
     public List<User> getUsersByRoleName(String roleName) {
         return userRepository.findByRoleName(roleName);
     }

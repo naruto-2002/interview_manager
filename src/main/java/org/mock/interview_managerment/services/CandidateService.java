@@ -2,6 +2,7 @@ package org.mock.interview_managerment.services;
 
 import org.mock.interview_managerment.dto.request.CandidateCreateDto;
 import org.mock.interview_managerment.entities.Candidate;
+import org.mock.interview_managerment.enums.ResultInterviewEnum;
 import org.mock.interview_managerment.enums.StatusCandidateEnum;
 import org.mock.interview_managerment.mapper.CandidateMapper;
 import org.mock.interview_managerment.repository.CandidateRepository;
@@ -108,6 +109,10 @@ public class CandidateService {
 
     public List<Candidate> getAllCandidates() {
         return candidateRepository.findAll();
+    }
+
+    public List<Candidate> getCandidatesWithPassedInterview() {
+        return candidateRepository.findCandidatesByInterviewResult(ResultInterviewEnum.PASS);
     }
 
 }

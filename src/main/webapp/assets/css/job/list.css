@@ -46,7 +46,7 @@
 
 .pagination-container {
     position: fixed;
-    bottom: 50px;
+    bottom: 30px;
     left: 0;
     width: 100%;
 
@@ -57,4 +57,207 @@
     display: flex;
     justify-content: center;
 
+}
+
+body {
+    padding-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+
+}
+
+thead {
+    background-color: #343a40;
+    color: white;
+}
+
+table,
+th,
+td {
+    border: 1px solid #dee2e6;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #c1b4b4 !important;
+    /* Màu nền cho các hàng chẵn */
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: rgba(210, 200, 141, 0.97) !important;
+    /* Màu nền cho các hàng lẻ */
+}
+
+.text-success {
+    color: #28a745 !important;
+}
+
+.text-warning {
+    color: #ffc107 !important;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+i.fas {
+    font-size: 1.2em;
+}
+
+th {
+    background-color: aqua;
+}
+
+/* CSS cho các tiêu đề của bảng */
+.table thead th {
+    background-color: brown !important;
+    color: white;
+
+    font-weight: bold;
+    /* In đậm chữ */
+    padding: 10px;
+    /* Khoảng cách bên trong */
+}
+
+/* CSS cho các liên kết */
+.icon-link {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    /* Kích thước chữ */
+    color: #bd3309;
+    /* Màu chữ */
+    text-decoration: none;
+    /* Loại bỏ gạch chân */
+    padding: 10px;
+    padding-top: 20px;
+    border-radius: 5px;
+    /* Bo tròn góc nếu cần */
+}
+
+/* CSS cho các biểu tượng */
+.icon-link i {
+    font-size: 24px;
+    /* Kích thước biểu tượng lớn hơn */
+    margin-right: 8px;
+    /* Khoảng cách giữa biểu tượng và văn bản */
+}
+
+/* Thay đổi màu khi di chuột qua liên kết */
+.icon-link:hover {
+    color: red;
+    /* Màu chữ khi di chuột qua */
+}
+
+/* search */
+/* CSS cho form */
+form {
+    display: flex;
+    align-items: center;
+}
+
+/* CSS cho input tìm kiếm */
+.search-box .form-control {
+    width: 100%;
+    border-radius: 12px;
+}
+
+/* CSS cho select */
+.custom-select-arrow .form-control {
+    height: 3rem;
+    font-size: 12px;
+    border-radius: 12px;
+}
+
+/* CSS cho nút tìm kiếm */
+.btn-info {
+    border: 2px solid #007bff;
+    /* Bo viền nút */
+    border-radius: 5px;
+    /* Bo tròn góc nút */
+    padding: 0.5rem 1rem;
+    /* Khoảng cách bên trong nút */
+    font-size: 16px;
+    /* Kích thước chữ */
+    background-color: #ffffff;
+    /* Màu nền của nút */
+    color: #007bff;
+    /* Màu chữ của nút */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* CSS cho biểu tượng trong nút */
+.btn-info i {
+    font-size: 18px;
+    /* Kích thước biểu tượng */
+}
+
+/* Thay đổi màu khi di chuột qua nút */
+.btn-info:hover {
+    background-color: #007bff;
+    /* Màu nền khi di chuột qua */
+    color: #ffffff;
+    /* Màu chữ khi di chuột qua */
+    border-color: #007bff;
+    /* Màu viền khi di chuột qua */
+}
+
+/* phân trang */
+/* CSS cho phần phân trang */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    /* Căn giữa phân trang */
+    margin-top: 20px;
+    /* Khoảng cách phía trên phân trang */
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    /* Loại bỏ dấu chấm và đánh số mặc định */
+    padding: 0;
+    margin: 0;
+}
+
+.pagination .page-item {
+
+    /* Bo viền cho các mục phân trang */
+    border-radius: 8px;
+    /* Bo tròn góc */
+    margin: 0 2px;
+    /* Khoảng cách giữa các mục phân trang */
+}
+
+.job-list-title {
+    font-family: 'Times New Roman', Times, serif;
+    /* Font chữ */
+    font-size: 3.5rem;
+    /* Kích thước chữ */
+    color: black;
+    /* Màu chữ */
+    text-align: center;
+    /* Căn giữa tiêu đề */
+    margin-bottom: 20px;
+    /* Khoảng cách phía dưới tiêu đề */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+    /* Hiệu ứng bóng chéo */
 }

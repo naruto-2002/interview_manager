@@ -37,9 +37,6 @@ public class AddController {
         model.addAttribute("interviewers", interviewers);
         model.addAttribute("recruiters", recruiters);
         model.addAttribute("newInterview", new Interview());
-
-
-
         return "interview/add";
     }
 

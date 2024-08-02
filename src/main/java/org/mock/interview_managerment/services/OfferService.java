@@ -18,6 +18,8 @@ public class OfferService {
     private OfferRepository offerRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EmailService emailService;
 
     public Page<Offer> getOffers(int page, int size) {
         return offerRepository.findAll(PageRequest.of(page, size));
@@ -63,7 +65,7 @@ public class OfferService {
 
     public void approveOffer(Long id) {
         Offer offer = findById(id);
-        offer.setStatus(OfferStatusEnum.WAITTING_FOR_RESPONSE);
+        offer.setStatus(OfferStatusEnum.APPROVED);
         offerRepository.save(offer);
     }
 
@@ -76,13 +78,20 @@ public class OfferService {
     public void markAsSent(Long id) {
         Offer offer = findById(id);
         // Implement the logic for marking as sent to candidate
-        offer.setStatus(OfferStatusEnum.ACCEPTED);
+        emailService.sendOfferEmail(offer.getCandidate().getEmail(), offer);
+        offer.setStatus(OfferStatusEnum.WAITING_FOR_RESPONSE);
         offerRepository.save(offer);
     }
 
     public void declineOffer(Long id) {
         Offer offer = findById(id);
         offer.setStatus(OfferStatusEnum.DECLINED);
+        offerRepository.save(offer);
+    }
+
+    public void acceptOffer(Long id) {
+        Offer offer = findById(id);
+        offer.setStatus(OfferStatusEnum.ACCEPTED);
         offerRepository.save(offer);
     }
 

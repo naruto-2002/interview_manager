@@ -2,6 +2,7 @@ package org.mock.interview_managerment.services;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.mock.interview_managerment.entities.Offer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -69,6 +70,47 @@ public class EmailService {
                             "  </body>" +
                             "</html>",
                     toEmail, resetPasswordUrl
+            ), true);
+
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void sendOfferEmail(String toEmail, Offer offer) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setFrom(fromEmail);
+            helper.setTo(toEmail);
+            helper.setSubject("Offer Details from IMS System");
+            helper.setText(String.format(
+                    "<html>" +
+                            "  <body>" +
+                            "    <p>Dear %s,</p>" +
+                            "    <p>We are pleased to extend an offer for the position of <b>%s</b>.</p>" +
+                            "    <p>Details of the offer are as follows:</p>" +
+                            "    <ul>" +
+                            "      <li>Position: %s</li>" +
+                            "      <li>Department: %s</li>" +
+                            "      <li>Contract Type: %s</li>" +
+                            "      <li>Salary: %s</li>" +
+                            "      <li>Start Date: %s</li>" +
+                            "    </ul>" +
+                            "    <p>Please review the attached offer letter and respond at your earliest convenience.</p>" +
+                            "    <p>Best Regards,</p>" +
+                            "    <p>IMS Team</p>" +
+                            "  </body>" +
+                            "</html>",
+                    offer.getCandidate().getName(),
+                    offer.getPosition(),
+                    offer.getPosition(),
+                    offer.getDepartment(),
+                    offer.getContractType(),
+                    offer.getBasicSalary(),
+                    offer.getStartContract()
             ), true);
 
             javaMailSender.send(message);

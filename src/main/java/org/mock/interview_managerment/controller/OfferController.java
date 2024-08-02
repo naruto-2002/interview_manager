@@ -106,6 +106,12 @@ public class OfferController {
         return "redirect:/offers"; // redirect to offer list
     }
 
+    @GetMapping("/accept/{id}")
+    public String acceptOffer(@PathVariable Long id) {
+        offerService.acceptOffer(id);
+        return "redirect:/offers"; // redirect to offer list
+    }
+
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

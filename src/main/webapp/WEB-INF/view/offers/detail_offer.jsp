@@ -50,19 +50,34 @@
                             </sec:authorize>
                         </c:when>
 
-                        <c:when test="${offer.status == 'WAITING_FOR_APPROVAL'}">
+                        <c:when test="${offer.status == 'APPROVED'}">
                             <sec:authorize access="hasAnyRole('RECRUITER', 'HR_MANAGER', 'ADMIN')">
                                 <a href="${pageContext.request.contextPath}/offers/send/${offer.offerId}"
                                    class="btn btn-info">Mark as Sent to Candidate</a>
-                                <a href="${pageContext.request.contextPath}/offers/cancel/${offer.offerId}"
-                                   class="btn btn-warning">Cancel Offer</a>
+                                <a
+                                        onclick="showCancelModal('${offer.offerId}')"
+                                        class="btn btn-warning">Cancel Offer</a>
+                            </sec:authorize>
+                        </c:when>
+
+
+                        <c:when test="${offer.status == 'WAITING_FOR_RESPONSE'}">
+                            <sec:authorize access="hasAnyRole('RECRUITER', 'HR_MANAGER', 'ADMIN')">
+                                <a href="${pageContext.request.contextPath}/offers/accept/${offer.offerId}"
+                                   class="btn btn-success">ACCEPTED</a>
+                                <a href="${pageContext.request.contextPath}/offers/decline/${offer.offerId}"
+                                   class="btn btn-info">DECLINED</a>
+                                <a
+                                        onclick="showCancelModal('${offer.offerId}')"
+                                        class="btn btn-warning">Cancel Offer</a>
                             </sec:authorize>
                         </c:when>
 
                         <c:when test="${offer.status == 'ACCEPTED'}">
                             <sec:authorize access="hasAnyRole('RECRUITER', 'HR_MANAGER', 'ADMIN')">
-                                <a href="${pageContext.request.contextPath}/offers/cancel/${offer.offerId}"
-                                   class="btn btn-warning">Cancel Offer</a>
+                                <a
+                                        onclick="showCancelModal('${offer.offerId}')"
+                                        class="btn btn-warning">Cancel Offer</a>
                             </sec:authorize>
                         </c:when>
                     </c:choose>
@@ -142,6 +157,30 @@
             </div>
         </div>
     </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Cancel Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to cancel this offer?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No
+                    </button>
+                    <button type="button" class="btn btn-danger" id="confirmCancelButton">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script src="/lib/jquery/jquery.min.js" type="text/javascript"></script>
@@ -153,5 +192,15 @@
 <script src="/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <script src="/lib/jqvmap/jquery.vmap.min.js" type="text/javascript"></script>
 <script src="/lib/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+<script>
+    function showCancelModal(offerId) {
+        $('#confirmCancelButton').attr('onclick', 'confirmDelete(' + offerId + ')');
+        $('#deleteModal').modal('show');
+    }
+
+    function confirmDelete(offerId) {
+        window.location.href = '/offers/cancel/' + offerId;
+    }
+</script>
 </body>
 </html>

@@ -3,7 +3,8 @@ package org.mock.interview_managerment.enums;
 public enum OfferStatusEnum {
     WAITING_FOR_APPROVAL("Waiting for Approval"),
     REJECTED("Rejected"),
-    WAITTING_FOR_RESPONSE("Waitting for response"),
+    APPROVED("Approved"),
+    WAITING_FOR_RESPONSE("Waiting for response"),
     ACCEPTED("Accepted Offer"),
     DECLINED("Declined Offer"),
     CANCELLED("Cancelled");

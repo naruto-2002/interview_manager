@@ -137,13 +137,13 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach items="${candidate.candidateJob}" var="candidateJob">
+                                        <c:forEach items="${candidate.candidateJobs}" var="candidateJob">
                                             <tr>
                                                 <td>${candidateJob.job.title}</td>
                                                 <td>${candidateJob.job.location}</td>
                                                 <td>${candidateJob.job.status}</td>
                                                 <td class="action-buttons">
-                                                    <a type="submit" href="/interview/add"
+                                                    <a type="submit" href="/interview/add_details"
                                                        class="btn btn-sm btn-info action-button">Create new Schedule</a>
                                                     </button>
                                                 </td>

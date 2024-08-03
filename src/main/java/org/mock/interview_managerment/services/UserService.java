@@ -5,7 +5,7 @@ import org.mock.interview_managerment.dto.response.UserDetailDto;
 import org.mock.interview_managerment.dto.response.UserListDto;
 import org.mock.interview_managerment.dto.response.UserUpdateDto;
 import org.mock.interview_managerment.entities.User;
-import org.mock.interview_managerment.enums.StatusEnum;
+
 import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.mock.interview_managerment.enums.StatusUserEnum;
 import org.mock.interview_managerment.mapper.UserMapper;

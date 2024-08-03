@@ -2,6 +2,8 @@ package org.mock.interview_managerment.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.mock.interview_managerment.enums.GenderEnum;
 import org.mock.interview_managerment.enums.HighestLevelEnum;
 import org.mock.interview_managerment.enums.PositionEnum;
@@ -27,7 +29,7 @@ public class Candidate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date dob;
+    private LocalDate dob;
     private Integer yearsExperience;
     private String address;
     private String cvAttachmentLink;
@@ -61,7 +63,8 @@ public class Candidate {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "candidate", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "candidate", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
+
     @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
     @ToString.Exclude // Không sử dụng trong toString()
     private List<CandidateJob> candidateJob;

@@ -1,22 +1,25 @@
 package org.mock.interview_managerment.controller;
 
 
+import com.google.api.services.drive.model.File;
 import jakarta.validation.Valid;
 
 import org.mock.interview_managerment.dto.request.CandidateCreateDto;
 import org.mock.interview_managerment.entities.Candidate;
+import org.mock.interview_managerment.entities.CandidateJob;
 import org.mock.interview_managerment.entities.User;
-import org.mock.interview_managerment.enums.GenderEnum;
-import org.mock.interview_managerment.enums.HighestLevelEnum;
-import org.mock.interview_managerment.enums.PositionEnum;
-import org.mock.interview_managerment.enums.StatusCandidateEnum;
+import org.mock.interview_managerment.enums.*;
 import org.mock.interview_managerment.repository.CandidateRepository;
 import org.mock.interview_managerment.services.CandidateService;
+import org.mock.interview_managerment.services.UploadtoDriver;
 import org.mock.interview_managerment.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,24 +27,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.*;
 
 @Controller()
 public class CandidateController {
-    @Autowired
-    private CandidateRepository candidateRepository;
     @Autowired
     private CandidateService candidateService;
     @Autowired
     private UserService userService;
 
     @GetMapping("/candidate")
-    public String getAllCandidate(Model model, @RequestParam(value = "page", defaultValue = "0") int page,RedirectAttributes redirectAttributes) {
+    public String getAllCandidate(Model model, @RequestParam(value = "page", defaultValue = "0") int page, RedirectAttributes redirectAttributes) {
         Page<Candidate> candidates = null;
 
         candidates = candidateService.getAll(page).getBody();
@@ -94,28 +99,51 @@ public class CandidateController {
 
     @GetMapping("/candidate/addCandidateForward")
     public String fowardAddCandidate(Model model) {
-
+        User user=userService.getCurrentUser();
+        model.addAttribute("user", user);
+        List<User> users = userService.findByRoleforCandidate();
+        model.addAttribute("recruiters", users);
         Candidate candidate = new Candidate();
-        model.addAttribute("status", StatusCandidateEnum.values());
+        List<StatusCandidateEnum> statusneeds= Arrays.asList(StatusCandidateEnum.OPEN, StatusCandidateEnum.BANNED);
+        model.addAttribute("status", statusneeds);
         model.addAttribute("candidate", candidate);
-        List<User> users= userService.findByRoleforCandidate();
-        model.addAttribute("recruiters",users);
+
         return "Candidate_view/add-candidate";
     }
 
     @PostMapping("/candidate/addCandidate")
-    public String createCandidate(@Valid @ModelAttribute("candidate") CandidateCreateDto candidateCreateDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+    public String createCandidate(@Valid @ModelAttribute("candidate") CandidateCreateDto candidateCreateDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, @RequestParam("cv") MultipartFile filecv) {
         if (bindingResult.hasErrors()) {
+            User user=userService.getCurrentUser();
+            model.addAttribute("user", user);
             System.out.println(bindingResult.getAllErrors());
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("message", "Failed to created candidate");
+            List<User> users = userService.findByRoleforCandidate();
+            model.addAttribute("recruiters", users);
             return "Candidate_view/add-candidate";
         }
         try {
+//            String fileName = storeFile(filecv);
+            UploadtoDriver uploadtoDriver = new UploadtoDriver();
+            uploadtoDriver.init();
+            java.io.File tempFile = java.io.File.createTempFile("temp-file", ".tmp");
+            byte[] bytes= filecv.getBytes();
+            if(bytes.length>0){
+                try (FileOutputStream fileOutputStream = new FileOutputStream(tempFile)) {
+                    fileOutputStream.write(bytes);
+                }
+                File file = uploadtoDriver.uploadFile(uploadtoDriver.service,tempFile , "cv");
+                candidateCreateDto.setCvAttachmentLink(file.getWebViewLink());
+
+            }
+            // Ghi dữ liệu từ byte array vào file
+
             candidateService.create(candidateCreateDto);
-        }catch (Exception e){
-            redirectAttributes.addAttribute("message", "Failed to created candidate");
-            return "Candidate_view/add-candidate";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            redirectAttributes.addFlashAttribute("message", "Failed to created candidate");
+            return "redirect:/candidate/addCandidateForward";
         }
         redirectAttributes.addFlashAttribute("message2", "Successfully created candidate");
         return "redirect:/candidate";
@@ -132,12 +160,49 @@ public class CandidateController {
     public String updateForward(@RequestParam("id") Long id, Model model) {
         Candidate candidate = candidateService.getById(id).getBody();
         model.addAttribute("candidate", candidate);
+        User user=userService.getCurrentUser();
+        model.addAttribute("user1", user);
+        List<User> users = userService.findByRoleforCandidate();
+        model.addAttribute("recruiters", users);
         return "Candidate_view/update-candidate";
     }
 
     @PostMapping("/candidate/updateCandidate")
-    public String updateCandidate(@RequestParam("id") Long id, @ModelAttribute("candidate") Candidate candidate) {
-        candidateService.updateCandidate(id, candidate);
+    public String updateCandidate(@RequestParam("id") Long id, @Valid @ModelAttribute("candidate") CandidateCreateDto candidateCreateDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, @RequestParam("cv") MultipartFile filecv) {
+        if (bindingResult.hasErrors()) {
+            candidateCreateDto.setId(id);
+            User user=userService.getCurrentUser();
+            model.addAttribute("user1", user);
+            System.out.println(bindingResult.getAllErrors());
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("message", "Failed to created candidate");
+            List<User> users = userService.findByRoleforCandidate();
+            model.addAttribute("recruiters", users);
+            return "Candidate_view/update-candidate";
+        }
+        try {
+//            String fileName = storeFile(filecv);
+            UploadtoDriver uploadtoDriver = new UploadtoDriver();
+            uploadtoDriver.init();
+            java.io.File tempFile = java.io.File.createTempFile("temp-file", ".tmp");
+            byte[] bytes= filecv.getBytes();
+            // Ghi dữ liệu từ byte array vào file
+            if(bytes.length>0){
+                try (FileOutputStream fileOutputStream = new FileOutputStream(tempFile)) {
+                    fileOutputStream.write(bytes);
+                }
+                File file = uploadtoDriver.uploadFile(uploadtoDriver.service,tempFile , "cv");
+                candidateCreateDto.setCvAttachmentLink(file.getWebViewLink());
+
+            }
+
+            candidateService.updateCandidate(id,candidateCreateDto);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            candidateCreateDto.setId(id);
+            redirectAttributes.addFlashAttribute("message", "Failed to created candidate");
+            return "redirect:/candidate/updateForward";
+        }
         return "redirect:/candidate";
     }
 
@@ -159,17 +224,19 @@ public class CandidateController {
         });
         return candidates;
     }
+
     @GetMapping("/candidate/delete")
-    public String deleteCandidate(@RequestParam("id") Long id,RedirectAttributes redirectAttributes) {
+    public String deleteCandidate(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
         candidateService.deleteCandidate(id);
         redirectAttributes.addFlashAttribute("message2", "Successfully delete candidate");
 
         return "redirect:/candidate";
     }
+
     @GetMapping("candidate/ban")
-    public String banCandidate(@RequestParam("id") Long id,RedirectAttributes redirectAttributes) {
+    public String banCandidate(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
         candidateService.banCandidate(id);
-        return "redirect:/candidate/candidateDetail?id="+id;
+        return "redirect:/candidate/candidateDetail?id=" + id;
     }
 
     private int getStatusIndex(String status) {
@@ -203,6 +270,22 @@ public class CandidateController {
             default:
                 return -1;
         }
+    }
+
+
+    public String storeFile(MultipartFile file) throws IOException {
+        String UPLOAD_DIRECTORY = "uploads/";
+        // Tạo thư mục uploads nếu chưa tồn tại
+        Path uploadPath = Paths.get(UPLOAD_DIRECTORY);
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        // Lưu tệp vào thư mục uploads
+        Path filePath = uploadPath.resolve(file.getOriginalFilename());
+        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        return filePath.toString();
     }
 
 }

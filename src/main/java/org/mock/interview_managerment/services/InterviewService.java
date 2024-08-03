@@ -21,7 +21,8 @@ public class InterviewService {
         return interviewRepository.findAll();
     }
 
-    public Interview handleSaveInterview(Interview interview) {
+    public Interview saveInterview(Interview interview) {
+        interview.setDeleted(false);
         return interviewRepository.save(interview);
     }
 
@@ -29,11 +30,9 @@ public class InterviewService {
         return interviewRepository.findByInterviewId(id);
     }
 
-    public void updateInterview(Interview interview) {
-        interviewRepository.save(interview);
-    }
-
     public void deleteInterviewById(Long interviewId) {
-        interviewRepository.deleteById(interviewId);
+        Interview interview = getByInterviewId(interviewId);
+        interview.setDeleted(true);
+        interviewRepository.save(interview);
     }
 }

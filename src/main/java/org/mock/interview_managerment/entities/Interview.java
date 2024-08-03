@@ -29,6 +29,7 @@ public class Interview {
     private String meetingId;
     private String note;
     private String title;
+    private boolean deleted = false;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)

@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="/lib/datetimepicker/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" href="/lib/select2/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap-slider/css/bootstrap-slider.min.css">
-    <link rel="stylesheet" type="text/css" href="/multiselect/css/multi-select.css">
+
     <link rel="stylesheet" href="/css/app.css" type="text/css">
 
 

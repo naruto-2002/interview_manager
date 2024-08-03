@@ -21,9 +21,8 @@
     <link rel="stylesheet" type="text/css" href="/lib/datetimepicker/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" href="/lib/select2/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap-slider/css/bootstrap-slider.min.css">
-    <link rel="stylesheet" type="text/css" href="/multiselect/css/multi-select.css">
+    <link rel="stylesheet" type="text/css" href="/lib/multiselect/css/multi-select.css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
-    <link rel="stylesheet" href="/css/interview/add.css">
     <link rel="stylesheet" href="/css/virtual-select.min.css" type="text/css">
     <style>
         .vscomp-toggle-button {
@@ -39,33 +38,39 @@
 <jsp:include page="../layout/left-sidebar.jsp"/>
 <div class="be-content">
     <div class="container">
-        <h1>User Registration</h1>
+        <h1>Update </h1>
         <%--@elvariable id="candidate" type=""--%>
-        <form:form action="/updateCandidate?id=${candidate.id}" method="post" modelAttribute="candidate" id="form">
+        <form:form action="/candidate/updateCandidate?id=${candidate.id}" method="post" modelAttribute="candidate" id="form" enctype="multipart/form-data">
             <div class="row">
 
                 <div class="col-md-6">
                     <div class="form-group">
                         <label >Full Name:</label>
-                        <input type="text" class="form-control" name="name" value="${candidate.name}"   required/>
+                        <input type="text" class="form-control" name="name" value="${candidate.name}"   />
+                        <form:errors path="name" cssClass="text-danger"></form:errors>
                     </div>
                     <div class="form-group">
                         <label for="dob">Date of Birth:</label>
-                        <form:input type="date" class="form-control" path="dob"/>
+                        <form:input type="date" class="form-control" value="${candidate.dob}" path="dob"/>
+                        <form:errors path="dob" cssClass="text-danger"></form:errors>
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone Number:</label>
                         <form:input type="tel" class="form-control" path="phone" placeholder="Enter your phone number"/>
+                        <form:errors path="phone" cssClass="text-danger"></form:errors>
                     </div>
                     <div class="form-group">
-                        <label for="cvAttachmentLink">File CV:</label>
-                        <form:input type="file" class="form-control" path="cvAttachmentLink"/>
+                        <label >File CV: (${candidate.cvAttachmentLink})</label>
+                        <input type="file" class="form-control"   id="input" name="cv" />
+
+
                     </div>
                     <div class="form-group">
                         <label >CurrentPosition:</label><br>
                         <form:select class="" path="currentPosition" id="position">
                             <form:option value="">Select </form:option>
                             <form:options items="${position}" />
+                            <form:errors path="currentPosition" cssClass="text-danger"></form:errors>
                         </form:select>
                     </div>
                     <div class="form-group">
@@ -78,13 +83,15 @@
                             <option value="Business analysis" ${fn:contains(candidate.skills, 'Business analysis') ? 'selected' : ''}>Business analysis</option>
                             <option value="Communication" ${fn:contains(candidate.skills, 'Communication') ? 'selected' : ''}>Communication</option>
                         </select>
+                        <form:errors path="skills" cssClass="text-danger"></form:errors>
                     </div>
 
                     <div class="form-group">
                         <label>Recruiter:</label><br>
                         <form:select path="user" id="recruiter">
-                            <form:option value="" selected="true">Choose Recruiter</form:option>
-                            <form:options items="${recruiters}" itemValue="id" itemLabel="fullName"  />
+<%--                            <form:option value="" >Choose Recruiter</form:option>--%>
+                            <form:option value="${user1}">Asign Me</form:option>
+                            <form:options items="${recruiters}" itemValue="userId" itemLabel="fullName"  />
 
                         </form:select>
                         <form:errors path="user" cssClass="text-danger"></form:errors>
@@ -108,6 +115,7 @@
                             <form:option value="">Select </form:option>
                             <form:options items="${gender}" />
                         </form:select>
+                        <form:errors path="gender" cssClass="text-danger"></form:errors>
                     </div>
 
                     <div class="form-group">
@@ -120,6 +128,7 @@
                             <form:option value="">Select </form:option>
                             <form:options items="${status}" />
                         </form:select>
+                        <form:errors path="status" cssClass="text-danger"></form:errors>
                     </div>
                     <div class="form-group">
                         <label for="yearsExperience">Year of Experience:</label>
@@ -131,6 +140,7 @@
                             <form:option value="">Select </form:option>
                             <form:options items="${highlevel}" />
                         </form:select>
+                        <form:errors path="highestLevel" cssClass="text-danger"></form:errors>
                     </div>
                 </div>
             </div>
@@ -149,33 +159,17 @@
 
 </div>
 </div>
-<script src="assets\js\virtual-select.min.js"></script>
+<script src="/js/virtual-select.min.js"></script>
 <script>
     VirtualSelect.init({
         ele: 'select'
     });
-
-</script>
-<script>
-    var form= document.getElementById('form')
-    console.log(form)
-
-    form.addEventListener('submit', (event) => {
-        // Kiểm tra các trường bắt buộc
-        const position = document.getElementById('position');
-        const skill= document.getElementById('skill');
-        const gender= document.getElementById('gender');
-        const recruiter= document.getElementById('recruiter');
-        const status = document.getElementById('status');
-        const highlevel = document.getElementById('highestlevel');
-        if(position.value===""||status.value==""||skill.value==""||gender.value==""||recruiter.value==""||highlevel.value=="") {
-            alert("Please select ")
-            event.preventDefault();
+    function handleAssignMeClick(select) {
+        if (select.value === "${user1}") {
+            // Chuyển giá trị của select box thành "user 1"
+            select.value = "${user1}";
         }
-
-
-
-
-    });
+    }
 </script>
+
 </body>

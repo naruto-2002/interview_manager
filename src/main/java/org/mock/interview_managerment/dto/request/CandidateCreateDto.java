@@ -11,13 +11,14 @@ import org.mock.interview_managerment.enums.PositionEnum;
 import org.mock.interview_managerment.enums.StatusCandidateEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 public class CandidateCreateDto {
-
+    private Long id;
     @NotBlank(message = "Name cannot be null")
     private String name;
 
@@ -50,7 +51,7 @@ public class CandidateCreateDto {
     @NotNull(message = "Date of birth cannot be null")
     @PastOrPresent(message = "Date of Birth must be in the past")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dob;
+    private LocalDate dob;
 
     private String note;
 

@@ -9,9 +9,12 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
+import com.google.api.services.drive.model.Permission;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Arrays;
+import java.util.List;
 
 /* class to demonstrate use of Drive files list API */
 public class UploadtoDriver {
@@ -20,7 +23,7 @@ public class UploadtoDriver {
 
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 
-    public Drive service;
+    public static Drive service;
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Lấy access token và refresh token từ nơi bạn lưu trữ
         String accessToken = "your_access_token";
@@ -52,10 +55,21 @@ public class UploadtoDriver {
         // Tạo FileContent từ đường dẫn file
         FileContent mediaContent = new FileContent("application/pdf", file);
 
+        File file2;
         // Upload file lên Google Drive
-        return driveService.files().create(fileMetadata, mediaContent)
+        file2= driveService.files().create(fileMetadata, mediaContent)
                 .setFields("id, webViewLink")
                 .execute();
+        List<String> emails = Arrays.asList("damnhau04@gmail.com", "user2@example.com");
 
+        for (String email : emails) {
+            Permission permission = new Permission()
+                    .setType("user")
+                    .setRole("reader")
+                    .setEmailAddress(email);
+            service.permissions().create(file2.getId(), permission)
+                    .execute();
+        }
+        return file2;
     }
 }

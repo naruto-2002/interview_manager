@@ -14,6 +14,8 @@ public class ScheduledInterview implements Serializable {
     @EmbeddedId
     private ScheduledInterviewId ScheduledInterviewId;
 
+    private boolean deleted = false;
+
     @ManyToOne
     @MapsId("interviewId")
     @JoinColumn(name = "interview_id")

@@ -18,7 +18,6 @@ public class DeleteController {
 
     @GetMapping("/interview/delete")
     public String deleteInterview(@RequestParam("interviewId") long interviewId, Model model) {
-        offerService.deleteOfferByInterviewId(interviewId);
         scheduledInterviewService.deleteScheduledInterviewByInterviewId(interviewId);
         interviewService.deleteInterviewById(interviewId);
         return "redirect:/interview/list";  // Redirect to avoid form resubmission issues

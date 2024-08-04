@@ -45,7 +45,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star" for="title">Schedule title</label>
                                                     <div class="col-12 col-sm-8 col-lg-8">
-                                                        <form:input type="text" class="form-control" id="title" path="title" />
+                                                        <form:input type="text" class="form-control" id="title" path="title" placeholder="Type a title..." />
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -59,7 +59,7 @@
                                                     <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Schedule Time</label>
                                                     <div class="col-12 col-sm-8 col-lg-8">
                                                         <div class="input-group date datetimepicker" data-min-view="2" data-date-format="yyyy-mm-dd">
-                                                            <form:input type="text" class="form-control" id="date" path="date" />
+                                                            <form:input type="text" class="form-control" id="date" path="date" placeholder="yyyy-mm-dd"/>
                                                             <div class="input-group-append">
                                                                 <button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
                                                             </div>
@@ -68,9 +68,9 @@
                                                 </div>
                                                 <div class=" form-group row d-flex justify-content-center">
                                                     <label class="col-form-label text-sm-right mr-2" for="startTime">From:</label>
-                                                    <form:input class="col-2 form-control input-spacing mr-4" id="startTime" path="startTime" type="text" />
+                                                    <form:input class="col-2 form-control input-spacing mr-4" id="startTime" path="startTime" type="text" placeholder="hh:mm"/>
                                                     <label class="col-form-label text-sm-right mr-2" for="endTime">To:</label>
-                                                    <form:input class="col-2 form-control mr-6" id="endTime" path="endTime" type="text" />
+                                                    <form:input class="col-2 form-control mr-6" id="endTime" path="endTime" type="text" placeholder="hh:mm"/>
                                                 </div>
                                             </c:if>
 
@@ -124,7 +124,7 @@
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 " for="note">Notes</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
-                                                    <form:textarea class="form-control" id="note" path="note"/>
+                                                    <form:textarea class="form-control" id="note" path="note" placeholder="Type a note..."/>
                                                 </div>
                                             </div>
                                         </div>
@@ -190,13 +190,13 @@
                                                 <div class="form-group row">
                                                     <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="location">Location</label>
                                                     <div class="col-12 col-sm-8 col-lg-8">
-                                                        <form:input class="form-control" id="location" path="location" type="text"/>
+                                                        <form:input class="form-control" id="location" path="location" type="text" placeholder="Type a location..."/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="meetingId">Meeting ID</label>
                                                     <div class="col-12 col-sm-8 col-lg-8">
-                                                        <form:input class="form-control" id="meetingId" path="meetingId" type="text"/>
+                                                        <form:input class="form-control" id="meetingId" path="meetingId" type="text" placeholder="Type a meeting id..."/>
                                                     </div>
                                                 </div>
                                             </c:if>
@@ -316,9 +316,17 @@
                                         <div class="d-flex justify-content-center align-items-center card-body">
                                             <div class="">
                                                 <c:if test = "${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
-                                                    <a href="/interview/add_candidate">
-                                                        <button type="button" class="ml-6 btn btn-space btn-secondary btn-width active">Back</button>
-                                                    </a>
+                                                    <c:if test = "${interview.interviewId == null}">
+                                                        <a href="/interview/add_candidate">
+                                                            <button type="button" class="ml-6 btn btn-space btn-secondary btn-width active">Back</button>
+                                                        </a>
+                                                    </c:if>
+                                                    <c:if test = "${interview.interviewId != null}">
+                                                        <a href="/interview/edit_candidate?interviewId=${interview.interviewId}">
+                                                            <button type="button" class="ml-6 btn btn-space btn-secondary btn-width active">Back</button>
+                                                        </a>
+                                                    </c:if>
+
                                                     <button type="submit" class="ml-6 btn btn-space btn-secondary btn-width active">Submit</button>
                                                     <a href="/interview/list">
                                                         <button type="button" class="ml-6 btn btn-space btn-secondary btn-width active">Cancel</button>

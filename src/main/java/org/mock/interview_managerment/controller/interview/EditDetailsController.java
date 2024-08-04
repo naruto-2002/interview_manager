@@ -58,14 +58,14 @@ public class EditDetailsController {
 
         if(roleName.equals("recruiter") || roleName.equals("admin") || roleName.equals("manager")) {
             scheduledInterviewService.deleteScheduledInterviewByInterviewId(newInterview.getInterviewId());
-            interviewService.updateInterview(newInterview);
+            interviewService.saveInterview(newInterview);
         }
 
         if(roleName.equals("interviewer")) {
             Interview interview = interviewService.getByInterviewId(newInterview.getInterviewId());
             interview.setNote(newInterview.getNote());
             interview.setResult(newInterview.getResult());
-            interviewService.updateInterview(interview);
+            interviewService.saveInterview(interview);
         }
 
         List<Long> selectedInterviewerIds = newInterview.getSelectedInterviewerIds();
@@ -79,7 +79,7 @@ public class EditDetailsController {
             scheduledInterview.setInterview(newInterview);
             scheduledInterview.setInterviewer(userService.getByUserId(selectedInterviewerId));
 
-            scheduledInterviewService.handleSaveScheduledInterview(scheduledInterview);
+            scheduledInterviewService.saveScheduledInterview(scheduledInterview);
         }
 
         return "redirect:/interview/list";

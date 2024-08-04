@@ -43,7 +43,7 @@ public class AddDetailsController {
     public String addNewInterview(@ModelAttribute("newInterview") Interview newInterview) {
         newInterview.setResult(ResultInterviewEnum.NA);
         newInterview.setStatus(StatusInterviewEnum.NEW);
-        Interview interview = interviewService.handleSaveInterview(newInterview);
+        Interview interview = interviewService.saveInterview(newInterview);
 
         List<Long> selectedInterviewerIds = newInterview.getSelectedInterviewerIds();
         for(Long selectedInterviewerId : selectedInterviewerIds) {
@@ -56,7 +56,7 @@ public class AddDetailsController {
             scheduledInterview.setInterview(interview);
             scheduledInterview.setInterviewer(userService.getByUserId(selectedInterviewerId));
 
-            scheduledInterviewService.handleSaveScheduledInterview(scheduledInterview);
+            scheduledInterviewService.saveScheduledInterview(scheduledInterview);
         }
 
         return "redirect:/interview/list";

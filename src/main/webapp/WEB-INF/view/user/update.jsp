@@ -24,11 +24,11 @@
 </head>
 
 <body>
-<jsp:include page="../layout/header.jsp"/>
+<jsp:include page="../layout/header.jsp" />
 
-<jsp:include page="../layout/left-sidebar.jsp"/>
+<jsp:include page="../layout/left-sidebar.jsp" />
 <div class="be-content">
-    <div class="page-head" style="margin-top: 60px;" style="margin-top: 60px;">
+    <div class="page-head" style="margin-top: 60px;"style="margin-top: 60px;">
         <h2 class="page-head-title">User</h2>
         <nav aria-label="breadcrumb mt-2" role="navigation">
             <ol class="breadcrumb page-head-nav">
@@ -43,23 +43,20 @@
         <form:form action="/user/update" method="post" modelAttribute="user">
             <div class="row">
                 <div class="col-md-6">
-                    <form:hidden path="userId"/>
+                    <form:hidden path="userId" />
                     <div class="form-group">
                         <label for="fullName">Full Name:</label>
-                        <form:input type="text" class="form-control" id="fullName" path="fullName"
-                                    placeholder="Enter your full name"/>
-                        <form:errors path="fullName" cssClass="text-danger"/>
+                        <form:input type="text" class="form-control" id="fullName" path="fullName" placeholder="Enter your full name" />
+                        <form:errors path="fullName" cssClass="text-danger" />
                     </div>
                     <div class="form-group">
                         <label for="dob">Date of Birth:</label>
-                        <form:input path="dob" id="dob" type="date"
-                                    class="form-control" value="${user.dob}"/>
-                        <form:errors path="dob" cssClass="text-danger"/>
+                        <form:input path="dob" id="dob" type="date" class="form-control" value="${user.dob}"/>
+                        <form:errors path="dob" cssClass="text-danger" />
                     </div>
                     <div class="form-group">
                         <label for="phoneNumber">Phone Number:</label>
-                        <form:input type="tel" class="form-control" id="phoneNumber"
-                                    placeholder="Enter your phone number" path="phoneNumber"/>
+                        <form:input type="tel" class="form-control" id="phoneNumber" placeholder="Enter your phone number" path="phoneNumber"/>
                     </div>
                     <div class="form-group">
                         <label for="role">Role:</label>
@@ -82,8 +79,8 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <form:input type="email" class="form-control" id="email" path="email"/>
-                        <form:errors path="email" cssClass="text-danger"/>
+                        <form:input type="email" class="form-control" id="email" path="email" />
+                        <form:errors path="email" cssClass="text-danger" />
                     </div>
                     <div class="form-group">
                         <label for="address">Address:</label>

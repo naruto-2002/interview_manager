@@ -36,8 +36,8 @@
                 <div class="card-header">
                     <c:if test = "${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
                         <div class="d-flex justify-content-end">
-                            <a href="javascript:void(0);" onclick="confirmDelete(${interview.interviewId})">
-                                <button class="btn btn-space btn-secondary btn-width active">Delete</button>
+                            <a href="/interview/reminder?interviewId=${interview.interviewId}">
+                                <button class="btn btn-space btn-secondary active">Send Reminder</button>
                             </a>
                         </div>
                     </c:if>

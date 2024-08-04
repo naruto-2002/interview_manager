@@ -16,7 +16,7 @@ public class CandidateJobService {
         return candidateJobRepository.findAll();
     }
 
-    public List<CandidateJob> getAllByCandidateId(Long id) {
-        return candidateJobRepository.findByCandidateId(id);
+    public List<CandidateJob> getAllJobOpenByCandidateId(Long id) {
+        return candidateJobRepository.findAllJobOpenByCandidateId(id);
     }
 }

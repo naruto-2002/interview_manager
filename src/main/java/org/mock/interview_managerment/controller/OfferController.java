@@ -89,7 +89,7 @@ public class OfferController {
 
             Interview interview = offer.getInterview();
             interview.setStatus(StatusInterviewEnum.CANCELLED);
-            interviewService.updateInterview(interview);
+            interviewService.saveInterview(interview);
 
             redirectAttributes.addFlashAttribute("message", "Offer approved successfully.");
         } else {
@@ -233,7 +233,7 @@ public class OfferController {
             return "offers/create_offer";
         }
 
-        Candidate candidate = candidateService.getById(offer.getOfferId()).getBody();
+        Candidate candidate = candidateService.getById(offer.getCandidate().getId()).getBody();
         candidate.setStatus(StatusCandidateEnum.Waiting_for_approval);
         candidateService.updateCandidatenew(candidate.getId(), candidate);
         offerService.saveOffer(offer);

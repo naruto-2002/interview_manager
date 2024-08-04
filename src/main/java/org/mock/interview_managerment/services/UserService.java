@@ -107,10 +107,13 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public List<UserListDto> search(String keyword) {
-        return userRepository.search(keyword).stream()
+    public Page<UserListDto> handleSearchAndFilterUsers(String keyword, Long roleId, Pageable pageable) {
+        Page<User> userPage = userRepository.searchAndFilterUsers(keyword, roleId, pageable);
+        List<UserListDto> userListDtos = userPage.getContent().stream()
                 .map(userMapper::toUserListDto)
                 .collect(Collectors.toList());
+
+        return new PageImpl<>(userListDtos, pageable, userPage.getTotalElements());
     }
 
     public List<User> getManagers() {
@@ -153,13 +156,13 @@ public class UserService {
     public User getByUserId(long userId) {
         return userRepository.findByUserId(userId);
     }
-    public User getCurrentUser(){
+    public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
         if (principal instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) principal;
             String username = userDetails.getUsername();
-            Optional<User> ouser= getUserByUsername(username);
+            Optional<User> ouser = getUserByUsername(username);
             User user = ouser.get();
             return user;
         }
@@ -190,10 +193,9 @@ public class UserService {
     }
 
 
-
     //"ADMIN", "RECRUITER", "INTERVIEWER", "MANAGER"
     public String getRoleName(String authority) {
-        switch(authority) {
+        switch (authority) {
             case "[ROLE_INTERVIEWER]":
                 return "interviewer";
             case "[ROLE_ADMIN]":

@@ -98,6 +98,7 @@ public class ForgotPasswordController {
 
         passwordResetTokenService.handleDeleteToken(passwordResetToken);
         model.addAttribute("message", "Your password has been successfully reset.");
+        System.out.println("Done reset password");
         return "redirect:/login";
     }
 }

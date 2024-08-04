@@ -22,11 +22,28 @@
           href="/lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
 </head>
+<style>
 
+    .alert {
+        width: 300px;
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        z-index: 1050;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .alert.show {
+        opacity: 1;
+        transform: translateX(0);
+    }
+</style>
 <body>
-<jsp:include page="../layout/header.jsp" />
+<jsp:include page="../layout/header.jsp"/>
 
-<jsp:include page="../layout/left-sidebar.jsp" />
+<jsp:include page="../layout/left-sidebar.jsp"/>
 
 <div class="be-content" style="margin-top: 60px;">
     <div class="main-content container-fluid">
@@ -44,10 +61,15 @@
                 <div class="d-flex justify-content-end">
                     <c:choose>
                         <c:when test="${userDetail.status == 'ACTIVE'}">
-                            <button class="btn btn-space btn-danger" onclick="updateStatus('${userDetail.userId}')"> De-activate user</button>
+                            <button class="btn btn-space btn-danger"
+                                    onclick="updateStatus('${userDetail.userId}', '${sessionScope.userId}')">
+                                De-activate user
+                            </button>
                         </c:when>
                         <c:otherwise>
-                            <button class="btn btn-space btn-success" onclick="updateStatus('${userDetail.userId}')">Activate user</button>
+                            <button class="btn btn-space btn-success" onclick="updateStatus('${userDetail.userId}')">
+                                Activate user
+                            </button>
                         </c:otherwise>
                     </c:choose>
                 </div>
@@ -66,8 +88,9 @@
                             <label for="dob" class="font-weight-bold mr-2"
                                    style="width: 100px; text-align: left;">D.O.B:</label>
                             <p id="dob" class="flex-grow-1 border" style="text-align: left; padding-left: 10px;">
-                                <fmt:parseDate value="${userDetail.dob}" pattern="yyyy-MM-dd" var="parsedDob" type="date"/>
-                                <fmt:formatDate value="${parsedDob}" pattern="dd-MM-yyyy" />
+                                <fmt:parseDate value="${userDetail.dob}" pattern="yyyy-MM-dd" var="parsedDob"
+                                               type="date"/>
+                                <fmt:formatDate value="${parsedDob}" pattern="dd-MM-yyyy"/>
                             </p>
                         </div>
                         <div class="form-group d-flex align-items-center">
@@ -104,7 +127,7 @@
                             <p id="address" class="flex-grow-1 border"
                                style="text-align: left; padding-left: 10px;">
                                 ${userDetail.address}
-                                </p>
+                            </p>
                         </div>
                         <div class="form-group d-flex align-items-center">
                             <label for="gender" class="font-weight-bold mr-2"
@@ -129,12 +152,23 @@
                 </div>
                 <div class="row justify-content-center">
                     <button class="mr-6 btn btn-space btn-primary btn-width active"
-                            style="width: 100px;">Edit</button>
+                            style="width: 100px;">Edit
+                    </button>
                     <button class="ml-6 btn btn-space btn-secondary btn-width active"
-                            style="width: 100px;" onclick="window.history.back();">Cancel</button>
+                            style="width: 100px;" onclick="window.history.back();">Cancel
+                    </button>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="alert alert-contrast alert-danger alert-dismissible"
+     role="alert" id="alert">
+    <div class="icon"><span class="mdi mdi-close-circle-o"></span></div>
+    <div class="message">
+
+        <strong>Danger!</strong> Cannot deactivate itself.
     </div>
 </div>
 
@@ -157,7 +191,17 @@
 
     });
 
-    function updateStatus(userId) {
+    function updateStatus(userId, sessionId) {
+
+        if (userId === sessionId) {
+            var errorAlert = document.getElementById('alert');
+            errorAlert.classList.add('show');
+
+            setTimeout(function() {
+                errorAlert.classList.remove('show');
+            }, 2000);
+            return
+        }
 
         var xhr = new XMLHttpRequest();
 
@@ -169,7 +213,7 @@
         };
 
         xhr.send(JSON.stringify(data));
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 location.reload();
             }

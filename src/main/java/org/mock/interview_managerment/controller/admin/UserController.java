@@ -1,5 +1,6 @@
 package org.mock.interview_managerment.controller.admin;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.eclipse.tags.shaded.org.apache.xpath.operations.Mod;
 import org.mock.interview_managerment.dto.request.UserCreateDto;
@@ -115,6 +116,12 @@ public class UserController {
     @GetMapping("/login")
     public String getPageLogin() {
         return "auth/login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        request.getSession().removeAttribute("userId");
+        return "redirect:/login?logout";
     }
 
 }

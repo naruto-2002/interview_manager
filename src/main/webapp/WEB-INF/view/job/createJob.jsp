@@ -38,6 +38,7 @@
                             <input type="text" class="form-control" id="title" name="title" required>
                         </div>
                     </div>
+
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="skills">Skills</label>
@@ -57,6 +58,8 @@
                             </div>
                             <input type="hidden" id="skills" name="requiredSkills">
                             <div id="selectedSkills" class="mt-2"></div>
+                            <span id="error-message-skills" style="color:red; display:none;">Please select at least one
+                                skill.</span>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -76,6 +79,8 @@
                             </div>
                             <input type="hidden" id="benefits" name="benefits">
                             <div id="selectedBenefits" class="mt-2"></div>
+                            <span id="error-message-benefits" style="color:red; display:none;">Please select at least
+                                one benefit.</span>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -96,6 +101,8 @@
                             </div>
                             <input type="hidden" id="level" name="level">
                             <div id="selectedLevels" class="mt-2"></div>
+                            <span id="error-message-levels" style="color:red; display:none;">Please select at least one
+                                level.</span>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -137,7 +144,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" onclick="return validateForm()">Submit</button>
                 <a href="javascript:history.back()" class="btn btn-secondary">Cancel</a>
                 <hr>
             </form>

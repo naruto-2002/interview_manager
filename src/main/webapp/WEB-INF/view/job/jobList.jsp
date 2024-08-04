@@ -125,12 +125,13 @@
                                                                     class="text-warning mx-2">
                                                                     <i class="fas fa-edit"></i> <!-- Icon for Update -->
                                                                 </a>
-                                                                <a href="/job/delete/${listjobs.content[index].jobId}"
-                                                                    class="text-danger">
+                                                                <a href="javascript:void(0);" class="text-danger"
+                                                                    onclick="confirmDelete(${listjobs.content[index].jobId})">
                                                                     <i class="fas fa-trash"></i>
                                                                     <!-- Icon for Delete -->
                                                                 </a>
                                                             </td>
+
 
 
                                                         </tr>
@@ -211,6 +212,30 @@
                                 </div>
                             </div>
                         </div>
+                        <script>
+                            function confirmDelete(jobId) {
+                                Swal.fire({
+                                    title: 'Bạn có chắc muốn xóa công việc này không?',
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Xóa',
+                                    cancelButtonText: 'Hủy'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = "/job/delete/" + jobId;
+                                    }
+                                });
+                            }
+                        </script>
+                        <!-- Thêm SweetAlert CSS -->
+                        <link rel="stylesheet"
+                            href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+                        <!-- Thêm SweetAlert JavaScript -->
+                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
                         <script src="/lib/jquery/jquery.min.js" type="text/javascript"></script>
                         <script src="/lib/perfect-scrollbar/js/perfect-scrollbar.min.js"
                             type="text/javascript"></script>

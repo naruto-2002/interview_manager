@@ -20,6 +20,7 @@ public class CandidateMapper {
         candidate.setSkills(candidateCreateDto.getSkills());
         candidate.setYearsExperience(candidateCreateDto.getYearsExperience());
         candidate.setUser(candidateCreateDto.getUser());
+        candidate.setNote(candidateCreateDto.getNote());
         return candidate;
     }
 }

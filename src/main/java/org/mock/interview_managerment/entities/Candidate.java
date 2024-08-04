@@ -68,4 +68,6 @@ public class Candidate {
     @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
     @ToString.Exclude // Không sử dụng trong toString()
     private List<CandidateJob> candidateJobs;
+
+    private Boolean isDeleted = false;
 }

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +26,7 @@ public class CandidateService {
     public ResponseEntity<Page<Candidate>> getAll(int page){
 
         Pageable pageable= (Pageable) PageRequest.of(page,7);
-        Page<Candidate> l= candidateRepository.findAll(pageable);
+        Page<Candidate> l= candidateRepository.findByIsDeletedFalse(pageable);
         return ResponseEntity.ok().body(l);
     }
 
@@ -59,8 +60,10 @@ public class CandidateService {
         candidateRepository.save(candidate1);
         return candidate1;
     }
-    public void deleteCandidate(Long Id){
-        candidateRepository.deleteById(Id);
+    public void deleteCandidate(Long id){
+        Candidate candidate=candidateRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        candidate.setIsDeleted(true);
+        candidateRepository.save(candidate);
     }
     public void banCandidate(Long id){
         Candidate candidate=candidateRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));

@@ -14,13 +14,18 @@ public class ScheduledInterviewService {
     private final InterviewService interviewService;
     private final UserService userService;
 
-    public List<ScheduledInterview> getAllScheduledInterview() {
-        return scheduledInterviewRepository.findAll();
-    }
-    public ScheduledInterview handleSaveScheduledInterview(ScheduledInterview scheduledInterview) {
+    public ScheduledInterview saveScheduledInterview(ScheduledInterview scheduledInterview) {
+        scheduledInterview.setDeleted(false);
         return scheduledInterviewRepository.save(scheduledInterview);
     }
     public void deleteScheduledInterviewByInterviewId(long interviewId) {
-        scheduledInterviewRepository.deleteByInterviewId(interviewId);
+        List<ScheduledInterview> scheduledInterviews = scheduledInterviewRepository.findAllByInterviewId(interviewId);
+        scheduledInterviews.forEach(scheduledInterview -> {
+            scheduledInterview.setDeleted(true);
+            scheduledInterviewRepository.save(scheduledInterview);
+        });
+    }
+    public List<ScheduledInterview> getScheduledInterviewByInterviewId(long interviewId) {
+        return scheduledInterviewRepository.findAllByInterviewId(interviewId);
     }
 }

@@ -1,4 +1,6 @@
-
+* {
+    color: black;
+}
 
 .bs-grid-block {
     border: none !important;
@@ -25,6 +27,7 @@
     display: flex;
     flex-direction: column-reverse;
     width: 100%;
+    font-size: 16px;
 }
 
 .ms-selection {
@@ -56,6 +59,8 @@
     text-align: left;
 }
 
+
+
 .table-container {
     max-height: 200px;
     overflow-y: auto;
@@ -72,22 +77,4 @@
     font-size: 16px !important;
     color: black !important;
     font-weight: 400;
-}
-
-.dataTables_wrapper .dataTables_length {
-    margin-left: 22px;
-    margin-bottom: 12px;
-}
-
-.dataTables_wrapper .dataTables_filter {
-    margin-right: 22px;
-    margin-bottom: 12px;
-}
-
-.icon + .icon {
-    margin-left: 26px !important;
-}
-
-.btn-width {
-    width: 108px;
 }

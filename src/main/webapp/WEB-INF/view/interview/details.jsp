@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="/lib/datetimepicker/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" href="/lib/select2/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap-slider/css/bootstrap-slider.min.css">
-
+    
     <link rel="stylesheet" href="/css/app.css" type="text/css">
     <link rel="stylesheet" href="/css/interview/details.css">
 </head>
@@ -36,8 +36,8 @@
                 <div class="card-header">
                     <c:if test = "${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
                         <div class="d-flex justify-content-end">
-                            <a href="javascript:void(0);" onclick="confirmDelete(${interview.interviewId})">
-                                <button class="btn btn-space btn-secondary btn-width active">Delete</button>
+                            <a href="/interview/reminder?interviewId=${interview.interviewId}">
+                                <button class="btn btn-space btn-secondary active">Send Reminder</button>
                             </a>
                         </div>
                     </c:if>
@@ -70,7 +70,6 @@
                                                                 <li>Address: <span>${interview.candidate.address}</span></li>
                                                                 <li>Email: <span>${interview.candidate.email}</span></li>
                                                                 <li>Phone: <span>${interview.candidate.phone}</span></li>
-                                                                <li>Skills: <span>${interview.candidate.skills}</span></li>
                                                                 <li>Position: <span>${interview.candidate.currentPosition}</span></li>
                                                             </ul>
                                                         </div>
@@ -105,9 +104,7 @@
                                                 </div>
                                             </div>
                                         </form>
-
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -182,9 +179,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
                                             <div class="form-group row">
                                                 <div class="col-12 col-sm-8 col-lg-6 text-sm-left">
                                                     <div class="card" style="padding: 0; margin: 0">
@@ -218,12 +212,12 @@
                                     <div class="d-flex justify-content-center align-items-center card-body">
                                         <div class="d-flex">
                                             <c:if test = "${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
-                                                <a href="/interview/edit?interview_id=${interview.interviewId}">
+                                                <a href="/interview/edit_candidate?interviewId=${interview.interviewId}">
                                                     <button class="mr-6 btn btn-space btn-secondary btn-width active">Edit</button>
                                                 </a>
                                             </c:if>
                                             <c:if test = "${roleName == 'interviewer'}">
-                                                <a href="/interview/edit?interview_id=${interview.interviewId}">
+                                                <a href="/interview/edit_details?interviewId=${interview.interviewId}&candidateId=${interview.candidate.id}">
                                                     <button class="mr-6 btn btn-space btn-secondary btn-width active">Edit Result</button>
                                                 </a>
                                             </c:if>

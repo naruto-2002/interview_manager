@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "candidate_job")
+@Table(name = "candidate_jobs")
 public class CandidateJob implements Serializable {
 
     @EmbeddedId

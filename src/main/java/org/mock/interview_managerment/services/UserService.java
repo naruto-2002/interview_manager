@@ -5,7 +5,7 @@ import org.mock.interview_managerment.dto.response.UserDetailDto;
 import org.mock.interview_managerment.dto.response.UserListDto;
 import org.mock.interview_managerment.dto.response.UserUpdateDto;
 import org.mock.interview_managerment.entities.User;
-import org.mock.interview_managerment.enums.StatusEnum;
+
 import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.mock.interview_managerment.enums.StatusUserEnum;
 import org.mock.interview_managerment.mapper.UserMapper;
@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -149,5 +152,59 @@ public class UserService {
 
     public User getByUserId(long userId) {
         return userRepository.findByUserId(userId);
+    }
+    public User getCurrentUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) principal;
+            String username = userDetails.getUsername();
+            Optional<User> ouser= getUserByUsername(username);
+            User user = ouser.get();
+            return user;
+        }
+        return null;
+    }
+    public String getCurrentUsername() {
+        // Lấy thông tin người dùng từ SecurityContextHolder
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) principal;
+            return getRoleName(userDetails.getAuthorities().toString());
+        }
+        return null;
+    }
+
+    public String getCurrentUserRole() {
+        // Lấy thông tin người dùng từ SecurityContextHolder
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) principal;
+            return userDetails.getUsername();
+        }
+        return null;
+    }
+
+
+
+    //"ADMIN", "RECRUITER", "INTERVIEWER", "MANAGER"
+    public String getRoleName(String authority) {
+        switch(authority) {
+            case "[ROLE_INTERVIEWER]":
+                return "interviewer";
+            case "[ROLE_ADMIN]":
+                return "admin";
+            case "[ROLE_RECRUITER]":
+                return "recruiter";
+            case "[ROLE_MANAGER]":
+                return "manager";
+
+            default:
+                return "Unknown role";
+        }
     }
 }

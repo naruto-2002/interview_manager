@@ -28,13 +28,13 @@ public class CandidateService {
     public ResponseEntity<Page<Candidate>> getAll(int page){
 
         Pageable pageable= (Pageable) PageRequest.of(page,7);
-        Page<Candidate> l= candidateRepository.findAll(pageable);
+        Page<Candidate> l= candidateRepository.findByIsDeletedFalse(pageable);
         return ResponseEntity.ok().body(l);
     }
 
     public ResponseEntity<Page<Candidate>> search(String keyword, StatusCandidateEnum status, int page){
         Pageable pageable= (Pageable) PageRequest.of(page,7);
-        Page<Candidate> l= candidateRepository.findByStatusAndNameContainingOrEmailContainingOrPhoneContainingOrUserContaining(status,keyword,keyword,keyword,keyword,pageable);
+        Page<Candidate> l= candidateRepository.findByKeywordAndStatus(keyword,pageable,status);
         return ResponseEntity.ok().body(l);
     }
     public ResponseEntity<Page<Candidate>> findByStatus(StatusCandidateEnum status, int page){
@@ -44,7 +44,7 @@ public class CandidateService {
     }
     public ResponseEntity<Page<Candidate>> findBykey(String keyword, int page){
         Pageable pageable= (Pageable) PageRequest.of(page,7);
-        Page<Candidate> l= candidateRepository.findByNameContainingOrEmailContainingOrPhoneContaining(keyword,keyword,keyword,pageable);
+        Page<Candidate> l= candidateRepository.findByKeyword(keyword,pageable);
         return ResponseEntity.ok().body(l);
     }
     public Candidate create(CandidateCreateDto c){
@@ -55,15 +55,17 @@ public class CandidateService {
         Candidate candidate= candidateRepository.getById(id);
         return ResponseEntity.ok().body(candidate);
     }
-    public ResponseEntity updateCandidate(Long userId, Candidate newCandidate) {
-        Candidate candidate = candidateRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        candidateRepository.save(newCandidate);
-        return ResponseEntity.ok().body(newCandidate);
+    public Candidate updateCandidate(Long id, CandidateCreateDto newCandidate) {
+        Candidate candidate=candidateRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        Candidate candidate1= CandidateMapper.toCandidate(newCandidate);
+        candidate1.setId(candidate.getId());
+        candidateRepository.save(candidate1);
+        return candidate1;
     }
-    public void deleteCandidate(Long Id){
-        candidateRepository.deleteById(Id);
+    public void deleteCandidate(Long id){
+        Candidate candidate=candidateRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        candidate.setIsDeleted(true);
+        candidateRepository.save(candidate);
     }
     public void banCandidate(Long id){
         Candidate candidate=candidateRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
@@ -146,6 +148,10 @@ public class CandidateService {
 
     public List<Candidate> getAllCandidates() {
         return candidateRepository.findAll();
+    }
+
+    public Candidate getCandidateById(long id){
+        return candidateRepository.findByCandidateId(id);
     }
 
     public List<Candidate> getCandidatesWithPassedInterview() {

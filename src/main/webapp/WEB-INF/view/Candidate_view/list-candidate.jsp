@@ -17,10 +17,35 @@
     <link rel="stylesheet" type="text/css" href="/lib/datetimepicker/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" href="/lib/select2/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap-slider/css/bootstrap-slider.min.css">
-    <link rel="stylesheet" type="text/css" href="/multiselect/css/multi-select.css">
+
     <link rel="stylesheet" href="/css/app.css" type="text/css">
     <link rel="stylesheet" href="/css/popup.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            padding: 12px 16px;
+            margin-right: 10px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        td {
+            white-space: nowrap;
+
+        }
+    </style>
 </head>
 
 <body>
@@ -98,7 +123,39 @@
                 <tbody>
                 <c:forEach items="${candidates}" var="candidate">
                     <tr>
-                        <td>${candidate.name}</td>
+                        <td>
+                            <div class="dropdown">
+                                <span>${candidate.name}</span>
+                                <div class="dropdown-content">
+                                    <table class="table table-striped table-sm table-responsive">
+                                        <thead>
+                                        <tr>
+                                            <th>Job Title</th>
+                                            <th>Location</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach items="${candidate.candidateJobs}" var="candidateJob">
+                                            <tr>
+                                                <td>${candidateJob.job.title}</td>
+                                                <td>${candidateJob.job.location}</td>
+                                                <td>${candidateJob.job.status}</td>
+                                                <td class="action-buttons">
+                                                    <a type="submit" href="/interview/add_details"
+                                                       class="btn btn-sm btn-info action-button">Create new Schedule</a>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </td>
+
                         <td>${candidate.email}</td>
                         <td>${candidate.phone}</td>
                         <td>${candidate.currentPosition}</td>

@@ -9,7 +9,14 @@ import java.util.List;
 
 @Repository
 public interface InterviewRepository extends JpaRepository<Interview, Long> {
+    @Override
+    @Query("SELECT i FROM Interview i WHERE i.deleted = false")
     List<Interview> findAll();
-    @Query("SELECT i FROM Interview i WHERE i.interviewId = :interviewId")
+
+    @Query("SELECT i FROM Interview i WHERE i.interviewId = :interviewId AND i.deleted = false")
     Interview findByInterviewId(long interviewId);
+
+
+
+
 }

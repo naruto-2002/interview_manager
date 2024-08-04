@@ -1,0 +1,133 @@
+h3 {
+    padding-top: 50px;
+    font-family: 'Times New Roman', Times, serif;
+    color: black !important;
+}
+
+.table th,
+.table td {
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    border-bottom: 2px solid #ddd;
+}
+
+.table td:first-child {
+    border-right: 2px solid #ddd;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* CSS cho nội dung chính */
+.be-content {
+    font-family: 'Arial', sans-serif;
+    /* Font chữ chung */
+}
+
+/* CSS cho tiêu đề */
+.be-content h3 {
+    font-size: 2rem;
+    /* Kích thước chữ tiêu đề */
+    color: #007bff;
+    /* Màu chữ tiêu đề */
+    margin-bottom: 20px;
+    /* Khoảng cách dưới tiêu đề */
+}
+
+/* CSS cho card */
+.card {
+    border: 1px solid #dee2e6;
+    /* Bo viền thẻ */
+    border-radius: 8px;
+    /* Bo tròn góc */
+    padding: 50px;
+    /* Padding của thẻ lớn */
+    margin-bottom: 20px;
+    /* Khoảng cách dưới card */
+    background-color: #ffffff;
+    /* Màu nền thẻ */
+    width: 60%;
+    /* Chiều rộng của card */
+}
+
+/* CSS cho các tiêu đề trong card */
+.card-header {
+    text-align: center;
+    font-size: 1.5rem;
+    /* Kích thước chữ của tiêu đề trong card */
+    font-weight: bold;
+    /* Chữ đậm */
+    color: #343a40;
+    /* Màu chữ tiêu đề card */
+    border-bottom: 2px solid #181b1d;
+    /* Đường viền dưới tiêu đề card */
+    padding-bottom: 15px;
+    /* Khoảng cách dưới tiêu đề */
+}
+
+/* CSS cho nội dung trong card */
+.card-body {
+    padding-top: 20px;
+    font-size: 1.1rem;
+    /* Kích thước chữ nội dung card */
+}
+
+/* CSS cho các nút */
+.btn {
+    border-radius: 8px;
+    /* Bo tròn góc nút */
+    font-size: 1rem;
+    /* Kích thước chữ của nút */
+    padding: 10px 20px;
+    /* Padding cho nút */
+    text-decoration: none;
+    /* Bỏ gạch dưới */
+    display: inline-block;
+    /* Hiển thị dưới dạng khối */
+    text-align: center;
+    /* Căn giữa văn bản */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Hiệu ứng chuyển màu nền và chữ khi hover */
+}
+
+/* CSS cho nút 'Back' */
+.btn-success {
+    background-color: rgb(33, 216, 33);
+    /* Màu nền của nút 'Back' */
+
+
+    color: black;
+    /* Màu chữ của nút 'Back' */
+}
+
+/* CSS cho nút 'Edit' */
+.btn-warning {
+    background-color: yellow;
+    /* Màu nền của nút 'Edit' */
+
+    color: #000000;
+    /* Màu chữ của nút 'Edit' */
+}
+
+/* Hiệu ứng khi hover */
+.btn:hover {
+    opacity: 0.8;
+    /* Giảm độ mờ khi hover */
+    text-decoration: none;
+    /* Bỏ gạch dưới khi hover */
+}
+
+/* CSS cho container của các nút */
+.btn-container {
+    display: flex;
+    /* Sắp xếp các nút theo hàng ngang */
+    gap: 10px;
+    /* Khoảng cách giữa các nút */
+}

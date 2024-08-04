@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap-slider/css/bootstrap-slider.min.css">
     <link rel="stylesheet" type="text/css" href="/multiselect/css/multi-select.css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
-    <link rel="stylesheet" href="/css/interview/add.css">
+    <link rel="stylesheet" href="/css/interview/add_details.css">
 </head>
 <body>
 <div class="be-wrapper">
@@ -34,7 +34,7 @@
         <div class="main-content container-fluid">
             <div class="card text-center">
                 <div class="card-body">
-                    <form:form action="/interview/add" method="post" modelAttribute="newInterview">
+                    <form:form action="/interview/add_details" method="post" modelAttribute="newInterview">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="bs-grid-block">
@@ -43,34 +43,21 @@
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star" for="title">Schedule title</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
-                                                    <form:input type="text" class="form-control" id="title" path="title" />
+                                                    <form:input type="text" class="form-control" id="title" path="title" placeholder="Type a title..."/>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Candidate name</label>
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star" for="candidate">Candidate name</label>
                                                 <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
-                                                    <form:select class="select2" id="candidate" path="candidate.id" onchange="updateCandidateInfo()">
-                                                        <option value="" disabled selected>Select a candidate</option>
-                                                        <c:forEach var="candidate" items="${candidates}">
-                                                            <form:option value="${candidate.id}"
-                                                                         data-dob="${candidate.dob}"
-                                                                         data-address="${candidate.address}"
-                                                                         data-email="${candidate.email}"
-                                                                         data-phone="${candidate.phone}"
-                                                                         data-skills="${candidate.skills}"
-                                                                         data-position="${candidate.currentPosition}">
-                                                                ${candidate.name}
-                                                            </form:option>
-                                                        </c:forEach>
-                                                    </form:select>
+                                                    <form:input type="text" class="d-none" id="title" path="candidate.id" value="${candidate.id}" />
+                                                    <input class="form-control" id="candidate" type="text" readonly="readonly" value="${candidate.name}"/>
                                                 </div>
                                             </div>
-
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Schedule Time</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
                                                     <div class="input-group date datetimepicker" data-min-view="2" data-date-format="yyyy-mm-dd">
-                                                        <form:input type="text" class="form-control" id="date" path="date" />
+                                                        <form:input type="text" class="form-control" id="date" path="date" placeholder="yyyy-mm-dd" />
                                                         <div class="input-group-append">
                                                             <button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
                                                         </div>
@@ -79,19 +66,17 @@
                                             </div>
                                             <div class=" form-group row d-flex justify-content-center">
                                                 <label class="col-form-label text-sm-right mr-2" for="startTime">From:</label>
-                                                <form:input class="col-2 form-control input-spacing mr-4" id="startTime" path="startTime" type="text" />
+                                                <form:input class="col-2 form-control input-spacing mr-4" id="startTime" path="startTime" type="text" placeholder="hh:mm" />
                                                 <label class="col-form-label text-sm-right mr-2" for="endTime">To:</label>
-                                                <form:input class="col-2 form-control mr-6" id="endTime" path="endTime" type="text" />
+                                                <form:input class="col-2 form-control mr-6" id="endTime" path="endTime" type="text" placeholder="hh:mm" />
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 " for="note">Notes    </label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
-                                                    <form:textarea class="form-control" id="note" path="note"/>
+                                                    <form:textarea class="form-control" id="note" path="note" placeholder="Type a note..."/>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -104,18 +89,14 @@
                                                 <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
                                                     <form:select class="select2" id="job" path="job.jobId">
                                                         <option value="" disabled selected>Select a job</option>
-                                                        <c:forEach var="job" items="${jobs}">
-                                                            <form:option value="${job.jobId}"
-                                                                         data-location="${job.location}"
-                                                                         data-level="${job.level}"
-                                                                         data-status="${job.status}">
-                                                                ${job.title}
+                                                        <c:forEach var="candidateJob" items="${candidateJobs}">
+                                                            <form:option value="${candidateJob.job.jobId}">
+                                                                ${candidateJob.job.title} | ${candidateJob.job.status}
                                                             </form:option>
                                                         </c:forEach>
                                                     </form:select>
                                                 </div>
                                             </div>
-
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Interviewer</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
@@ -135,36 +116,24 @@
                                                         </table>
                                                     </div>
                                                 </div>
-
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star" for="recruiter">Recruiter owner</label>
+                                                <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
+                                                    <form:input type="text" class="d-none" id="title" path="recruiter.userId" value="${candidate.user.userId}" />
+                                                    <input class="form-control" id="recruiter" type="text" readonly="readonly" value="${candidate.user.fullName}"/>
+                                                </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="location">Location</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
-                                                    <form:input class="form-control" id="location" path="location" type="text"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Recruiter owner</label>
-                                                <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
-                                                    <form:select class="select2" id="recruiter" path="recruiter.userId">
-                                                        <option value="" disabled selected>Select a recruiter</option>
-                                                        <c:forEach var="recruiter" items="${recruiters}">
-                                                            <form:option value="${recruiter.userId}"
-                                                                         data-dob="${recruiter.dob}"
-                                                                         data-address="${recruiter.address}"
-                                                                         data-email="${recruiter.email}"
-                                                                         data-phone-number="${recruiter.phoneNumber}"
-                                                                         data-department="${recruiter.department}">
-                                                                ${recruiter.fullName} | ${recruiter.department}
-                                                            </form:option>
-                                                        </c:forEach>
-                                                    </form:select>
+                                                    <form:input class="form-control" id="location" path="location" type="text" placeholder="Type a location..."/>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="meetingId">Meeting ID</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
-                                                    <form:input class="form-control" id="meetingId" path="meetingId" type="text"/>
+                                                    <form:input class="form-control" id="meetingId" path="meetingId" type="text" placeholder="Type a meeting id..."/>
                                                 </div>
                                             </div>
                                         </div>
@@ -178,19 +147,19 @@
                                     <div class="card text-center">
                                         <div class="d-flex justify-content-center align-items-center card-body">
                                             <div class="">
-                                                <button type="submit" class="mr-6 btn btn-space btn-secondary btn-width active">Submit</button>
+                                                <a href="/interview/add_candidate">
+                                                    <button type="button" class="ml-6 btn btn-space btn-secondary btn-width active">Back</button>
+                                                </a>
+                                                <button type="submit" class="ml-6 btn btn-space btn-secondary btn-width active">Submit</button>
                                                 <a href="/interview/list">
                                                     <button type="button" class="ml-6 btn btn-space btn-secondary btn-width active">Cancel</button>
                                                 </a>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                     </form:form>
                 </div>
             </div>
@@ -221,7 +190,7 @@
 <script src="/lib/select2/js/select2.full.min.js" type="text/javascript"></script>
 <script src="/lib/bootstrap-slider/bootstrap-slider.min.js" type="text/javascript"></script>
 <script src="/lib/bs-custom-file-input/bs-custom-file-input.js" type="text/javascript"></script>
-<script src="/js/interview/add.js"></script>
+<script src="/js/interview/add_details.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         //-initialize the javascript

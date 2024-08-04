@@ -16,18 +16,31 @@ import java.util.List;
 
 @Repository
 public interface CandidateRepository extends JpaRepository<Candidate,Long> {
-    public Page<Candidate> findAll(Pageable pageable);
+    public Page<Candidate> findByIsDeletedFalse(Pageable pageable);
     public Candidate save(Candidate candidate);
-    public Page<Candidate> findByStatusAndNameContainingOrEmailContainingOrPhoneContainingOrUserContaining(StatusCandidateEnum status, String name, String email, String phone, String recruiter, Pageable pageable);
-    public Page<Candidate> findByNameContainingOrEmailContainingOrPhoneContaining(String name, String email, String phone, Pageable pageable);;
+
     public Candidate getById(Long id);
     public Page<Candidate> findByStatus(StatusCandidateEnum status, Pageable pageable);
 
+    @Query("SELECT c FROM Candidate c WHERE c.isDeleted = false AND "
+            + "(c.name LIKE %:keyword% OR c.phone LIKE %:keyword% OR "
+            + "c.email LIKE %:keyword% OR CAST(c.currentPosition AS string) LIKE %:keyword% OR "
+            + "c.user.fullName LIKE %:keyword%) "
+            + "AND c.status = :status")
+    public Page<Candidate> findByKeywordAndStatus(String keyword, Pageable pageable,StatusCandidateEnum status);
+
+    @Query("SELECT c FROM Candidate c WHERE c.isDeleted = false AND "
+            + "(c.name LIKE %:keyword% OR c.phone LIKE %:keyword% OR "
+            + "c.email LIKE %:keyword% OR CAST(c.currentPosition AS string) LIKE %:keyword% OR "
+            + "c.user.fullName LIKE %:keyword%) ")
+    Page<Candidate> findByKeyword(String keyword, Pageable pageable);
+
+
     List<Candidate> findAll();
     @Query("SELECT c FROM Candidate c WHERE c.id = :id")
-    default Candidate findByCandidateId(long id) {
-        return null;
-    }
+    Candidate findByCandidateId(long id);
+
+
 
     @Query("SELECT c FROM Candidate c JOIN c.interviews i WHERE i.result = :result")
     List<Candidate> findCandidatesByInterviewResult(@Param("result") ResultInterviewEnum result);

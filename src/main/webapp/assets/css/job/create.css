@@ -1,0 +1,15 @@
+.selected-item {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 20px;
+}
+
+.remove-item {
+    cursor: pointer;
+    margin-left: 5px;
+    color: #dc3545;
+}

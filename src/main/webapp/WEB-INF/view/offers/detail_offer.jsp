@@ -149,8 +149,21 @@
             </div>
 
             <div class="row d-f justify-content-center">
-                <a href="${pageContext.request.contextPath}/offers/edit/${offer.offerId}"
-                   class="btn btn-info p-2 px-6 text-center">Edit</a>
+
+                <c:choose>
+                    <c:when test="${offer.status != 'WAITING_FOR_APPROVAL' && offer.status != 'WAITING_FOR_RESPONSE' }">
+                        <button type="button" class="btn btn-info p-2 px-6 text-center" disabled="disabled">
+                            Edit
+                            </a>
+                        </button>
+                    </c:when>
+                    <c:otherwise>
+                        <a class="btn btn-info p-2 px-6 text-center"
+                           href="${pageContext.request.contextPath}/offers/edit/${offer.offerId}"
+                        >Edit
+                        </a>
+                    </c:otherwise>
+                </c:choose>
                 <span class="m-2"></span>
                 <button type="button" class="btn btn-secondary p-2 px-6 text-center"
                         onclick="window.history.back();">Back

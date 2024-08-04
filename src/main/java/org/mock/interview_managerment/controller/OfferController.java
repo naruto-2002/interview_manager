@@ -1,10 +1,13 @@
 package org.mock.interview_managerment.controller;
 
 import io.micrometer.common.util.StringUtils;
+import org.mock.interview_managerment.entities.Candidate;
+import org.mock.interview_managerment.entities.Interview;
 import org.mock.interview_managerment.entities.Offer;
 import org.mock.interview_managerment.enums.*;
 import org.mock.interview_managerment.services.*;
 import org.mock.interview_managerment.util.OfferSpecification;
+import org.mock.interview_managerment.util.OfferUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -71,38 +75,124 @@ public class OfferController {
     }
 
     @GetMapping("/cancel/{id}")
-    public String cancelOffer(@PathVariable Long id) {
-        offerService.cancelOffer(id);
+    public String cancelOffer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        Offer offer = offerService.findById(id);
+        if (offer != null) { // Check if the offer is found
+            // Approve the offer
+            offerService.cancelOffer(id);
+
+            // Update the candidate's status
+              Candidate candidate = candidateService.getById(offer.getCandidate().getId()).getBody();
+            candidate.setStatus(StatusCandidateEnum.Cancelled_offer);
+            candidateService.updateCandidatenew(candidate.getId(), candidate);
+
+            Interview interview = offer.getInterview();
+            interview.setStatus(StatusInterviewEnum.CANCELLED);
+            interviewService.updateInterview(interview);
+
+            redirectAttributes.addFlashAttribute("message", "Offer approved successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Offer not found.");
+        }
         return "redirect:/offers"; // redirect to offer list
     }
 
     @GetMapping("/approve/{id}")
-    public String approveOffer(@PathVariable Long id) {
-        offerService.approveOffer(id);
+    public String approveOffer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        Offer offer = offerService.findById(id);
+        if (offer != null) { // Check if the offer is found
+            // Approve the offer
+            offerService.approveOffer(id);
+
+            // Update the candidate's status
+              Candidate candidate = candidateService.getById(offer.getCandidate().getId()).getBody();
+            candidate.setStatus(StatusCandidateEnum.Approved_offer);
+            candidateService.updateCandidatenew(candidate.getId(), candidate);
+
+            redirectAttributes.addFlashAttribute("message", "Offer approved successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Offer not found.");
+        }
         return "redirect:/offers"; // redirect to offer list
     }
 
+
     @GetMapping("/reject/{id}")
-    public String rejectOffer(@PathVariable Long id) {
-        offerService.rejectOffer(id);
+    public String rejectOffer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        Offer offer = offerService.findById(id);
+        if (offer != null) { // Check if the offer is found
+            // Approve the offer
+            offerService.rejectOffer(id);
+
+            // Update the candidate's status
+              Candidate candidate = candidateService.getById(offer.getCandidate().getId()).getBody();
+            candidate.setStatus(StatusCandidateEnum.Rejected_offer);
+            candidateService.updateCandidatenew(candidate.getId(), candidate);
+
+            redirectAttributes.addFlashAttribute("message", "Offer approved successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Offer not found.");
+        }
         return "redirect:/offers"; // redirect to offer list
     }
 
     @GetMapping("/send/{id}")
-    public String markAsSent(@PathVariable Long id) {
-        offerService.markAsSent(id);
+    public String markAsSent(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        Offer offer = offerService.findById(id);
+        if (offer != null) { // Check if the offer is found
+            // Approve the offer
+            offerService.markAsSent(id);
+
+            // Update the candidate's status
+              Candidate candidate = candidateService.getById(offer.getCandidate().getId()).getBody();
+            candidate.setStatus(StatusCandidateEnum.Waiting_for_response);
+            candidateService.updateCandidatenew(candidate.getId(), candidate);
+
+            redirectAttributes.addFlashAttribute("message", "Offer approved successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Offer not found.");
+        }
         return "redirect:/offers"; // redirect to offer list
     }
 
     @GetMapping("/decline/{id}")
-    public String declineOffer(@PathVariable Long id) {
-        offerService.declineOffer(id);
+    public String declineOffer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+
+        Offer offer = offerService.findById(id);
+        if (offer != null) { // Check if the offer is found
+            // Approve the offer
+            offerService.declineOffer(id);
+
+            // Update the candidate's status
+              Candidate candidate = candidateService.getById(offer.getCandidate().getId()).getBody();
+            candidate.setStatus(StatusCandidateEnum.Declined_offer);
+            candidateService.updateCandidatenew(candidate.getId(), candidate);
+
+            redirectAttributes.addFlashAttribute("message", "Offer approved successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Offer not found.");
+        }
         return "redirect:/offers"; // redirect to offer list
     }
 
     @GetMapping("/accept/{id}")
-    public String acceptOffer(@PathVariable Long id) {
-        offerService.acceptOffer(id);
+    public String acceptOffer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+
+
+        Offer offer = offerService.findById(id);
+        if (offer != null) { // Check if the offer is found
+            // Approve the offer
+            offerService.acceptOffer(id);
+
+            // Update the candidate's status
+              Candidate candidate = candidateService.getById(offer.getCandidate().getId()).getBody();
+            candidate.setStatus(StatusCandidateEnum.Accepted_offer);
+            candidateService.updateCandidatenew(candidate.getId(), candidate);
+
+            redirectAttributes.addFlashAttribute("message", "Offer approved successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Offer not found.");
+        }
         return "redirect:/offers"; // redirect to offer list
     }
 
@@ -123,6 +213,7 @@ public class OfferController {
 
     @PostMapping
     public String saveOffer(@ModelAttribute("offer") Offer offer, BindingResult result, Model model) {
+        offer.setStatus(OfferStatusEnum.WAITING_FOR_APPROVAL);
         if (result.hasErrors()) {
             populateModelAttributes(model);
             return "offers/create_offer";
@@ -140,25 +231,43 @@ public class OfferController {
             populateModelAttributes(model);
             return "offers/create_offer";
         }
-        offer.setStatus(OfferStatusEnum.WAITING_FOR_APPROVAL);
+
+        Candidate candidate = candidateService.getById(offer.getCandidate().getId()).getBody();
+        candidate.setStatus(StatusCandidateEnum.Waiting_for_approval);
+        candidateService.updateCandidatenew(candidate.getId(), candidate);
         offerService.saveOffer(offer);
         return "redirect:/offers";
     }
 
     @GetMapping("/edit/{id}")
     public String editOfferForm(@PathVariable Long id, Model model) {
-        Offer offer = offerService.getOfferById(id);
-        if (offer != null) {
-            model.addAttribute("offer", offer);
-            populateModelAttributes(model);
-            return "offers/edit_offer";
+        String redirect = OfferUtils.checkOfferStatus(id, offerService);
+        if (redirect != null) {
+            return redirect;
         }
 
-        return "redirect:/offers";
+        Offer offer = offerService.getOfferById(id);
+
+        if (offer == null) {
+            return "redirect:/offers";
+        }
+
+        if (offer.getStatus() == OfferStatusEnum.APPROVED) {
+            return "redirect:/offers/detail/" + id;
+        }
+
+        model.addAttribute("offer", offer);
+        populateModelAttributes(model);
+        return "offers/edit_offer";
     }
+
 
     @PostMapping("/{id}")
     public String updateOffer(@PathVariable Long id, @ModelAttribute("offer") Offer offer, BindingResult result, Model model) {
+        String redirect = OfferUtils.checkOfferStatus(id, offerService);
+        if (redirect != null) {
+            return redirect;
+        }
         if (result.hasErrors()) {
             offer.setOfferId(id);
             populateModelAttributes(model);
@@ -179,7 +288,7 @@ public class OfferController {
             return "offers/create_offer";
         }
         offer.setOfferId(id);
-        offerService.saveOffer(offer);
+        offerService.updateOffer(offer);
         return "redirect:/offers";
     }
 

@@ -5,6 +5,12 @@
 <head>
     <title>Create Offer</title>
     <!-- Các liên kết CSS khác -->
+    <link rel="stylesheet" type="text/css" href="/lib/perfect-scrollbar/css/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="/lib/material-design-icons/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" type="text/css"
+          href="/lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/css/app.css" type="text/css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
     <link rel="stylesheet" href="/css/offer/index.css" type="text/css">
     <style>
@@ -70,12 +76,12 @@
                                 <div class="col-md-6">
                                     From
                                     <form:input path="startContract" class="form-control" id="startContract"
-                                                type="date" required="true"/>
+                                                type="date" required="true" onchange="updateEndDate()"/>
                                 </div>
                                 <div class="col-md-6">
                                     To
                                     <form:input path="endContract" class="form-control" id="endContract" type="date"
-                                                required="true"/>
+                                                required="true" onchange="updateStartDate()"/>
                                 </div>
                             </div>
                         </div>
@@ -131,7 +137,7 @@
                 <div class="row d-f justify-content-center">
                     <button class="btn btn-info p-2 px-6 text-center" type="submit">Submit</button>
                     <span class="m-2"></span>
-                    <button type="button" class="btn btn-info p-2 px-6 text-center"
+                    <button type="button" class="btn btn-secondary p-2 px-6 text-center"
                             onclick="window.history.back();">Cancel
                     </button>
                 </div>
@@ -149,5 +155,27 @@
 <script src="/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <script src="/lib/jqvmap/jquery.vmap.min.js" type="text/javascript"></script>
 <script src="/lib/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+<script>
+    function updateEndDate() {
+        var startDate = document.getElementById('startContract').value;
+        document.getElementById('endContract').setAttribute('min', startDate);
+
+        var endDate = document.getElementById('endContract').value;
+        if (endDate < startDate) {
+            document.getElementById('endContract').value = startDate;
+        }
+    }
+
+    function updateStartDate() {
+        var endDate = document.getElementById('endContract').value;
+        document.getElementById('startContract').setAttribute('max', endDate);
+
+        var startDate = document.getElementById('startContract').value;
+        if (startDate > endDate) {
+            document.getElementById('startContract').value = endDate;
+        }
+    }
+
+</script>
 </body>
 </html>

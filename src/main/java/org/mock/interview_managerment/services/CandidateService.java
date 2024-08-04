@@ -12,8 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,6 +69,41 @@ public class CandidateService {
         Candidate candidate=candidateRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
         candidate.setStatus(StatusCandidateEnum.valueOf("BANNED"));
         candidateRepository.save(candidate);
+    }
+
+
+    @Transactional
+    public Candidate updateCandidatenew(Long id, Candidate updatedCandidate) {
+        Optional<Candidate> optionalCandidate = candidateRepository.findById(id);
+        if (optionalCandidate.isPresent()) {
+            Candidate existingCandidate = optionalCandidate.get();
+
+            // Cập nhật các thuộc tính cần thiết
+            existingCandidate.setName(updatedCandidate.getName());
+            existingCandidate.setEmail(updatedCandidate.getEmail());
+            existingCandidate.setPhone(updatedCandidate.getPhone());
+            existingCandidate.setAddress(updatedCandidate.getAddress());
+            existingCandidate.setDob(updatedCandidate.getDob());
+            existingCandidate.setYearsExperience(updatedCandidate.getYearsExperience());
+            existingCandidate.setCvAttachmentLink(updatedCandidate.getCvAttachmentLink());
+            existingCandidate.setNote(updatedCandidate.getNote());
+            existingCandidate.setSkills(updatedCandidate.getSkills());
+            existingCandidate.setGender(updatedCandidate.getGender());
+            existingCandidate.setHighestLevel(updatedCandidate.getHighestLevel());
+            existingCandidate.setCurrentPosition(updatedCandidate.getCurrentPosition());
+            existingCandidate.setStatus(updatedCandidate.getStatus());
+
+            // Nếu trạng thái mới khác trạng thái hiện tại, cập nhật trạng thái
+            if (updatedCandidate.getStatus() != null &&
+                    updatedCandidate.getStatus() != existingCandidate.getStatus()) {
+                existingCandidate.setStatus(updatedCandidate.getStatus());
+            }
+
+            // Lưu lại ứng viên đã cập nhật
+            return candidateRepository.save(existingCandidate);
+        } else {
+            throw new IllegalArgumentException("Candidate not found with ID: " + id);
+        }
     }
 
     private int getStatusIndex(String status) {

@@ -1,5 +1,6 @@
 package org.mock.interview_managerment.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.mock.interview_managerment.entities.Offer;
 import org.mock.interview_managerment.entities.User;
 import org.mock.interview_managerment.enums.DepartmentEnum;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -34,6 +36,17 @@ public class OfferService {
             return offerRepository.findAll(pageable);
         }
         return offerRepository.findByKeywordAndDepartmentAndStatus(keyword, department, status, pageable);
+    }
+
+    @Transactional
+    public Offer updateOffer(Offer offer) {
+        // Kiểm tra sự tồn tại của offer bằng ID trước khi cập nhật
+        if (offerRepository.existsById(offer.getOfferId())) {
+            // Thực hiện cập nhật
+            return offerRepository.save(offer);
+        } else {
+            throw new EntityNotFoundException("Offer not found with ID: " + offer.getOfferId());
+        }
     }
 
     public Page<Offer> getAllOffers(Pageable pageable) {

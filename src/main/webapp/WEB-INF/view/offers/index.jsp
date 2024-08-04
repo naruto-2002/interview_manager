@@ -13,6 +13,15 @@
           href="/lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
     <link rel="stylesheet" href="/css/offer/index.css" type="text/css">
+    <style>
+        .dropdown-menu.custom-dropdown {
+            transform: translate3d(-123px, 45px, 0); /* Điều chỉnh vị trí của menu */
+            /* Nếu cần điều chỉnh thêm: */
+            /* top: 100%; */
+            /* left: 0; */
+            /* margin: 0; */
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="../layout/header.jsp"/>
@@ -65,12 +74,26 @@
                        title="Clear search">
                         Clear
                     </a>
-                    <a href="/offers/new"
-                       class="btn d-flex justify-content-center align-items-center bg-success text-white border-success"
-                       style="border-radius: 50%; border: 1px #000 solid;width: 40px; height: 40px" title="Add Offer">
+
+                    <!-- Example single danger button -->
+                    <div class="btn-group">
+                        <button data-toggle="dropdown"
+                                style="border: none"
+                                aria-haspopup="true" aria-expanded="false">
+                            <a
+                                    class="btn d-flex justify-content-center align-items-center bg-success text-white border-success"
+                                    style="border-radius: 50%; border: 1px #000 solid;width: 40px; height: 40px"
+                                    title="Add Offer">
                         <span class="mdi mdi-plus text-white font-weight-bold font-weight-bold"
                               style="font-size: 20px"></span>
-                    </a>
+                            </a>
+                        </button>
+                        <div class="dropdown-menu custom-dropdown">
+                            <a class="dropdown-item" href="/offers/new">Add Offer</a>
+                            <a class="dropdown-item" href="/offers/new">Import Offer</a>
+                            <a class="dropdown-item" href="/offers/new">Export Offer</a>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>

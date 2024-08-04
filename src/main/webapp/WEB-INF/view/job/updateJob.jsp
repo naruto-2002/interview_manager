@@ -70,8 +70,11 @@
                                                     data-value="communication">Communication</a>
                                             </div>
                                         </div>
-                                        <input type="hidden" id="skills" name="requiredSkills">
+                                        <input type="hidden" id="skills" name="requiredSkills"
+                                            value="${requiredSkills}">
                                         <div id="selectedSkills" class="mt-2"></div>
+                                        <span id="error-message-skills" style="color:red; display:none;">Vui lòng chọn
+                                            ít nhất một kỹ năng.</span>
                                     </div>
                                     <div class="col-md-4">
                                         <label for="benefits">Benefits</label>
@@ -90,8 +93,10 @@
                                                 <a class="dropdown-item" href="#" data-value="travel">Travel</a>
                                             </div>
                                         </div>
-                                        <input type="hidden" id="benefits" name="benefits">
+                                        <input type="hidden" id="benefits" name="benefits" value="${benefits}">
                                         <div id="selectedBenefits" class="mt-2"></div>
+                                        <span id="error-message-benefits" style="color:red; display:none;">Vui lòng chọn
+                                            ít nhất một phúc lợi.</span>
                                     </div>
                                     <div class="col-md-4">
                                         <label for="level">Levels</label>
@@ -109,8 +114,10 @@
                                                 <a class="dropdown-item" href="#" data-value="vice-head">Vice Head</a>
                                             </div>
                                         </div>
-                                        <input type="hidden" id="level" name="level">
+                                        <input type="hidden" id="level" name="level" value="${level}">
                                         <div id="selectedLevels" class="mt-2"></div>
+                                        <span id="error-message-levels" style="color:red; display:none;">Vui lòng chọn
+                                            ít nhất một cấp độ.</span>
                                     </div>
                                 </div>
 
@@ -155,7 +162,8 @@
                                         rows="3" />
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary"
+                                    onclick="return validateForm()">Submit</button>
                                 <a href="javascript:history.back()" class="btn btn-secondary">Cancel</a>
 
                                 <hr>

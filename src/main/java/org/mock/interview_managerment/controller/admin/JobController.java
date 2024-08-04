@@ -173,6 +173,9 @@ public class JobController {
         Job updateJob = this.jobService.getJobById(id);
         System.out.println(updateJob);
         model.addAttribute("update", updateJob);
+        model.addAttribute("requiredSkills", updateJob.getRequiredSkills());
+        model.addAttribute("benefits", updateJob.getBenefits());
+        model.addAttribute("level", updateJob.getLevel());
         return "job/updateJob";
     }
 

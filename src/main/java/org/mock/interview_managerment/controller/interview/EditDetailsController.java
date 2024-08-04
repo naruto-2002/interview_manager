@@ -28,7 +28,7 @@ public class EditDetailsController {
     @GetMapping("/interview/edit_details")
     public String getEditDetails(@RequestParam("interviewId") long interviewId, @RequestParam("candidateId") long candidateId, Model model) {
         List<User> interviewers = userService.getUsersByRoleName("INTERVIEWER");
-        List<CandidateJob> candidateJobs = candidateJobService.getAllByCandidateId(candidateId);
+        List<CandidateJob> candidateJobs = candidateJobService.getAllJobOpenByCandidateId(candidateId);
         Candidate candidate = candidateService.getCandidateById(candidateId);
         Interview interview = interviewService.getByInterviewId(interviewId);
 
@@ -59,12 +59,19 @@ public class EditDetailsController {
         if(roleName.equals("recruiter") || roleName.equals("admin") || roleName.equals("manager")) {
             scheduledInterviewService.deleteScheduledInterviewByInterviewId(newInterview.getInterviewId());
             interviewService.saveInterview(newInterview);
+            if(newInterview.getResult() != ResultInterviewEnum.OPEN && newInterview.getResult() != ResultInterviewEnum.NA) {
+                newInterview.setStatus(StatusInterviewEnum.INTERVIEWED);
+            }
+            interviewService.saveInterview(newInterview);
         }
 
         if(roleName.equals("interviewer")) {
             Interview interview = interviewService.getByInterviewId(newInterview.getInterviewId());
             interview.setNote(newInterview.getNote());
             interview.setResult(newInterview.getResult());
+            if(newInterview.getResult() != ResultInterviewEnum.OPEN && newInterview.getResult() != ResultInterviewEnum.NA) {
+                interview.setStatus(StatusInterviewEnum.INTERVIEWED);
+            }
             interviewService.saveInterview(interview);
         }
 

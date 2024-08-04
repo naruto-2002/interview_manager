@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="/lib/bootstrap-slider/css/bootstrap-slider.min.css">
     <link rel="stylesheet" type="text/css" href="/multiselect/css/multi-select.css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
-    <link rel="stylesheet" href="/css/interview/add.css">
+    <link rel="stylesheet" href="/css/interview/add_details.css">
 </head>
 <body>
 <div class="be-wrapper">
@@ -190,7 +190,7 @@
 <script src="/lib/select2/js/select2.full.min.js" type="text/javascript"></script>
 <script src="/lib/bootstrap-slider/bootstrap-slider.min.js" type="text/javascript"></script>
 <script src="/lib/bs-custom-file-input/bs-custom-file-input.js" type="text/javascript"></script>
-<script src="/js/interview/add.js"></script>
+<script src="/js/interview/add_details.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         //-initialize the javascript

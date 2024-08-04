@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.mock.interview_managerment.entities.*;
 import org.mock.interview_managerment.entities.pk.ScheduledInterviewId;
 import org.mock.interview_managerment.enums.ResultInterviewEnum;
+import org.mock.interview_managerment.enums.StatusCandidateEnum;
 import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.mock.interview_managerment.services.*;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,7 @@ public class AddDetailsController {
     @GetMapping("/interview/add_details")
     public String getAddDetailsPage(@RequestParam("candidateId") long candidateId, Model model) {
         List<User> interviewers = userService.getUsersByRoleName("INTERVIEWER");
-        List<CandidateJob> candidateJobs = candidateJobService.getAllByCandidateId(candidateId);
+        List<CandidateJob> candidateJobs = candidateJobService.getAllJobOpenByCandidateId(candidateId);
         Candidate candidate = candidateService.getCandidateById(candidateId);
 
 
@@ -41,8 +42,9 @@ public class AddDetailsController {
 
     @PostMapping("/interview/add_details")
     public String addNewInterview(@ModelAttribute("newInterview") Interview newInterview) {
-        newInterview.setResult(ResultInterviewEnum.NA);
+        newInterview.setResult(ResultInterviewEnum.OPEN);
         newInterview.setStatus(StatusInterviewEnum.NEW);
+        newInterview.getCandidate().setStatus(StatusCandidateEnum.Waiting_for_interview);
         Interview interview = interviewService.saveInterview(newInterview);
 
         List<Long> selectedInterviewerIds = newInterview.getSelectedInterviewerIds();

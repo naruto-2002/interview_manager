@@ -20,12 +20,15 @@
                 <div class="card card-border-color card-border-color-primary">
                     <div class="card-header">
                         <img class="logo-img" src="\img\login_img.png" alt="logo" width="120" height="40">
-                        <span class="splash-description">Please enter your userinformation.</span>
-                        <c:if test="${param.error != null}">
-                            <div class="my-2" style="color: red;">Invalid email or password.</div>
+                        <span class="splash-description">Please enter your user information.</span>
+                        <c:if test="${param.error == 'disabled'}">
+                            <div class="my-2" style="color: red;">Your account has been disabled.</div>
+                        </c:if>
+                        <c:if test="${param.error == 'invalid'}">
+                            <div class="my-2" style="color: red;">Invalid username or password.</div>
                         </c:if>
                         <c:if test="${message != null}">
-                            <div class="my-2" style="color: green;">${message}.</div>
+                            <div class="my-2" style="color: green;">${message}</div>
                         </c:if>
                     </div>
                     <div class="card-body">

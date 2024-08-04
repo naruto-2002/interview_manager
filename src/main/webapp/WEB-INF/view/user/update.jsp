@@ -51,7 +51,7 @@
                     </div>
                     <div class="form-group">
                         <label for="dob">Date of Birth:</label>
-                        <form:input path="dob" id="dob" type="text" class="form-control" />
+                        <form:input path="dob" id="dob" type="date" class="form-control" value="${user.dob}"/>
                         <form:errors path="dob" cssClass="text-danger" />
                     </div>
                     <div class="form-group">

@@ -1,5 +1,6 @@
 package org.mock.interview_managerment.controller.interview;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.mock.interview_managerment.entities.*;
 import org.mock.interview_managerment.entities.pk.ScheduledInterviewId;
@@ -8,11 +9,13 @@ import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.mock.interview_managerment.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -33,6 +36,8 @@ public class EditDetailsController {
         Interview interview = interviewService.getByInterviewId(interviewId);
 
         List<ScheduledInterview> scheduledInterviews = scheduledInterviewService.getScheduledInterviewByInterviewId(interviewId);
+        List<Long> scheduledInterviewIds = new ArrayList<>();
+        interview.setSelectedInterviewerIds(scheduledInterviewIds);
         for(ScheduledInterview s: scheduledInterviews) {
             interview.getSelectedInterviewerIds().add(s.getInterviewer().getUserId());
         }
@@ -53,7 +58,10 @@ public class EditDetailsController {
     }
 
     @PostMapping("/interview/edit_details")
-    public String postEditDetails(@ModelAttribute("newInterview") Interview newInterview) {
+    public String postEditDetails(@ModelAttribute("newInterview") @Valid Interview newInterview, BindingResult result) {
+        if (result.hasErrors() || newInterview.getSelectedInterviewerIds().isEmpty()) {
+            return "redirect:/interview/edit_details?interviewId=" + newInterview.getInterviewId() +"&candidateId=" + newInterview.getCandidate().getId();
+        }
         String roleName = userService.getCurrentUserRole();
 
         if(roleName.equals("recruiter") || roleName.equals("admin") || roleName.equals("manager")) {

@@ -1,6 +1,8 @@
 package org.mock.interview_managerment.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -21,14 +23,23 @@ public class Interview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long interviewId;
 
+    @NotNull(message = "Mandatory")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
+
+    @NotBlank(message = "Mandatory.")
     private String startTime;
+
+    @NotBlank(message = "Mandatory.")
     private String endTime;
+
     private String location;
     private String meetingId;
     private String note;
+
+    @NotBlank(message = "Mandatory.")
     private String title;
+
     private boolean deleted = false;
 
     @Enumerated(EnumType.STRING)
@@ -39,17 +50,21 @@ public class Interview {
     @Column(length = 20)
     private StatusInterviewEnum status;
 
+    @NotNull(message = "Mandatory")
     @ManyToOne
     @JoinColumn(name = "recruiter_id")
     private User recruiter;
 
+    @NotNull(message = "Mandatory")
     @ManyToOne
     @JoinColumn(name = "job_id")
     private Job job;
 
+    @NotNull(message = "Mandatory")
     @ManyToOne
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
+
 
     @OneToMany(mappedBy = "interview", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
@@ -57,7 +72,7 @@ public class Interview {
     private List<ScheduledInterview> scheduledInterviews;
 
     @Transient // Chú thích này để JPA không lưu trữ trường này vào cơ sở dữ liệu
-    private List<Long> selectedInterviewerIds = new ArrayList<>();
+    private List<Long> selectedInterviewerIds;
 
 
 

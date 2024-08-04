@@ -15,6 +15,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,6 +39,16 @@ public class OfferService {
             return offerRepository.findAll(pageable);
         }
         return offerRepository.findByKeywordAndDepartmentAndStatus(keyword, department, status, pageable);
+    }
+
+    public List<Offer> getOffersByDateRange(Date start, Date end) {
+        LocalDateTime startDateTime = convertToLocalDateTime(start);
+        LocalDateTime endDateTime = convertToLocalDateTime(end);
+        return offerRepository.findByDateRange(startDateTime, endDateTime);
+    }
+
+    private LocalDateTime convertToLocalDateTime(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     @Transactional

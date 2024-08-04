@@ -91,7 +91,7 @@
                         <div class="dropdown-menu custom-dropdown">
                             <a class="dropdown-item" href="/offers/new">Add Offer</a>
                             <a class="dropdown-item" href="/offers/new">Import Offer</a>
-                            <a class="dropdown-item" href="/offers/new">Export Offer</a>
+                            <a class="dropdown-item" href="/offers/export">Export Offer</a>
                         </div>
                     </div>
                 </div>

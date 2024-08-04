@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/offers")
@@ -82,7 +83,7 @@ public class OfferController {
             offerService.cancelOffer(id);
 
             // Update the candidate's status
-              Candidate candidate = candidateService.getById(offer.getCandidate().getId()).getBody();
+            Candidate candidate = offer.getCandidate();
             candidate.setStatus(StatusCandidateEnum.Cancelled_offer);
             candidateService.updateCandidatenew(candidate.getId(), candidate);
 
@@ -105,7 +106,7 @@ public class OfferController {
             offerService.approveOffer(id);
 
             // Update the candidate's status
-              Candidate candidate = candidateService.getById(offer.getCandidate().getId()).getBody();
+            Candidate candidate = offer.getCandidate();
             candidate.setStatus(StatusCandidateEnum.Approved_offer);
             candidateService.updateCandidatenew(candidate.getId(), candidate);
 
@@ -125,7 +126,7 @@ public class OfferController {
             offerService.rejectOffer(id);
 
             // Update the candidate's status
-              Candidate candidate = candidateService.getById(offer.getCandidate().getId()).getBody();
+            Candidate candidate = offer.getCandidate();
             candidate.setStatus(StatusCandidateEnum.Rejected_offer);
             candidateService.updateCandidatenew(candidate.getId(), candidate);
 
@@ -144,7 +145,7 @@ public class OfferController {
             offerService.markAsSent(id);
 
             // Update the candidate's status
-              Candidate candidate = candidateService.getById(offer.getCandidate().getId()).getBody();
+            Candidate candidate = offer.getCandidate();
             candidate.setStatus(StatusCandidateEnum.Waiting_for_response);
             candidateService.updateCandidatenew(candidate.getId(), candidate);
 
@@ -164,7 +165,7 @@ public class OfferController {
             offerService.declineOffer(id);
 
             // Update the candidate's status
-              Candidate candidate = candidateService.getById(offer.getCandidate().getId()).getBody();
+            Candidate candidate = offer.getCandidate();
             candidate.setStatus(StatusCandidateEnum.Declined_offer);
             candidateService.updateCandidatenew(candidate.getId(), candidate);
 
@@ -185,7 +186,7 @@ public class OfferController {
             offerService.acceptOffer(id);
 
             // Update the candidate's status
-              Candidate candidate = candidateService.getById(offer.getCandidate().getId()).getBody();
+            Candidate candidate = offer.getCandidate();
             candidate.setStatus(StatusCandidateEnum.Accepted_offer);
             candidateService.updateCandidatenew(candidate.getId(), candidate);
 
@@ -232,7 +233,7 @@ public class OfferController {
             return "offers/create_offer";
         }
 
-        Candidate candidate = candidateService.getById(offer.getCandidate().getId()).getBody();
+        Candidate candidate = candidateService.getById(offer.getOfferId()).getBody();
         candidate.setStatus(StatusCandidateEnum.Waiting_for_approval);
         candidateService.updateCandidatenew(candidate.getId(), candidate);
         offerService.saveOffer(offer);
@@ -311,6 +312,23 @@ public class OfferController {
             return "offers/detail_offer";
         }
         return "redirect:/offers";
+    }
+
+    @GetMapping("/export")
+    public String filterOffers(Model model, @RequestParam(required = false) Date start, @RequestParam(required = false) Date end) {
+        if(start != null && end != null) {
+            List<Offer> filteredOffers = offerService.getOffersByDateRange(start, end);
+            model.addAttribute("offers", filteredOffers);
+        }
+
+
+        // Add the start and end dates back to the model to repopulate the form fields
+        model.addAttribute("start", start);
+        model.addAttribute("end", end);
+
+        // Load necessary data for dropdowns and other form elements if required
+        populateModelAttributes(model);
+        return "offers/export-offer";
     }
 
     private void populateModelAttributes(Model model) {

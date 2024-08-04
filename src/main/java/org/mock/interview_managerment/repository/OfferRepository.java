@@ -11,6 +11,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public interface OfferRepository extends JpaRepository<Offer, Long> {
@@ -19,6 +21,9 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     Page<Offer> findAll(Specification<Offer> spec, Pageable pageable);
     @Query("SELECT o FROM Offer o WHERE o.deleted = false")
     Page<Offer> findAllActiveOffers(Pageable pageable);
+
+    @Query("SELECT o FROM Offer o WHERE o.createdAt BETWEEN :start AND :end")
+    List<Offer> findByDateRange(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
     @Query("SELECT o FROM Offer o WHERE " +
             "LOWER(o.candidate.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +

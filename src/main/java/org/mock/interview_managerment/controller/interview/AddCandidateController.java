@@ -38,6 +38,10 @@ public class AddCandidateController {
 
     @PostMapping("/interview/add_candidate")
     public String getAddDetailsPage(@ModelAttribute("newInterview") Interview newInterview) {
+        if (newInterview.getCandidate() == null || newInterview.getCandidate().getId() == null) {
+            return "redirect:/interview/add_candidate";
+        }
+
         long candidateId = newInterview.getCandidate().getId();
         return "redirect:/interview/add_details?candidateId=" + candidateId;
     }

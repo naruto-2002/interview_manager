@@ -66,3 +66,38 @@ function formatSalary(input) {
     input.value = value;
 }
 
+function validateForm() {
+    var skills = document.getElementById('skills').value;
+    var benefits = document.getElementById('benefits').value;
+    var levels = document.getElementById('level').value;
+
+    var errorMessageSkills = document.getElementById('error-message-skills');
+    var errorMessageBenefits = document.getElementById('error-message-benefits');
+    var errorMessageLevels = document.getElementById('error-message-levels');
+
+    var valid = true;
+
+    if (!skills) {
+        errorMessageSkills.style.display = 'block';
+        valid = false;
+    } else {
+        errorMessageSkills.style.display = 'none';
+    }
+
+    if (!benefits) {
+        errorMessageBenefits.style.display = 'block';
+        valid = false;
+    } else {
+        errorMessageBenefits.style.display = 'none';
+    }
+
+    if (!levels) {
+        errorMessageLevels.style.display = 'block';
+        valid = false;
+    } else {
+        errorMessageLevels.style.display = 'none';
+    }
+
+    return valid;
+}
+

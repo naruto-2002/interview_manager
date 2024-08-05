@@ -2,6 +2,7 @@ package org.mock.interview_managerment.config;
 
 import jakarta.servlet.DispatcherType;
 import org.mock.interview_managerment.security.CustomAuthenticationFailureHandler;
+import org.mock.interview_managerment.security.CustomAuthenticationSuccessHandler;
 import org.mock.interview_managerment.services.CustomUserDetailsService;
 import org.mock.interview_managerment.services.UserService;
 import org.springframework.context.annotation.Bean;
@@ -41,7 +42,9 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http, CustomAuthenticationFailureHandler customAuthenticationFailureHandler) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http,
+                                    CustomAuthenticationFailureHandler customAuthenticationFailureHandler,
+                                    CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
@@ -58,6 +61,7 @@ public class SecurityConfiguration {
 
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
+                        .successHandler(customAuthenticationSuccessHandler)
                         .failureHandler(customAuthenticationFailureHandler)
                         .permitAll())
                 .exceptionHandling(exceptionHandling -> exceptionHandling

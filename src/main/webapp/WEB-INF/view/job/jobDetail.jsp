@@ -39,6 +39,10 @@
                             <div class="d-flex justify-content-between mb-3">
                                 <h3>Job Detail ${jobdetail.jobId}</h3>
                             </div>
+                            <div class="text-end mb-3">
+                                <p class="text-muted">Created on ${jobdetail.createdAt} | Last modified on
+                                    ${jobdetail.updatedAt}</p>
+                            </div>
 
                             <hr />
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,10 @@ public class EditDetailsController {
         model.addAttribute("results", ResultInterviewEnum.values());
         model.addAttribute("states", StatusInterviewEnum.values());
         model.addAttribute("interview", interview);
-        model.addAttribute("newInterview", interview);
+
+        if (!model.containsAttribute("newInterview")) {
+            model.addAttribute("newInterview", interview);
+        }
 
 
 
@@ -58,11 +62,54 @@ public class EditDetailsController {
     }
 
     @PostMapping("/interview/edit_details")
-    public String postEditDetails(@ModelAttribute("newInterview") @Valid Interview newInterview, BindingResult result) {
-        if (result.hasErrors() || newInterview.getSelectedInterviewerIds().isEmpty()) {
-            return "redirect:/interview/edit_details?interviewId=" + newInterview.getInterviewId() +"&candidateId=" + newInterview.getCandidate().getId();
-        }
+    public String postEditDetails(@ModelAttribute("newInterview") @Valid Interview newInterview, BindingResult result, RedirectAttributes redirectAttributes) {
+
         String roleName = userService.getCurrentUserRole();
+
+        if(roleName.equals("recruiter") || roleName.equals("admin") || roleName.equals("manager")) {
+            // Kiểm tra và thêm lỗi nếu cần
+            if (newInterview.getSelectedInterviewerIds() == null || newInterview.getSelectedInterviewerIds().isEmpty()) {
+                result.rejectValue("selectedInterviewerIds", "error.newInterview", "Please select at least one interviewer.");
+            }
+
+            if (newInterview.getJob() == null || newInterview.getJob().getJobId() == null) {
+                result.rejectValue("job.jobId", "error.newInterview", "Please select a job.");
+            }
+
+            if (newInterview.getCandidate() == null || newInterview.getCandidate().getId() == null) {
+                result.rejectValue("candidate.id", "error.newInterview", "Vui lòng chọn một ứng viên.");
+            }
+
+            // Kiểm tra startTime và endTime
+            if (newInterview.getStartTime() != null && newInterview.getEndTime() != null) {
+                if (newInterview.getEndTime().isBefore(newInterview.getStartTime())) {
+                    result.rejectValue("endTime", "error.newInterview", "The end time must not be less than the start time.");
+                }
+            }
+
+            if (result.hasErrors()) {
+                // Log lỗi để kiểm tra
+                result.getAllErrors().forEach(error -> {
+                    System.out.println(error.getObjectName() + ": " + error.getDefaultMessage());
+                });
+
+                redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.newInterview", result);
+                redirectAttributes.addFlashAttribute("newInterview", newInterview);
+
+                return "redirect:/interview/edit_details?interviewId=" + newInterview.getInterviewId() + "&candidateId=" + newInterview.getCandidate().getId();
+            }
+
+        }
+
+        if(roleName.equals("interviewer")) {
+            List<ScheduledInterview> scheduledInterviews = scheduledInterviewService.getScheduledInterviewByInterviewId(newInterview.getInterviewId());
+            List<Long> scheduledInterviewIds = new ArrayList<>();
+            newInterview.setSelectedInterviewerIds(scheduledInterviewIds);
+            for(ScheduledInterview s: scheduledInterviews) {
+                newInterview.getSelectedInterviewerIds().add(s.getInterviewer().getUserId());
+            }
+
+        }
 
         if(roleName.equals("recruiter") || roleName.equals("admin") || roleName.equals("manager")) {
             scheduledInterviewService.deleteScheduledInterviewByInterviewId(newInterview.getInterviewId());

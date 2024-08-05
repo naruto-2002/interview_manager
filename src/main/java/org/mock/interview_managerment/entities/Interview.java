@@ -11,7 +11,7 @@ import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalTime;
 import java.util.List;
 
 @Data
@@ -23,21 +23,23 @@ public class Interview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long interviewId;
 
-    @NotNull(message = "Mandatory")
+    @NotNull(message = "Please enter date.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
-    @NotBlank(message = "Mandatory.")
-    private String startTime;
+    @DateTimeFormat(pattern = "HH:mm")
+    @NotNull(message = "Please enter start time.")
+    private LocalTime startTime;
 
-    @NotBlank(message = "Mandatory.")
-    private String endTime;
+    @DateTimeFormat(pattern = "HH:mm")
+    @NotNull(message = "Please enter end time.")
+    private LocalTime endTime;
 
     private String location;
     private String meetingId;
     private String note;
 
-    @NotBlank(message = "Mandatory.")
+    @NotBlank(message = "Please enter title.")
     private String title;
 
     private boolean deleted = false;

@@ -71,27 +71,29 @@
                                         <td>${interview.result}</td>
                                         <td>${interview.status}</td>
                                         <td>${interview.job.title}</td>
-                                        <td class="d-flex align-items-center justify-content-center">
+                                        <td class="d-flex">
                                             <div class="icon">
                                                 <a href="/interview/details?interviewId=${interview.interviewId}">
                                                     <span class="mdi mdi-eye"></span>
                                                 </a>
                                             </div>
-                                            <c:if test = "${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
-                                                <div class="icon">
-                                                    <a href="/interview/edit_candidate?interviewId=${interview.interviewId}">
-                                                        <span class="mdi mdi-edit"></span>
-                                                    </a>
-                                                </div>
+                                            <c:if test = "${interview.status != 'CANCELLED'}">
+                                                <c:if test = "${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
+                                                    <div class="icon">
+                                                        <a href="/interview/edit_candidate?interviewId=${interview.interviewId}">
+                                                            <span class="mdi mdi-edit"></span>
+                                                        </a>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test = "${roleName == 'interviewer'}">
+                                                    <div class="icon">
+                                                        <a href="/interview/edit_details?interviewId=${interview.interviewId}&candidateId=${interview.candidate.id}">
+                                                            <span class="mdi mdi-edit"></span>
+                                                        </a>
+                                                    </div>
+                                                </c:if>
                                             </c:if>
 
-                                            <c:if test = "${roleName == 'interviewer'}">
-                                                <div class="icon">
-                                                    <a href="/interview/edit_details?interviewId=${interview.interviewId}&candidateId=${interview.candidate.id}">
-                                                        <span class="mdi mdi-edit"></span>
-                                                    </a>
-                                                </div>
-                                            </c:if>
 
                                         </td>
                                     </tr>

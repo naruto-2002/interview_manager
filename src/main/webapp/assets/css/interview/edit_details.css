@@ -78,3 +78,10 @@
     color: black !important;
     font-weight: 400;
 }
+
+.error {
+    font-size: 14px;
+    width: 100%;
+    font-weight: 400;
+    color: red;
+}

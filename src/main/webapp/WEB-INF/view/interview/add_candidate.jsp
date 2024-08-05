@@ -52,6 +52,7 @@
                                                                 </form:option>
                                                             </c:forEach>
                                                         </form:select>
+                                                        <form:errors path="candidate.id" cssClass="error"/>
                                                     </div>
                                                 </div>
                                             </div>

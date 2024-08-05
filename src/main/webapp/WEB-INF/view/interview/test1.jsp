@@ -1,31 +1,6 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="/img/logo-fav.png">
-    <title>Beagle</title>
-    <link rel="stylesheet" type="text/css" href="/lib/perfect-scrollbar/css/perfect-scrollbar.css">
-    <link rel="stylesheet" type="text/css" href="/lib/material-design-icons/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" type="text/css" href="/lib/datetimepicker/css/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" type="text/css" href="/lib/select2/css/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="/lib/bootstrap-slider/css/bootstrap-slider.min.css">
-
-    <link rel="stylesheet" href="/css/app.css" type="text/css">
-    <link rel="stylesheet" href="/css/interview/details.css">
-</head>
-<body>
 <div class="be-wrapper">
     <%@include file="../layout/header.jsp"%>
     <%@include file="../layout/left-sidebar.jsp"%>
-
 
     <div class="be-content">
         <div class="page-head">
@@ -35,11 +10,7 @@
             <div class="card">
                 <div class="card-header">
                     <c:if test="${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
-                        <div class="d-flex justify-content-end">
-                            <a href="/interview/reminder?interviewId=${interview.interviewId}">
-                                <button class="btn btn-space btn-secondary active">Send Reminder</button>
-                            </a>
-                        </div>
+                        <a href="/interview/reminder?interviewId=${interview.interviewId}" class="btn btn-secondary">Send Reminder</a>
                     </c:if>
                 </div>
                 <div class="card-body">
@@ -106,37 +77,47 @@
                     </div>
                     <div class="row">
                         <div class="col-12 text-center">
-                            <a href="/interview/list">
-                                <button class="btn btn-space btn-secondary btn-width active">Close</button>
-                            </a>
+                            <a href="/interview/list" class="btn btn-secondary">Close</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
-<script src="/lib/jquery/jquery.min.js" type="text/javascript"></script>
-<script src="/lib/perfect-scrollbar/js/perfect-scrollbar.min.js" type="text/javascript"></script>
-<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
-<script src="/js/app.js" type="text/javascript"></script>
-<script src="/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
-<script src="/lib/jquery.nestable/jquery.nestable.js" type="text/javascript"></script>
-<script src="/lib/moment.js/min/moment.min.js" type="text/javascript"></script>
-<script src="/lib/datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-<script src="/lib/select2/js/select2.min.js" type="text/javascript"></script>
-<script src="/lib/select2/js/select2.full.min.js" type="text/javascript"></script>
-<script src="/lib/bootstrap-slider/bootstrap-slider.min.js" type="text/javascript"></script>
-<script src="/lib/bs-custom-file-input/bs-custom-file-input.js" type="text/javascript"></script>
 
-<script src="/js/interview/details.js"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        //-initialize the javascript
-        App.init();
-        App.formElements();
-    });
-</script>
-</body>
-</html>
+<style>
+    .info-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px; /* Increased space between rows */
+    }
+    .info-label {
+        font-weight: bold;
+        margin-right: 20px; /* Increased space between label and content */
+        width: 200px; /* Adjust width if needed */
+        flex-shrink: 0;
+        font-size: 16px; /* Increased font size for better readability */
+        color: #333;
+    }
+    .info-content {
+        flex: 1;
+        font-size: 16px; /* Increased font size for better readability */
+        color: #555;
+    }
+    .interviewer-item {
+        margin-bottom: 8px; /* Reduced space between interviewer items */
+    }
+    .btn-secondary {
+        background-color: #6c757d;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 16px; /* Increased button font size */
+    }
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+</style>

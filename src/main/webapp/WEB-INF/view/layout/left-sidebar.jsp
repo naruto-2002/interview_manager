@@ -9,7 +9,7 @@
                     <ul class="sidebar-elements">
                         <li class="divider">Menu</li>
                         <li class="active mb-4"><a href="/user"><i class="icon mdi mdi-account"></i><span>User</span></a></li>
-                        <li class="mb-4"><a href="/interview/list"><i class="icon mdi mdi-face"></i><span>Inerview</span></a></li>
+                        <li class="mb-4"><a href="/interview/list"><i class="icon mdi mdi-group"></i><span>Inerview</span></a></li>
                         <li class="mb-4"><a href="/job"><i class="icon mdi mdi-group"></i><span>Job</span></a></li>
                         <li class="mb-4"><a href="/offers"><i class="icon mdi mdi-group"></i><span>Offer</span></a></li>
                         <li class="mb-4"><a href="/candidate"><i class="icon mdi mdi-group"></i><span>Candidate</span></a></li>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -67,6 +68,14 @@ public class AddDetailsController {
         if (newInterview.getStartTime() != null && newInterview.getEndTime() != null) {
             if (newInterview.getEndTime().isBefore(newInterview.getStartTime())) {
                 result.rejectValue("endTime", "error.newInterview", "The end time must not be less than the start time.");
+            }
+        }
+
+        // Kiểm tra date không phải ngày trong quá khứ
+        if (newInterview.getDate() != null) {
+            LocalDate today = LocalDate.now();
+            if (newInterview.getDate().isBefore(today)) {
+                result.rejectValue("date", "error.newInterview", "The date cannot be a date in the past.");
             }
         }
 

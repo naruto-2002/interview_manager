@@ -17,24 +17,29 @@
 }
 
 
+/* CSS tùy chỉnh để cải thiện giao diện */
+.info-group {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px; /* Tăng kích thước font */
+}
+
 .info-row {
     display: flex;
-    align-items: center;
-    margin-bottom: 15px; /* Increased space between rows */
+    justify-content: space-between;
+    margin-bottom: 10px;
 }
+
 .info-label {
     font-weight: bold;
-    margin-right: 20px; /* Increased space between label and content */
-    width: 200px; /* Adjust width if needed */
-    flex-shrink: 0;
-    font-size: 16px; /* Increased font size for better readability */
-    color: #333;
+    width: 40%; /* Điều chỉnh kích thước nhãn */
+    text-align: left; /* Căn phải nhãn */
+    padding-right: 10px;
 }
+
 .info-content {
-    flex: 1;
-    font-size: 16px; /* Increased font size for better readability */
-    color: #555;
-}
-.interviewer-item {
-    margin-bottom: 8px; /* Reduced space between interviewer items */
+    width: 100%; /* Điều chỉnh kích thước nội dung */
+    text-align: left; /* Căn trái nội dung */
 }

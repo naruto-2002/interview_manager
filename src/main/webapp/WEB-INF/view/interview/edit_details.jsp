@@ -180,16 +180,16 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star" for="recruiter">Recruiter owner</label>
-                                                    <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
-                                                        <form:input type="text" class="d-none" id="recruiter" path="recruiter.userId" value="${candidate.user.userId}" />
-                                                        <input class="form-control" id="recruiter" type="text" readonly="readonly" value="${candidate.user.fullName}"/>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
                                                     <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="location">Location</label>
                                                     <div class="col-12 col-sm-8 col-lg-8">
                                                         <form:input class="form-control" id="location" path="location" type="text" placeholder="Type a location..."/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star" for="recruiter">Recruiter owner</label>
+                                                    <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
+                                                        <form:input type="text" class="d-none" id="recruiter" path="recruiter.userId" value="${candidate.user.userId}" />
+                                                        <input class="form-control" id="recruiter" type="text" readonly="readonly" value="${candidate.user.fullName} | ${candidate.user.department}"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">

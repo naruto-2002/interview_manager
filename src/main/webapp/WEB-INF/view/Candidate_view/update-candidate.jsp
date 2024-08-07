@@ -45,12 +45,12 @@
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label >Full Name:</label>
+                        <label >Full Name: <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="name" value="${candidate.name}"   />
                         <form:errors path="name" cssClass="text-danger"></form:errors>
                     </div>
                     <div class="form-group">
-                        <label for="dob">Date of Birth:</label>
+                        <label for="dob">Date of Birth: <span class="text-danger">*</span></label>
                         <form:input type="date" class="form-control" value="${candidate.dob}" path="dob"/>
                         <form:errors path="dob" cssClass="text-danger"></form:errors>
                     </div>
@@ -66,7 +66,7 @@
 
                     </div>
                     <div class="form-group">
-                        <label >CurrentPosition:</label><br>
+                        <label >CurrentPosition: <span class="text-danger">*</span></label><br>
                         <form:select class="" path="currentPosition" id="position">
                             <form:option value="">Select </form:option>
                             <form:options items="${position}" />
@@ -74,7 +74,7 @@
                         </form:select>
                     </div>
                     <div class="form-group">
-                        <label >Skill:</label><br>
+                        <label >Skill: <span class="text-danger">*</span></label><br>
                         <select multiple name="skills" placeholder="Skill" data-search="false" data-silent-initial-value-set="true" id="skill">
                             <option value="Java" ${fn:contains(candidate.skills, 'Java') ? 'selected' : ''}>Java</option>
                             <option value="Nodejs" ${fn:contains(candidate.skills, 'Nodejs') ? 'selected' : ''}>Nodejs</option>
@@ -87,8 +87,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Recruiter:</label><br>
-                        <form:select path="user" id="recruiter">
+                        <label>Recruiter: <span class="text-danger">*</span></label><br>
+                        <form:select path="user" id="recruiter" data-search="true">
 <%--                            <form:option value="" >Choose Recruiter</form:option>--%>
                             <form:option value="${user1}">Asign Me</form:option>
                             <form:options items="${recruiters}" itemValue="userId" itemLabel="fullName"  />
@@ -102,7 +102,7 @@
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="email">Email:</label>
+                        <label for="email">Email: <span class="text-danger">*</span></label>
                         <input type="email" class="form-control" name="email" id="email" value="${candidate.email}" required/>
                     </div>
                     <div class="form-group">
@@ -110,7 +110,7 @@
                         <form:input type="text" class="form-control" path="address"/>
                     </div>
                     <div class="form-group">
-                        <label >Gender:</label><br>
+                        <label >Gender: <span class="text-danger">*</span></label><br>
                         <form:select class="form-control" path="gender" id="gender">
                             <form:option value="">Select </form:option>
                             <form:options items="${gender}" />
@@ -123,7 +123,7 @@
                         <form:input class="form-control" path="note"/>
                     </div>
                     <div class="form-group">
-                        <label >Status:</label><br>
+                        <label >Status: <span class="text-danger">*</span></label><br>
                         <form:select class="" path="status" id="status">
                             <form:option value="">Select </form:option>
                             <form:options items="${status}" />
@@ -135,7 +135,7 @@
                         <form:input class="form-control" path="yearsExperience"/>
                     </div>
                     <div class="form-group">
-                        <label >Highest Level:</label><br>
+                        <label >Highest Level: <span class="text-danger">*</span></label><br>
                         <form:select class="" path="highestLevel" id="highestlevel">
                             <form:option value="">Select </form:option>
                             <form:options items="${highlevel}" />

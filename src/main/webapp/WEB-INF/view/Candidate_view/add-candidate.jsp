@@ -51,12 +51,14 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Full Name:</label>
-                            <form:input type="text" class="form-control" path="name" placeholder="Enter your full name"/>
+                            <label >Full Name:
+                                <span class="text-danger">*</span>
+                            </label>
+                            <form:input type="text" class="form-control " path="name" placeholder="Enter your full name" />
                             <form:errors path="name" cssClass="text-danger"></form:errors>
                         </div>
                         <div class="form-group">
-                            <label for="dob">Date of Birth:</label>
+                            <label for="dob">Date of Birth: <span class="text-danger">*</span></label>
                             <form:input type="date" class="form-control" path="dob"/>
                             <form:errors cssClass="text-danger" path="dob"></form:errors>
                         </div>
@@ -71,7 +73,7 @@
 
                         </div>
                         <div class="form-group">
-                            <label>CurrentPosition:</label><br>
+                            <label>CurrentPosition: <span class="text-danger">*</span></label><br>
                             <form:select class="" path="currentPosition" id="position">
                                 <form:option value="">Select </form:option>
                                 <form:options items="${position}"/>
@@ -79,8 +81,8 @@
                             <form:errors path="currentPosition" cssClass="text-danger"></form:errors>
                         </div>
                         <div class="form-group">
-                            <label>Skill:</label><br>
-                            <select multiple name="skills" placeholder="Skill" data-search="false"
+                            <label>Skill: <span class="text-danger">*</span></label><br>
+                            <select multiple name="skills" placeholder="Skill" data-search="true"
                                     data-silent-initial-value-set="true" id="skill">
                                 <option value="Java">Java</option>
                                 <option value="Nodejs">Nodejs</option>
@@ -94,8 +96,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Recruiter:</label><br>
-                            <form:select path="user" id="recruiter">
+                            <label>Recruiter: <span class="text-danger">*</span></label><br>
+                            <form:select path="user" id="recruiter" data-search="true">
                                 <form:option value="" selected="true">Choose Recruiter</form:option>
                                 <form:option value="${user}">Asign Me</form:option>
                                 <form:options items="${recruiters}" itemValue="userId" itemLabel="fullName"  />
@@ -109,7 +111,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="email">Email:</label>
+                            <label for="email">Email: <span class="text-danger">*</span></label>
                             <input type="email" class="form-control" name="email" id="email" required/>
                             <form:errors cssClass="text-danger" path="email"></form:errors>
                         </div>
@@ -119,7 +121,7 @@
                             <form:errors cssClass="text-danger" path="address"></form:errors>
                         </div>
                         <div class="form-group">
-                            <label>Gender:</label><br>
+                            <label>Gender: <span class="text-danger">*</span></label><br>
                             <form:select class="form-control" path="gender" id="gender">
                                 <form:option value="">Select </form:option>
                                 <form:options items="${gender}"/>
@@ -133,7 +135,7 @@
                             <form:errors cssClass="text-danger" path="note"></form:errors>
                         </div>
                         <div class="form-group">
-                            <label>Status:</label><br>
+                            <label>Status: <span class="text-danger">*</span></label><br>
                             <form:select class="" path="status" id="status">
                                 <form:option value="">Select </form:option>
                                 <form:options items="${status}"/>
@@ -147,7 +149,7 @@
                             <form:errors cssClass="text-danger" path="yearsExperience"></form:errors>
                         </div>
                         <div class="form-group">
-                            <label>Highest Level:</label><br>
+                            <label>Highest Level: <span class="text-danger">*</span></label><br>
                             <form:select class="" path="highestLevel" id="highestlevel">
                                 <form:option value="">Select </form:option>
                                 <form:options items="${highlevel}"/>

@@ -34,7 +34,7 @@
         <div class="main-content container-fluid">
             <div class="card">
                 <div class="card-header">
-                    <c:if test = "${interview.status != 'CANCELLED'}">
+                    <c:if test = "${interview.status != 'CANCELLED' && interview.status != 'INTERVIEWED'}">
                         <c:if test="${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
                             <div class="d-flex justify-content-end">
                                 <a href="javascript:void(0);" onclick="confirmInterviewReminder(${interview.interviewId})">

@@ -35,11 +35,13 @@
             <div class="card text-center">
                 <div class="card-header">
                     <c:if test = "${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
-                        <div class="d-flex justify-content-end">
-                            <a href="javascript:void(0);" onclick="confirmCancel(${interview.interviewId})">
-                                <button class="btn btn-space btn-secondary active">Cancel Interview Schedule</button>
-                            </a>
-                        </div>
+                        <c:if test="${interview.status.name() == 'NEW' or interview.status.name() == 'INVITED'}">
+                            <div class="d-flex justify-content-end">
+                                <a href="javascript:void(0);" onclick="confirmCancel(${interview.interviewId})">
+                                    <button class="btn btn-space btn-secondary active">Cancel Interview Schedule</button>
+                                </a>
+                            </div>
+                        </c:if>
                     </c:if>
                 </div>
                 <div class="card-body">

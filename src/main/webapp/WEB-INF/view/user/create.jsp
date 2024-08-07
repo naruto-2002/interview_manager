@@ -51,6 +51,9 @@
             <c:set var="errorEmail">
                 <form:errors path="email" cssClass="text-danger"/>
             </c:set>
+            <c:set var="errorPhoneNumber">
+                <form:errors path="phoneNumber" cssClass="text-danger"/>
+            </c:set>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -67,8 +70,9 @@
                     </div>
                     <div class="form-group">
                         <label for="phoneNumber">Phone Number:</label>
-                        <form:input type="tel" class="form-control" id="phoneNumber"
+                        <form:input type="tel" class="form-control ${not empty errorPhoneNumber ? 'is-invalid' : ''}" id="phoneNumber"
                                     placeholder="Enter your phone number" path="phoneNumber"/>
+                        ${errorPhoneNumber}
                     </div>
                     <div class="form-group">
                         <label for="role">Role:</label>
@@ -129,7 +133,7 @@
             <div class="row text-center">
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="button" class="btn btn-secondary" onclick="window.history.back();">Cancel</button>
+                    <a type="button" class="btn btn-secondary" href="/user">Cancel</a>
                 </div>
             </div>
         </form:form>

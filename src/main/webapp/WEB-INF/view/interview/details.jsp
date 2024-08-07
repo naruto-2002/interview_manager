@@ -34,17 +34,19 @@
         <div class="main-content container-fluid">
             <div class="card">
                 <div class="card-header">
-                    <c:if test="${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
-                        <div class="d-flex justify-content-end">
-                            <a href="javascript:void(0);" onclick="confirmInterviewReminder(${interview.interviewId})">
-                                <button class="btn btn-space btn-secondary active">Send Reminder</button>
-                            </a>
-                        </div>
-                    </c:if>
-                    <c:if test="${not empty emailError}">
-                        <div class="d-flex justify-content-end" style="color: red; font-weight: 400">
-                            Error: ${emailError}
-                        </div>
+                    <c:if test = "${interview.status != 'CANCELLED' && interview.status != 'INTERVIEWED'}">
+                        <c:if test="${roleName == 'admin' || roleName == 'manager' || roleName == 'recruiter'}">
+                            <div class="d-flex justify-content-end">
+                                <a href="javascript:void(0);" onclick="confirmInterviewReminder(${interview.interviewId})">
+                                    <button class="btn btn-space btn-secondary active">Send Reminder</button>
+                                </a>
+                            </div>
+                        </c:if>
+                        <c:if test="${not empty emailError}">
+                            <div class="d-flex justify-content-end" style="color: red; font-weight: 400">
+                                Error: ${emailError}
+                            </div>
+                        </c:if>
                     </c:if>
                 </div>
                 <div class="card-body">

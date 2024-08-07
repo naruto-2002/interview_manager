@@ -13,6 +13,7 @@ import org.mock.interview_managerment.enums.DepartmentEnum;
 import org.mock.interview_managerment.enums.GenderEnum;
 import org.mock.interview_managerment.enums.StatusUserEnum;
 import org.mock.interview_managerment.validator.FullNameChecked;
+import org.mock.interview_managerment.validator.PhoneNumberChecked;
 import org.mock.interview_managerment.validator.UniqueEmail;
 
 import java.time.LocalDate;
@@ -31,7 +32,9 @@ public class UserCreateDto {
     @Email(message = "Email không hợp lệ", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     @UniqueEmail
     private String email;
-    @NotBlank(message = "Full name is required")
+
+    @NotNull(message = "Phone number can not be null")
+    @PhoneNumberChecked
     private String phoneNumber;
 
     @NotNull(message = "Date of birth is required")

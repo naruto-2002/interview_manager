@@ -28,9 +28,10 @@ public class AddDetailsController {
     private final InterviewService interviewService;
     private final ScheduledInterviewService scheduledInterviewService;
     private final CandidateJobService candidateJobService;
+    private final JobService jobService;
 
     @GetMapping("/interview/add_details")
-    public String getAddDetailsPage(@RequestParam("candidateId") long candidateId, Model model) {
+    public String getAddDetailsPage(@RequestParam("candidateId") long candidateId, @RequestParam("jobId") long jobId, Model model) {
         List<User> interviewers = userService.getUsersByRoleName("INTERVIEWER");
         List<CandidateJob> candidateJobs = candidateJobService.getAllJobOpenByCandidateId(candidateId);
         Candidate candidate = candidateService.getCandidateById(candidateId);
@@ -41,7 +42,12 @@ public class AddDetailsController {
         model.addAttribute("candidate", candidate);
 
         if (!model.containsAttribute("newInterview")) {
-            model.addAttribute("newInterview", new Interview());
+            Interview interview = new Interview();
+            if(jobId != 0) {
+                Job job = jobService.getJobById(jobId);
+                interview.setJob(job);
+            }
+            model.addAttribute("newInterview", interview);
         }
 
 
@@ -87,13 +93,22 @@ public class AddDetailsController {
 
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.newInterview", result);
             redirectAttributes.addFlashAttribute("newInterview", newInterview);
+            if (newInterview.getJob() == null || newInterview.getJob().getJobId() == null) {
+                return "redirect:/interview/add_details?candidateId=" + newInterview.getCandidate().getId() + "&jobId=0";
+            }else {
+                return "redirect:/interview/add_details?candidateId=" + newInterview.getCandidate().getId() + "&jobId=" + newInterview.getJob().getJobId();
+            }
 
-            return "redirect:/interview/add_details?candidateId=" + newInterview.getCandidate().getId();
         }
 
         newInterview.setResult(ResultInterviewEnum.OPEN);
         newInterview.setStatus(StatusInterviewEnum.NEW);
-        newInterview.getCandidate().setStatus(StatusCandidateEnum.Waiting_for_interview);
+
+        long candidateId = newInterview.getCandidate().getId();
+        Candidate candidate = candidateService.getCandidateById(candidateId);
+        candidate.setStatus(StatusCandidateEnum.Waiting_for_interview);
+        candidateService.updateCandidatenew(candidateId, candidate);
+
         Interview interview = interviewService.saveInterview(newInterview);
 
         List<Long> selectedInterviewerIds = newInterview.getSelectedInterviewerIds();

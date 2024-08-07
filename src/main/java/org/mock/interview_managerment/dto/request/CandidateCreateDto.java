@@ -19,25 +19,25 @@ import java.util.List;
 @Setter
 public class CandidateCreateDto {
     private Long id;
-    @NotBlank(message = "Name cannot be null")
+    @NotBlank(message = "Required field")
     private String name;
 
-    @NotBlank(message = "Email cannot be blank")
+    @NotBlank(message = "Required field")
     @Email(message = "Email must be valid")
     private String email;
 
 
     private String phone;
 
-    @NotNull(message = "Status cannot be null")
+    @NotNull(message = "Required field")
     private StatusCandidateEnum status;
 
-    @NotNull(message = "Current position cannot be null")
+    @NotNull(message = "Required field")
     private PositionEnum currentPosition;
 
     private String cvAttachmentLink;
 
-    @Size(min = 1, message = "At least one skill is required")
+    @Size(min = 1, message = "Please choose one skill")
     @ElementCollection
     private List<@NotNull(message = "Skill cannot be blank") String> skills;
 
@@ -45,21 +45,22 @@ public class CandidateCreateDto {
     @Positive(message = "Years of experience must be positive")
     private int yearsExperience;
 
-    @NotNull(message = "Highest level cannot be null")
+    @NotNull(message = "Required field")
     private HighestLevelEnum highestLevel;
 
-    @NotNull(message = "Date of birth cannot be null")
+    @NotNull(message = "Required field")
     @PastOrPresent(message = "Date of Birth must be in the past")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
 
     private String note;
 
-    @NotBlank(message = "Address cannot be blank")
+
     private String address;
 
-    @NotNull(message = "Gender cannot be null")
+    @NotNull(message = "Required field")
     private GenderEnum gender;
 
+    @NotNull(message = "Required field")
     private User user;
 }

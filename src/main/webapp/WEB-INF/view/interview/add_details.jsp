@@ -99,6 +99,7 @@
                                 <div class="bs-grid-block">
                                     <div class="card">
                                         <div class="card-body">
+
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Job</label>
                                                 <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
@@ -113,6 +114,7 @@
                                                     <form:errors path="job.jobId" cssClass="error"/>
                                                 </div>
                                             </div>
+
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Interviewer</label>
                                                 <div class="col-12 col-sm-8 col-lg-8 text-sm-left">

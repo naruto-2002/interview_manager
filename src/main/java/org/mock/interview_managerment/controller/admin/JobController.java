@@ -38,9 +38,9 @@ public class JobController {
 
     @RequestMapping("/job")
     public String listJobs(Model model,
-            @RequestParam("p") Optional<Integer> p,
-            @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "status", required = false) String status) {
+                           @RequestParam("p") Optional<Integer> p,
+                           @RequestParam(value = "keyword", required = false) String keyword,
+                           @RequestParam(value = "status", required = false) String status) {
 
         int pageNumber = p.orElse(0);
         Pageable pageable = PageRequest.of(pageNumber, 10);
@@ -175,6 +175,7 @@ public class JobController {
         System.out.println("check path id = " + id);
         Job jobdetail = this.jobService.getJobById(id);
         model.addAttribute("jobdetail", jobdetail);
+        model.addAttribute("isAdminOrManagerOrRecruiter", userService.isAdminOrManagerOrRecruiter());
         return "job/jobDetail";
     }
 
@@ -194,17 +195,17 @@ public class JobController {
 
     @PostMapping("/job/update")
     public String updateJob(@RequestParam Long jobId,
-            @RequestParam String title,
-            @RequestParam String description,
-            @RequestParam String requiredSkills,
-            @RequestParam String level,
-            @RequestParam String startDate,
-            @RequestParam String endDate,
-            @RequestParam String location,
-            @RequestParam String benefits,
-            @RequestParam String salaryFrom,
-            @RequestParam String salaryTo,
-            Model model) {
+                            @RequestParam String title,
+                            @RequestParam String description,
+                            @RequestParam String requiredSkills,
+                            @RequestParam String level,
+                            @RequestParam String startDate,
+                            @RequestParam String endDate,
+                            @RequestParam String location,
+                            @RequestParam String benefits,
+                            @RequestParam String salaryFrom,
+                            @RequestParam String salaryTo,
+                            Model model) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             // Parse String to Date

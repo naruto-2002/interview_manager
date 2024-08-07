@@ -178,8 +178,11 @@
                                class="btn btn-sm btn-info action-button">View</a>
                             <a type="submit" href="/candidate/updateForward?id=${candidate.id}"
                                class="btn btn-sm btn-warning action-button">Edit</a>
-                            <button class="btn btn-sm btn-danger action-button" onclick="remove(${candidate.id})">Delete
-                            </button>
+                            <c:if test="${candidate.status.toString() == 'OPEN'}">
+                                <button class="btn btn-sm btn-danger action-button" onclick="remove(${candidate.id})">
+                                    Delete
+                                </button>
+                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>

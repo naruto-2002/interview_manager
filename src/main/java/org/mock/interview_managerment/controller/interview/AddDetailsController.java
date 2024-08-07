@@ -103,7 +103,12 @@ public class AddDetailsController {
 
         newInterview.setResult(ResultInterviewEnum.OPEN);
         newInterview.setStatus(StatusInterviewEnum.NEW);
-        newInterview.getCandidate().setStatus(StatusCandidateEnum.Waiting_for_interview);
+
+        long candidateId = newInterview.getCandidate().getId();
+        Candidate candidate = candidateService.getCandidateById(candidateId);
+        candidate.setStatus(StatusCandidateEnum.Waiting_for_interview);
+        candidateService.updateCandidatenew(candidateId, candidate);
+
         Interview interview = interviewService.saveInterview(newInterview);
 
         List<Long> selectedInterviewerIds = newInterview.getSelectedInterviewerIds();

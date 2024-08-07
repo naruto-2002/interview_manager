@@ -25,6 +25,9 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     @Query("SELECT o FROM Offer o WHERE o.createdAt BETWEEN :start AND :end")
     List<Offer> findByDateRange(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
+    List<Offer> findByCreatedAtBetween(LocalDateTime startDate, LocalDateTime endDate);
+
+
     @Query("SELECT o FROM Offer o WHERE " +
             "LOWER(o.candidate.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(o.candidate.email) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +

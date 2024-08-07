@@ -40,12 +40,15 @@
                     <c:choose>
                         <c:when test="${offer.status == 'WAITING_FOR_APPROVAL'}">
                             <sec:authorize access="hasAnyRole('HR_MANAGER', 'ADMIN')">
-                                <a href="${pageContext.request.contextPath}/offers/approve/${offer.offerId}"
+                                <a href="#"
+                                   onclick="showNoteModal('${offer.offerId}', '${pageContext.request.contextPath}/offers/approve/${offer.offerId}')"
                                    class="btn btn-success">Approve</a>
-                                <a href="${pageContext.request.contextPath}/offers/reject/${offer.offerId}"
+                                <a href="#"
+                                   onclick="showNoteModal('${offer.offerId}', '${pageContext.request.contextPath}/offers/reject/${offer.offerId}')"
                                    class="btn btn-danger">Reject</a>
                             </sec:authorize>
                             <sec:authorize access="hasAnyRole('RECRUITER', 'HR_MANAGER', 'ADMIN')">
+
                                 <a onclick="showCancelModal('${offer.offerId}')"
                                    class="btn btn-warning text-white">Cancel Offer</a>
                             </sec:authorize>
@@ -64,9 +67,11 @@
 
                         <c:when test="${offer.status == 'WAITING_FOR_RESPONSE'}">
                             <sec:authorize access="hasAnyRole('RECRUITER', 'HR_MANAGER', 'ADMIN')">
-                                <a href="${pageContext.request.contextPath}/offers/accept/${offer.offerId}"
+                                <a href="#"
+                                   onclick="showNoteModal('${offer.offerId}', '${pageContext.request.contextPath}/offers/accept/${offer.offerId}')"
                                    class="btn btn-success">ACCEPTED</a>
-                                <a href="${pageContext.request.contextPath}/offers/decline/${offer.offerId}"
+                                <a href="#"
+                                   onclick="showNoteModal('${offer.offerId}', '${pageContext.request.contextPath}/offers/decline/${offer.offerId}')"
                                    class="btn btn-info">DECLINED</a>
                                 <a
                                         onclick="showCancelModal('${offer.offerId}')"
@@ -172,6 +177,35 @@
         </div>
     </div>
 
+
+    <!-- Add Note Confirmation Modal -->
+    <div class="modal fade" id="addNoteModal" tabindex="-1" role="dialog" aria-labelledby="addNoteModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNoteModalLabel">Add Notes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="noteForm" action="" method="post">
+                        <input type="hidden" name="offerId" id="offerId">
+                        <div class="form-group">
+                            <label for="note">Note:</label>
+                            <textarea id="note" name="note" class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group text-right">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Delete Confirmation Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
          aria-hidden="true">
@@ -207,13 +241,24 @@
 <script src="/lib/jqvmap/jquery.vmap.min.js" type="text/javascript"></script>
 <script src="/lib/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
 <script>
+
+    function showNoteModal(offerId, actionUrl) {
+        $('#offerId').val(offerId);
+        $('#noteForm').attr('action', actionUrl);
+        $('#addNoteModal').modal('show');
+    }
+
     function showCancelModal(offerId) {
+
         $('#confirmCancelButton').attr('onclick', 'confirmDelete(' + offerId + ')');
         $('#deleteModal').modal('show');
     }
 
     function confirmDelete(offerId) {
-        window.location.href = '/offers/cancel/' + offerId;
+        $('#deleteModal').modal('hide');
+        let actionUrl = '/offers/cancel/' + offerId;
+
+        showNoteModal(offerId, actionUrl)
     }
 </script>
 </body>

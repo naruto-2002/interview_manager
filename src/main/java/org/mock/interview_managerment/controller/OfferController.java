@@ -1,10 +1,17 @@
 package org.mock.interview_managerment.controller;
 
 import io.micrometer.common.util.StringUtils;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotNull;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.mock.interview_managerment.entities.Candidate;
 import org.mock.interview_managerment.entities.Interview;
 import org.mock.interview_managerment.entities.Offer;
 import org.mock.interview_managerment.enums.*;
+import org.mock.interview_managerment.repository.OfferRepository;
 import org.mock.interview_managerment.services.*;
 import org.mock.interview_managerment.util.OfferUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 //import org.springframework.security.access.annotation.Secured;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +30,11 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +50,8 @@ public class OfferController {
     private UserService userService;
     @Autowired
     private InterviewService interviewService;
+    @Autowired
+    private OfferRepository offerRepository;
 
     @GetMapping
     @PreAuthorize("hasRole('MANAGER')")
@@ -73,13 +87,14 @@ public class OfferController {
         return "redirect:/offers";
     }
 
-    @GetMapping("/cancel/{id}")
-    public String cancelOffer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    @PostMapping("/cancel/{id}")
+    public String cancelOffer(@PathVariable Long id,@RequestParam String note, RedirectAttributes redirectAttributes) {
         Offer offer = offerService.findById(id);
         if (offer != null) { // Check if the offer is found
             // Approve the offer
             offerService.cancelOffer(id);
-
+            offer.setNote(note);
+            offerService.saveOffer(offer);
             // Update the candidate's status
             Candidate candidate = offer.getCandidate();
             candidate.setStatus(StatusCandidateEnum.Cancelled_offer);
@@ -96,17 +111,19 @@ public class OfferController {
         return "redirect:/offers"; // redirect to offer list
     }
 
-    @GetMapping("/approve/{id}")
-    public String approveOffer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    @PostMapping("/approve/{id}")
+    public String approveOffer(@PathVariable Long id, @RequestParam String note, RedirectAttributes redirectAttributes) {
         Offer offer = offerService.findById(id);
         if (offer != null) { // Check if the offer is found
             // Approve the offer
+            offer.setNote(note);
+            offerService.saveOffer(offer);
             offerService.approveOffer(id);
 
             // Update the candidate's status
             Candidate candidate = offer.getCandidate();
             candidate.setStatus(StatusCandidateEnum.Approved_offer);
-            candidateService.updateCandidatenew(candidate.getId(), candidate);
+            candidateService.updateCandidatenew(offer.getCandidate().getId(), candidate);
 
             redirectAttributes.addFlashAttribute("message", "Offer approved successfully.");
         } else {
@@ -116,13 +133,14 @@ public class OfferController {
     }
 
 
-    @GetMapping("/reject/{id}")
-    public String rejectOffer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    @PostMapping("/reject/{id}")
+    public String rejectOffer(@PathVariable Long id,@RequestParam String note, RedirectAttributes redirectAttributes) {
         Offer offer = offerService.findById(id);
         if (offer != null) { // Check if the offer is found
             // Approve the offer
             offerService.rejectOffer(id);
-
+            offer.setNote(note);
+            offerService.saveOffer(offer);
             // Update the candidate's status
             Candidate candidate = offer.getCandidate();
             candidate.setStatus(StatusCandidateEnum.Rejected_offer);
@@ -154,13 +172,15 @@ public class OfferController {
         return "redirect:/offers"; // redirect to offer list
     }
 
-    @GetMapping("/decline/{id}")
-    public String declineOffer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    @PostMapping("/decline/{id}")
+    public String declineOffer(@PathVariable Long id, @RequestParam String note,RedirectAttributes redirectAttributes) {
 
         Offer offer = offerService.findById(id);
         if (offer != null) { // Check if the offer is found
             // Approve the offer
             offerService.declineOffer(id);
+            offer.setNote(note);
+            offerService.saveOffer(offer);
 
             // Update the candidate's status
             Candidate candidate = offer.getCandidate();
@@ -174,14 +194,16 @@ public class OfferController {
         return "redirect:/offers"; // redirect to offer list
     }
 
-    @GetMapping("/accept/{id}")
-    public String acceptOffer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    @PostMapping("/accept/{id}")
+    public String acceptOffer(@PathVariable Long id ,@RequestParam String note, RedirectAttributes redirectAttributes) {
 
 
         Offer offer = offerService.findById(id);
         if (offer != null) { // Check if the offer is found
             // Approve the offer
             offerService.acceptOffer(id);
+            offer.setNote(note);
+            offerService.saveOffer(offer);
 
             // Update the candidate's status
             Candidate candidate = offer.getCandidate();
@@ -214,16 +236,23 @@ public class OfferController {
     public String saveOffer(@ModelAttribute("offer") Offer offer, BindingResult result, Model model) {
         offer.setStatus(OfferStatusEnum.WAITING_FOR_APPROVAL);
 
+        // các properti nà
+        // Check for @NotNull fields
+        validateNotNullFields(offer, result);
+
         // Kiểm tra logic: startContract trước endContract
         if (offer.getStartContract().after(offer.getEndContract())) {
             result.rejectValue("startContract", "error.offer", "Start date must be before end date.");
             populateModelAttributes(model);
-            return "offers/create_offer";
         }
 
         // Kiểm tra logic: dueDate trong tương lai
         if (offer.getDueDate().before(new Date())) {
             result.rejectValue("dueDate", "error.offer", "Due date must be in the future.");
+            populateModelAttributes(model);
+        }
+
+        if (result.hasErrors()) {
             populateModelAttributes(model);
             return "offers/create_offer";
         }
@@ -311,7 +340,7 @@ public class OfferController {
 
     @GetMapping("/export")
     public String filterOffers(Model model, @RequestParam(required = false) Date start, @RequestParam(required = false) Date end) {
-        if(start != null && end != null) {
+        if (start != null && end != null) {
             List<Offer> filteredOffers = offerService.getOffersByDateRange(start, end);
             model.addAttribute("offers", filteredOffers);
         }
@@ -324,6 +353,77 @@ public class OfferController {
         // Load necessary data for dropdowns and other form elements if required
         populateModelAttributes(model);
         return "offers/export-offer";
+    }
+
+
+    @PostMapping("/export")
+    public void exportOffers(HttpServletResponse response,
+                             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                             @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) throws IOException {
+        List<Offer> offers = offerRepository.findByCreatedAtBetween(startDate, endDate);
+
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Offers");
+
+        // Create header row
+        Row header = sheet.createRow(0);
+        header.createCell(0).setCellValue("Offer ID");
+        header.createCell(1).setCellValue("Basic Salary");
+        header.createCell(2).setCellValue("Due Date");
+        header.createCell(3).setCellValue("Start Contract");
+        header.createCell(4).setCellValue("End Contract");
+        header.createCell(5).setCellValue("Note");
+        header.createCell(6).setCellValue("Contract Type");
+        header.createCell(7).setCellValue("Department");
+        header.createCell(8).setCellValue("Level");
+        header.createCell(9).setCellValue("Position");
+        header.createCell(10).setCellValue("Status");
+        header.createCell(14).setCellValue("Created At");
+        header.createCell(15).setCellValue("Updated At");
+
+        // Fill data
+        int rowNum = 1;
+        for (Offer offer : offers) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(offer.getOfferId());
+            row.createCell(1).setCellValue(offer.getBasicSalary());
+            row.createCell(2).setCellValue(offer.getDueDate().toString());
+            row.createCell(3).setCellValue(offer.getStartContract().toString());
+            row.createCell(4).setCellValue(offer.getEndContract().toString());
+            row.createCell(5).setCellValue(offer.getNote());
+            row.createCell(6).setCellValue(offer.getContractType().toString());
+            row.createCell(7).setCellValue(offer.getDepartment().toString());
+            row.createCell(8).setCellValue(offer.getLevel().toString());
+            row.createCell(9).setCellValue(offer.getPosition().toString());
+            row.createCell(10).setCellValue(offer.getStatus() != null ? offer.getStatus().toString() : "");
+            row.createCell(14).setCellValue(offer.getCreatedAt().toString());
+            row.createCell(15).setCellValue(offer.getUpdatedAt().toString());
+        }
+
+        // Write to response
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=offers.xlsx");
+
+        try (OutputStream os = response.getOutputStream()) {
+            workbook.write(os);
+        }
+
+        workbook.close();
+    }
+    private void validateNotNullFields(Offer offer, BindingResult result) {
+        Field[] fields = Offer.class.getDeclaredFields();
+        for (Field field : fields) {
+            if (field.isAnnotationPresent(NotNull.class)) {
+                field.setAccessible(true);
+                try {
+                    if (field.get(offer) == null) {
+                        result.rejectValue(field.getName(), "error.offer", field.getName() + " must not be null.");
+                    }
+                } catch (IllegalAccessException e) {
+                    // Handle exception if necessary
+                }
+            }
+        }
     }
 
     private void populateModelAttributes(Model model) {

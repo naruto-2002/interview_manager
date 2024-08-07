@@ -19,6 +19,10 @@
             font-size: 18px;
             font-weight: bold;
         }
+
+        .error {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -47,6 +51,7 @@
                                 <option value="" selected>Select a candidate</option>
                                 <form:options items="${candidates}" itemValue="id" itemLabel="name"/>
                             </form:select>
+                            <form:errors path="candidate.id" cssClass="error"/>
                         </div>
                         <div class="form-group">
                             <label for="position">Position: <span class="required">*</span></label>
@@ -77,17 +82,21 @@
                                     From
                                     <form:input path="startContract" class="form-control" id="startContract"
                                                 type="date" required="true" onchange="updateEndDate()"/>
+                                    <form:errors path="startContract" cssClass="error"/>
+
                                 </div>
                                 <div class="col-md-6">
                                     To
                                     <form:input path="endContract" class="form-control" id="endContract" type="date"
                                                 required="true" onchange="updateStartDate()"/>
+                                    <form:errors path="endContract" cssClass="error"/>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="dueDate">Due Date: <span class="required">*</span></label>
                             <form:input path="dueDate" class="form-control" id="dueDate" type="date" required="true"/>
+                            <form:errors path="dueDate" cssClass="error"/>
                         </div>
 
                         <div class="form-group">

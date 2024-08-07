@@ -15,11 +15,7 @@
     <link rel="stylesheet" href="/css/offer/index.css" type="text/css">
     <style>
         .dropdown-menu.custom-dropdown {
-            transform: translate3d(-123px, 45px, 0); /* Điều chỉnh vị trí của menu */
-            /* Nếu cần điều chỉnh thêm: */
-            /* top: 100%; */
-            /* left: 0; */
-            /* margin: 0; */
+            transform: translate3d(-123px, 45px, 0);
         }
     </style>
 </head>
@@ -89,7 +85,6 @@
                         </button>
                         <div class="dropdown-menu custom-dropdown">
                             <a class="dropdown-item" href="/offers/new">Add Offer</a>
-                            <a class="dropdown-item" href="/offers/new">Import Offer</a>
                             <a class="dropdown-item" href="/offers/export">Export Offer</a>
                         </div>
                     </div>

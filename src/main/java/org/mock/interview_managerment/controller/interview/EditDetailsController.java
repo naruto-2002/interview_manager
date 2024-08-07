@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.mock.interview_managerment.entities.*;
 import org.mock.interview_managerment.entities.pk.ScheduledInterviewId;
 import org.mock.interview_managerment.enums.ResultInterviewEnum;
+import org.mock.interview_managerment.enums.StatusCandidateEnum;
 import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.mock.interview_managerment.services.*;
 import org.springframework.stereotype.Controller;
@@ -126,6 +127,22 @@ public class EditDetailsController {
             if(newInterview.getResult() != ResultInterviewEnum.OPEN && newInterview.getResult() != ResultInterviewEnum.NA) {
                 newInterview.setStatus(StatusInterviewEnum.INTERVIEWED);
             }
+
+            if(newInterview.getResult() == ResultInterviewEnum.PASS) {
+                long candidateId = newInterview.getCandidate().getId();
+                Candidate candidate = candidateService.getCandidateById(candidateId);
+                candidate.setStatus(StatusCandidateEnum.Passed_Interview);
+                candidateService.updateCandidatenew(candidateId, candidate);
+            }
+
+            if(newInterview.getResult() == ResultInterviewEnum.FAILED) {
+                long candidateId = newInterview.getCandidate().getId();
+                Candidate candidate = candidateService.getCandidateById(candidateId);
+                candidate.setStatus(StatusCandidateEnum.Failed_interview);
+                candidateService.updateCandidatenew(candidateId, candidate);
+            }
+
+
             interviewService.saveInterview(newInterview);
         }
 
@@ -136,6 +153,21 @@ public class EditDetailsController {
             if(newInterview.getResult() != ResultInterviewEnum.OPEN && newInterview.getResult() != ResultInterviewEnum.NA) {
                 interview.setStatus(StatusInterviewEnum.INTERVIEWED);
             }
+
+            if(newInterview.getResult() == ResultInterviewEnum.PASS) {
+                long candidateId = newInterview.getCandidate().getId();
+                Candidate candidate = candidateService.getCandidateById(candidateId);
+                candidate.setStatus(StatusCandidateEnum.Passed_Interview);
+                candidateService.updateCandidatenew(candidateId, candidate);
+            }
+
+            if(newInterview.getResult() == ResultInterviewEnum.FAILED) {
+                long candidateId = newInterview.getCandidate().getId();
+                Candidate candidate = candidateService.getCandidateById(candidateId);
+                candidate.setStatus(StatusCandidateEnum.Failed_interview);
+                candidateService.updateCandidatenew(candidateId, candidate);
+            }
+
             interviewService.saveInterview(interview);
         }
 

@@ -8,7 +8,6 @@ import org.mock.interview_managerment.enums.ResultInterviewEnum;
 import org.mock.interview_managerment.enums.StatusCandidateEnum;
 import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.mock.interview_managerment.services.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,28 +28,31 @@ public class AddDetailsController {
     private final InterviewService interviewService;
     private final ScheduledInterviewService scheduledInterviewService;
     private final CandidateJobService candidateJobService;
-    @Autowired
-    JobService jobService;
+    private final JobService jobService;
+
     @GetMapping("/interview/add_details")
-    public String getAddDetailsPage(@RequestParam("candidateId") long candidateId, Model model,@RequestParam(value = "jobId" ,defaultValue = "0") long jobid) {
+    public String getAddDetailsPage(@RequestParam("candidateId") long candidateId, @RequestParam("jobId") long jobId, Model model) {
         List<User> interviewers = userService.getUsersByRoleName("INTERVIEWER");
         List<CandidateJob> candidateJobs = candidateJobService.getAllJobOpenByCandidateId(candidateId);
         Candidate candidate = candidateService.getCandidateById(candidateId);
 
 
-        Job jobneed=null;
-        if(jobid != 0){
-            jobneed= jobService.getJobById(jobid);
-        }
         model.addAttribute("interviewers", interviewers);
         model.addAttribute("candidateJobs", candidateJobs);
         model.addAttribute("candidate", candidate);
-        model.addAttribute("newInterview", new Interview());
 
-        model.addAttribute("job", jobneed);
+        if (!model.containsAttribute("newInterview")) {
+            Interview interview = new Interview();
+            if(jobId != 0) {
+                Job job = jobService.getJobById(jobId);
+                interview.setJob(job);
+            }
+            model.addAttribute("newInterview", interview);
+        }
+
+
         return "interview/add_details";
     }
-
 
     @PostMapping("/interview/add_details")
     public String addNewInterviewDetails(@ModelAttribute("newInterview") @Valid Interview newInterview, BindingResult result, RedirectAttributes redirectAttributes) {
@@ -91,13 +93,22 @@ public class AddDetailsController {
 
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.newInterview", result);
             redirectAttributes.addFlashAttribute("newInterview", newInterview);
+            if (newInterview.getJob() == null || newInterview.getJob().getJobId() == null) {
+                return "redirect:/interview/add_details?candidateId=" + newInterview.getCandidate().getId() + "&jobId=0";
+            }else {
+                return "redirect:/interview/add_details?candidateId=" + newInterview.getCandidate().getId() + "&jobId=" + newInterview.getJob().getJobId();
+            }
 
-            return "redirect:/interview/add_details?candidateId=" + newInterview.getCandidate().getId();
         }
 
         newInterview.setResult(ResultInterviewEnum.OPEN);
         newInterview.setStatus(StatusInterviewEnum.NEW);
-        newInterview.getCandidate().setStatus(StatusCandidateEnum.Waiting_for_interview);
+
+        long candidateId = newInterview.getCandidate().getId();
+        Candidate candidate = candidateService.getCandidateById(candidateId);
+        candidate.setStatus(StatusCandidateEnum.Waiting_for_interview);
+        candidateService.updateCandidatenew(candidateId, candidate);
+
         Interview interview = interviewService.saveInterview(newInterview);
 
         List<Long> selectedInterviewerIds = newInterview.getSelectedInterviewerIds();

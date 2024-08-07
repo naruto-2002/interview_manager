@@ -60,7 +60,7 @@ public class UploadtoDriver {
         file2= driveService.files().create(fileMetadata, mediaContent)
                 .setFields("id, webViewLink")
                 .execute();
-        List<String> emails = Arrays.asList("damnhau04@gmail.com", "user2@example.com");
+        List<String> emails = Arrays.asList("damnhau04@gmail.com", "trantran30102002@gmail.com");
 
         for (String email : emails) {
             Permission permission = new Permission()

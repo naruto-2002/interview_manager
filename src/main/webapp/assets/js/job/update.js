@@ -1,16 +1,29 @@
-function initializeDropdown(dropdownId, menuId, selectedId, hiddenFieldId) {
+function initializeDropdown(dropdownId, menuId, selectedId, hiddenFieldId, searchId) {
     var dropdown = document.getElementById(dropdownId);
     var menu = document.getElementById(menuId);
     var selectedElement = document.getElementById(selectedId);
     var hiddenField = document.getElementById(hiddenFieldId);
+    var searchInput = document.getElementById(searchId);
 
-    if (!dropdown || !menu || !selectedElement || !hiddenField) {
-        console.error('Một hoặc nhiều phần tử không tìm thấy: ', dropdownId, menuId, selectedId, hiddenFieldId);
+    if (!dropdown || !menu || !selectedElement || !hiddenField || !searchInput) {
+        console.error('Một hoặc nhiều phần tử không tìm thấy: ', dropdownId, menuId, selectedId, hiddenFieldId, searchId);
         return;
     }
 
     dropdown.addEventListener('click', function () {
         menu.classList.toggle('show');
+    });
+
+    searchInput.addEventListener('keyup', function () {
+        var filter = this.value.toLowerCase();
+        var items = menu.getElementsByClassName('dropdown-item');
+        Array.prototype.forEach.call(items, function (item) {
+            if (item.innerText.toLowerCase().includes(filter)) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
     });
 
     document.querySelectorAll('#' + menuId + ' .dropdown-item').forEach(function (item) {
@@ -61,19 +74,23 @@ function initializeDropdown(dropdownId, menuId, selectedId, hiddenFieldId) {
     var initialValue = hiddenField.value;
     if (initialValue) {
         initialValue.split(',').forEach(function (value) {
-            var text = document.querySelector('#' + menuId + ' .dropdown-item[data-value="' + value + '"]').innerText;
-            var element = document.createElement('span');
-            element.setAttribute('class', 'selected-item badge badge-primary mr-2');
-            element.setAttribute('data-value', value);
-            element.innerHTML = text + ' <i class="fas fa-times remove-item"></i>';
+            var item = document.querySelector('#' + menuId + ' .dropdown-item[data-value="' + value + '"]');
+            if (item) {
+                var text = item.innerText;
+                var element = document.createElement('span');
+                element.setAttribute('class', 'selected-item badge badge-primary mr-2');
+                element.setAttribute('data-value', value);
+                element.innerHTML = text + ' <i class="fas fa-times remove-item"></i>';
 
-            element.querySelector('.remove-item').addEventListener('click', function () {
-                this.parentNode.remove();
-                updateHiddenField();
-            });
+                element.querySelector('.remove-item').addEventListener('click', function () {
+                    this.parentNode.remove();
+                    updateHiddenField();
+                });
 
-            selectedElement.appendChild(element);
+                selectedElement.appendChild(element);
+            }
         });
+        updateHiddenField();
     }
 }
 
@@ -105,13 +122,33 @@ function validateForm() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    initializeDropdown('skillsDropdown', 'skillsMenu', 'selectedSkills', 'skills');
-    initializeDropdown('benefitsDropdown', 'benefitsMenu', 'selectedBenefits', 'benefits');
-    initializeDropdown('levelsDropdown', 'levelsMenu', 'selectedLevels', 'level');
+    initializeDropdown('skillsDropdown', 'skillsMenu', 'selectedSkills', 'skills', 'skillsSearch');
+    initializeDropdown('benefitsDropdown', 'benefitsMenu', 'selectedBenefits', 'benefits', 'benefitsSearch');
+    initializeDropdown('levelsDropdown', 'levelsMenu', 'selectedLevels', 'level', 'levelsSearch');
+});
+document.getElementById('startDate').addEventListener('change', function () {
+    const startDate = new Date(this.value);
+    const endDateInput = document.getElementById('endDate');
+
+    // Ensure endDate is after startDate
+    endDateInput.min = this.value;
+
+    if (new Date(endDateInput.value) <= startDate) {
+        endDateInput.value = '';
+    }
 });
 
+document.getElementById('endDate').addEventListener('change', function () {
+    const startDate = new Date(document.getElementById('startDate').value);
+    const endDate = new Date(this.value);
+
+    if (endDate <= startDate) {
+        alert('End date must be after the start date.');
+        this.value = '';
+    }
+});
 function formatSalary(input) {
-    let value = input.value.replace(/\D/g, '');
-    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    input.value = value;
+    let value = input.value.replace(/\D/g, ''); // Loại bỏ tất cả các ký tự không phải số
+    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Thêm dấu chấm vào vị trí hàng nghìn
+    input.value = value; // Cập nhật lại giá trị đã định dạng vào input
 }

@@ -5,6 +5,7 @@ import org.mock.interview_managerment.enums.StatusJobEnum;
 import org.mock.interview_managerment.services.JobService;
 import org.mock.interview_managerment.services.JobFileParser;
 
+import org.mock.interview_managerment.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,6 +33,8 @@ public class JobController {
     private JobService jobService;
     @Autowired
     private JobFileParser jobFileParser;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/job")
     public String listJobs(Model model,
@@ -65,8 +68,7 @@ public class JobController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("status", status);
         model.addAttribute("listjobs", page);
-        System.out.println(page);
-        System.out.println(page.getSize());
+        model.addAttribute("isAdminOrManagerOrRecruiter", userService.isAdminOrManagerOrRecruiter());
         return "job/jobList";
     }
 
@@ -87,6 +89,15 @@ public class JobController {
             // Phân tích tệp và lưu danh sách job
             List<Job> jobs = jobFileParser.parseExcelFile(file);
             jobService.saveListJob(jobs);
+            if (jobs.isEmpty()) {
+                // Nếu danh sách jobs rỗng
+                redirectAttributes.addFlashAttribute("successMessage",
+                        "No jobs to import. The file is empty or not in the correct format.");
+            } else {
+                // Nếu danh sách jobs không rỗng
+
+                redirectAttributes.addFlashAttribute("successMessage", "Jobs imported successfully!");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -115,7 +126,8 @@ public class JobController {
             @RequestParam String benefits,
             @RequestParam String salaryFrom,
             @RequestParam String salaryTo,
-            Model model) {
+            Model model,
+            RedirectAttributes redirectAttributes) {
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -139,12 +151,16 @@ public class JobController {
             job.setBenefits(benefits);
             job.setSalaryFrom(salaryFrom);
             job.setSalaryTo(salaryTo);
+            job.setLastModifiedBy(userService.getCurrentUsername());
             jobService.updateStatusJob(job);
 
             // Save Job
             jobService.saveJob(job);
 
-            // Redirect to job list page or success page
+            // Add success message
+            redirectAttributes.addFlashAttribute("successMessage", "Job created successfully!");
+
+            // Redirect to job list page
             return "redirect:/job";
 
         } catch (ParseException e) {
@@ -173,9 +189,6 @@ public class JobController {
         Job updateJob = this.jobService.getJobById(id);
         System.out.println(updateJob);
         model.addAttribute("update", updateJob);
-        model.addAttribute("requiredSkills", updateJob.getRequiredSkills());
-        model.addAttribute("benefits", updateJob.getBenefits());
-        model.addAttribute("level", updateJob.getLevel());
         return "job/updateJob";
     }
 
@@ -214,6 +227,7 @@ public class JobController {
             job.setBenefits(benefits);
             job.setSalaryFrom(salaryFrom);
             job.setSalaryTo(salaryTo);
+            job.setLastModifiedBy(userService.getCurrentUsername());
             jobService.updateStatusJob(job);
 
             // Save Job

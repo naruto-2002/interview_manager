@@ -1,6 +1,6 @@
 .selected-item {
     display: inline-block;
-    background-color: #007bff;
+    background-color: #508C9B;
     color: #fff;
     padding: 5px 10px;
     margin-right: 5px;
@@ -12,4 +12,18 @@
     cursor: pointer;
     margin-left: 5px;
     color: #dc3545;
+}
+
+.btn-primary {
+    background-color: #508C9B !important;
+}
+
+.selected-item {
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.remove-item {
+    cursor: pointer;
 }

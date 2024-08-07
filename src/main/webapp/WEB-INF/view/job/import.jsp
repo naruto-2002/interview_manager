@@ -5,7 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Excel File</title>
+
+    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/lib/perfect-scrollbar/css/perfect-scrollbar.css">
     <link rel="stylesheet" type="text/css" href="/lib/material-design-icons/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" type="text/css" href="/lib/datetimepicker/css/bootstrap-datetimepicker.min.css">
@@ -14,14 +22,18 @@
     <link rel="stylesheet" type="text/css" href="/multiselect/css/multi-select.css">
     <link rel="stylesheet" href="/css/app.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="/css/job/import.css">
-    <link rel="stylesheet" type="text/css" href="js/job/import.js">
+
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
 
     <jsp:include page="../layout/header.jsp" />
     <jsp:include page="../layout/left-sidebar.jsp" />
-    <div class="be-content">
+    <div class="be-content" style="padding-top: 60px">
         <div class="main-content container">
             <h2 class="mb-4 text-center">Upload Excel File</h2>
 

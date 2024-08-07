@@ -29,27 +29,34 @@
             </head>
 
             <body>
+                <jsp:include page="../layout/header.jsp" />
+
+                <jsp:include page="../layout/left-sidebar.jsp" />
                 <% if (request.getAttribute("errorMessage") !=null) { %>
                     <div class="alert alert-danger">
                         <%= request.getAttribute("errorMessage") %>
                     </div>
                     <% } %>
-                        <jsp:include page="../layout/header.jsp" />
-                        <jsp:include page="../layout/left-sidebar.jsp" />
-                        <div class="be-content mt-5">
+
+                        <div class="be-content " style="margin-top: 60px;">
                             <div class="main-content container-fluid">
                                 <div class="col-12 mx-auto">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h1 class="job-list-title">Job List</h1>
-
+                                        <c:if test="${not empty successMessage}">
+                                            <div id="successMessage" class="alert alert-success">
+                                                ${successMessage}
+                                            </div>
+                                        </c:if>
                                         <div>
-                                            <a href="/job/import" class="icon-link">
-                                                <i class="fas fa-file-import"></i> Import
-                                            </a>
-
-                                            <a href="/job/create" class="icon-link">
-                                                <i class="fas fa-briefcase"></i> Create a job
-                                            </a>
+                                            <c:if test="${isAdminOrManagerOrRecruiter}">
+                                                <a href="/job/import" class="icon-link">
+                                                    <i class="fas fa-file-import"></i> Import
+                                                </a>
+                                                <a href="/job/create" class="icon-link">
+                                                    <i class="fas fa-briefcase"></i> Create a job
+                                                </a>
+                                            </c:if>
                                         </div>
 
 
@@ -58,18 +65,18 @@
                                     <div class="container mt-2">
                                         <form action="/job" method="GET" style="display: flex; align-items: center;">
                                             <div class="search-box" style="flex: 0 0 50%; margin-right: 10px;">
-                                                <input style="width: 100%;color: blue;" class="form-control"
+                                                <input style="width: 100%;color: #134B70;" class="form-control"
                                                     type="search" name="keyword" placeholder="Search"
                                                     aria-label="Search" value="${keyword != null ? keyword : ''}">
                                             </div>
                                             <div class="col-auto"
                                                 style="display: flex; align-items: center; margin-right: 10px;">
                                                 <label for="statusSelect"
-                                                    style="margin-right: 1rem; font-size: 18px; color: blue;">Status</label>
+                                                    style="margin-right: 1rem; font-size: 18px; color: #134B70;">Status</label>
                                                 <div class="custom-select-arrow">
                                                     <select class="form-control" name="status" id="statusSelect"
-                                                        style="height: 3rem; font-size: 12px;color: blue">
-                                                        <option value=""></option>
+                                                        style="height: 3rem; font-size: 12px;color: #134B70">
+                                                        <option value="">ALL</option>
                                                         <option value="open" ${status=='OPEN' ? 'selected' : '' }>OPEN
                                                         </option>
                                                         <option value="close" ${status=='CLOSE' ? 'selected' : '' }>
@@ -94,13 +101,14 @@
                                     <table class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th style="border-radius: 16px 0 0 0;">Job Title</th>
+                                                <th style="border-radius: 12px 0 0 0;">STT</th>
+                                                <th>Job Title</th>
                                                 <th>Required Skills</th>
                                                 <th>Start date</th>
                                                 <th>End date</th>
                                                 <th>Level</th>
                                                 <th>Status</th>
-                                                <th style="border-radius:  0 16px 0 0 ;">Action</th>
+                                                <th style="border-radius: 0 12px 0 0;">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -108,8 +116,9 @@
                                                 <c:when test="${not empty listjobs.content}">
                                                     <!-- Hiển thị danh sách công việc nếu có dữ liệu -->
                                                     <c:forEach var="index" begin="0"
-                                                        end="${listjobs.content.size() -1}">
+                                                        end="${listjobs.content.size() - 1}" varStatus="loop">
                                                         <tr>
+                                                            <td>${loop.index + 1}</td> <!-- Số thứ tự bắt đầu từ 1 -->
                                                             <td>${listjobs.content[index].title}</td>
                                                             <td>${listjobs.content[index].requiredSkills}</td>
                                                             <td>${listjobs.content[index].startDate}</td>
@@ -121,30 +130,24 @@
                                                                     class="text-success">
                                                                     <i class="fas fa-eye"></i> <!-- Icon for View -->
                                                                 </a>
-                                                                <a href="/job/update/${listjobs.content[index].jobId}"
-                                                                    class="text-warning mx-2">
-                                                                    <i class="fas fa-edit"></i> <!-- Icon for Update -->
-                                                                </a>
-                                                                <a href="javascript:void(0);" class="text-danger"
-                                                                    onclick="confirmDelete(${listjobs.content[index].jobId})">
-                                                                    <i class="fas fa-trash"></i>
-                                                                    <!-- Icon for Delete -->
-                                                                </a>
+                                                                <c:if test="${isAdminOrManagerOrRecruiter}">
+                                                                    <a href="/job/update/${listjobs.content[index].jobId}"
+                                                                        class="text-warning mx-2">
+                                                                        <i class="fas fa-edit"></i>
+                                                                        <!-- Icon for Update -->
+                                                                    </a>
+                                                                    <a href="javascript:void(0);" class="text-danger"
+                                                                        onclick="confirmDelete(${listjobs.content[index].jobId})">
+                                                                        <i class="fas fa-trash"></i>
+                                                                        <!-- Icon for Delete -->
+                                                                    </a>
+                                                                </c:if>
                                                             </td>
-
-
-
                                                         </tr>
                                                     </c:forEach>
                                                 </c:when>
-
                                             </c:choose>
                                         </tbody>
-
-
-
-
-
                                     </table>
                                     <nav class="pagination-container" aria-label="Page navigation example">
                                         <ul class="pagination">
@@ -228,6 +231,25 @@
                                     }
                                 });
                             }
+                            window.onload = function () {
+                                var successMessage = document.getElementById('successMessage');
+                                if (successMessage) {
+                                    setTimeout(function () {
+                                        successMessage.style.display = 'none';
+                                    }, 3000); // 3000 milliseconds = 3 seconds
+                                }
+                            };
+
+                            function formatString(input) {
+                                return input.split(',').map(item => {
+                                    return item.trim().charAt(0).toUpperCase() + item.trim().slice(1).toLowerCase();
+                                }).join(', ');
+                            }
+
+                            document.getElementById('benefits').innerText = formatString(document.getElementById('benefits').innerText);
+                            document.getElementById('level').innerText = formatString(document.getElementById('level').innerText);
+                            document.getElementById('requiredSkills').innerText = formatString(document.getElementById('requiredSkills').innerText);
+
                         </script>
                         <!-- Thêm SweetAlert CSS -->
                         <link rel="stylesheet"

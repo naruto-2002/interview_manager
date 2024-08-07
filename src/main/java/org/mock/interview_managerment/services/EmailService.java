@@ -2,6 +2,7 @@ package org.mock.interview_managerment.services;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.mock.interview_managerment.entities.Interview;
 import org.mock.interview_managerment.entities.Offer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -118,5 +119,83 @@ public class EmailService {
             throw new RuntimeException(e);
         }
     }
+
+    public void sendInterviewReminderForInterviewer(String toEmail, Interview interview) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom(fromEmail);
+            helper.setTo(toEmail);
+            helper.setSubject(String.format("no-reply-email-IMS-system %s", interview.getTitle()));
+            helper.setText(String.format(
+                    "<html>" +
+                            "  <body>" +
+                            "    <p>This email is from IMS system,</p>" +
+                            "    <p>You have an interview schedule on <b>%s</b> from <b>%s</b> to <b>%s</b>.</p>" +
+                            "    <p>With Candidate <b>%s</b> for the position of <b>%s</b>. The CV is attached with this email.</p>" +
+                            "    <p>If anything is wrong, please refer to recruiter <b>%s</b> or visit our website <a href='http://localhost:8080/interview/details?interviewId=%d'>Interview Details</a>.</p>" +
+                            "    <p>Please join the interview room with ID: <a href='%s'>Meeting ID</a>.</p>" +
+                            "    <p>Thanks & Regards!</p>" +
+                            "    <p>IMS Team.</p>" +
+                            "    <p>Attachment: <a href='%s'>Candidate CV</a>.</p>" +
+                            "  </body>" +
+                            "</html>",
+                    interview.getDate().toString(),
+                    interview.getStartTime().toString(),
+                    interview.getEndTime().toString(),
+                    interview.getCandidate().getName(),
+                    interview.getCandidate().getCurrentPosition(),
+                    interview.getCandidate().getUser().getEmail(),
+                    interview.getInterviewId(),
+                    interview.getMeetingId(),
+                    interview.getCandidate().getCvAttachmentLink()
+            ), true);
+
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void sendInterviewReminderForCandidate(String toEmail, Interview interview) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom(fromEmail);
+            helper.setTo(toEmail);
+            helper.setSubject(String.format("no-reply-email-IMS-system %s", interview.getTitle()));
+            helper.setText(String.format(
+                    "<html>" +
+                            "  <body>" +
+                            "    <p>Dear %s,</p>" +
+                            "    <p>We would like to remind you of your upcoming interview scheduled on <b>%s</b> from <b>%s</b> to <b>%s</b>.</p>" +
+                            "    <p>Position: <b>%s</b></p>" +
+                            "    <p>Please join the interview room with ID: <a href='%s'>Meeting ID</a>.</p>" +
+                            "    <p>If anything is wrong, please refer to recruiter <b>%s</b> or visit our website <a href='http://localhost:8080/interview/details?interviewId=%d'>Interview Details</a>.</p>" +
+                            "    <p>Thank you,</p>" +
+                            "    <p>IMS Team</p>" +
+                            "  </body>" +
+                            "</html>",
+                    interview.getCandidate().getName(),
+                    interview.getDate().toString(),
+                    interview.getStartTime().toString(),
+                    interview.getEndTime().toString(),
+                    interview.getCandidate().getCurrentPosition(),
+                    interview.getMeetingId(),
+                    interview.getCandidate().getUser().getEmail(),
+                    interview.getInterviewId()
+            ), true);
+
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
 
 }

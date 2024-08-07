@@ -44,6 +44,7 @@ public class Job {
     @LastModifiedDate
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+    private String lastModifiedBy;
 
     public LocalDate getStartDateAsLocalDate() {
         return startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();

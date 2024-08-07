@@ -40,10 +40,12 @@
                                 <div class="bs-grid-block">
                                     <div class="card">
                                         <div class="card-body">
+
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star" for="title">Schedule title</label>
-                                                <div class="col-12 col-sm-8 col-lg-8">
+                                                <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
                                                     <form:input type="text" class="form-control" id="title" path="title" placeholder="Type a title..."/>
+                                                    <form:errors path="title" cssClass="error"/>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -55,21 +57,34 @@
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Schedule Time</label>
-                                                <div class="col-12 col-sm-8 col-lg-8">
+                                                <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
                                                     <div class="input-group date datetimepicker" data-min-view="2" data-date-format="yyyy-mm-dd">
                                                         <form:input type="text" class="form-control" id="date" path="date" placeholder="yyyy-mm-dd" />
                                                         <div class="input-group-append">
                                                             <button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
                                                         </div>
                                                     </div>
+                                                    <form:errors path="date" cssClass="error"/>
                                                 </div>
                                             </div>
-                                            <div class=" form-group row d-flex justify-content-center">
-                                                <label class="col-form-label text-sm-right mr-2" for="startTime">From:</label>
-                                                <form:input class="col-2 form-control input-spacing mr-4" id="startTime" path="startTime" type="text" placeholder="hh:mm" />
-                                                <label class="col-form-label text-sm-right mr-2" for="endTime">To:</label>
-                                                <form:input class="col-2 form-control mr-6" id="endTime" path="endTime" type="text" placeholder="hh:mm" />
+
+                                            <div class="form-group row d-flex" style="margin-left: 88px">
+                                                <div class="col-6 d-flex flex-column text-sm-left" >
+                                                    <div class="d-flex">
+                                                        <label class="col-form-label text-sm-right mr-2" for="startTime">From:</label>
+                                                        <form:input  type="time" id="startTime" name="startTime" class="col-8 form-control input-spacing" required="" path="startTime"/>
+                                                    </div>
+                                                    <form:errors style="margin-left: 62px; with: 200px" path="startTime" cssClass="error"/>
+                                                </div>
+                                                <div class="col-6 d-flex flex-column text-sm-left">
+                                                    <div class="d-flex">
+                                                        <label class="col-form-label text-sm-right mr-2" for="endTime">To:</label>
+                                                        <form:input type="time" id="endTIme" name="endTime" class="col-8 form-control input-spacing" required="" path="endTime"/>
+                                                    </div>
+                                                    <form:errors style="margin-left: 38px" path="endTime" cssClass="error"/>
+                                                </div>
                                             </div>
+
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 " for="note">Notes    </label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
@@ -95,11 +110,12 @@
                                                             </form:option>
                                                         </c:forEach>
                                                     </form:select>
+                                                    <form:errors path="job.jobId" cssClass="error"/>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Interviewer</label>
-                                                <div class="col-12 col-sm-8 col-lg-8">
+                                                <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
                                                     <div class="table-container">
                                                         <table class="table table-striped table-borderless">
                                                             <tr>
@@ -111,23 +127,25 @@
                                                                             </form:option>
                                                                         </c:forEach>
                                                                     </form:select>
+
                                                                 </td>
                                                             </tr>
                                                         </table>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star" for="recruiter">Recruiter owner</label>
-                                                <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
-                                                    <form:input type="text" class="d-none" id="title" path="recruiter.userId" value="${candidate.user.userId}" />
-                                                    <input class="form-control" id="recruiter" type="text" readonly="readonly" value="${candidate.user.fullName}"/>
+                                                    <form:errors path="selectedInterviewerIds" cssClass="error"/>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4" for="location">Location</label>
                                                 <div class="col-12 col-sm-8 col-lg-8">
                                                     <form:input class="form-control" id="location" path="location" type="text" placeholder="Type a location..."/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star" for="recruiter">Recruiter owner</label>
+                                                <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
+                                                    <form:input type="text" class="d-none" id="title" path="recruiter.userId" value="${candidate.user.userId}" />
+                                                    <input class="form-control" id="recruiter" type="text" readonly="readonly" value="${candidate.user.fullName} | ${candidate.user.department}"/>
                                                 </div>
                                             </div>
                                             <div class="form-group row">

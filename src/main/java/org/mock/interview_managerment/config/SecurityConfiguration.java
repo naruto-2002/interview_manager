@@ -19,54 +19,63 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfiguration {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
-    }
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder(10);
+        }
 
-    @Bean
-    public UserDetailsService userDetailsService(UserService userService) {
-        return new CustomUserDetailsService(userService);
-    }
+        @Bean
+        public UserDetailsService userDetailsService(UserService userService) {
+                return new CustomUserDetailsService(userService);
+        }
 
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http,
-                                                       PasswordEncoder passwordEncoder,
-                                                       UserDetailsService userDetailsService) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = http
-                .getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder);
-        return authenticationManagerBuilder.build();
-    }
+        @Bean
+        public AuthenticationManager authenticationManager(HttpSecurity http,
+                        PasswordEncoder passwordEncoder,
+                        UserDetailsService userDetailsService) throws Exception {
+                AuthenticationManagerBuilder authenticationManagerBuilder = http
+                                .getSharedObject(AuthenticationManagerBuilder.class);
+                authenticationManagerBuilder
+                                .userDetailsService(userDetailsService)
+                                .passwordEncoder(passwordEncoder);
+                return authenticationManagerBuilder.build();
+        }
 
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity http,
-                                    CustomAuthenticationFailureHandler customAuthenticationFailureHandler,
-                                    CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) throws Exception {
-        http
-                .authorizeHttpRequests(authorize -> authorize
-                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
-                        .requestMatchers("/", "/login", "/lib/**", "/css/**", "/js/**", "/img/**").permitAll()
+        @Bean
+        SecurityFilterChain filterChain(HttpSecurity http,
+                        CustomAuthenticationFailureHandler customAuthenticationFailureHandler,
+                        CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) throws Exception {
+                http
+                                .authorizeHttpRequests(authorize -> authorize
+                                                .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE)
+                                                .permitAll()
+                                                .requestMatchers("/", "/login", "/lib/**", "/css/**", "/js/**",
+                                                                "/img/**")
+                                                .permitAll()
 
-                        .requestMatchers("/forgot-password/**").permitAll()
+                                                .requestMatchers("/forgot-password/**").permitAll()
 
-                        .requestMatchers("/user/**").hasRole("ADMIN")
-                        .requestMatchers("/candidate/**").hasAnyRole("ADMIN", "RECRUITER")
-                        .requestMatchers("/offer/**").hasAnyRole("ADMIN", "RECRUITER", "MANAGER")
-                        .requestMatchers("/job/**").hasAnyRole("ADMIN", "RECRUITER")
-                        .requestMatchers("/interview/**").hasAnyRole("ADMIN", "RECRUITER", "INTERVIEWER")
-                        .anyRequest().authenticated())
+                                                .requestMatchers("/user/**").hasRole("ADMIN")
+                                                .requestMatchers("/candidate/**").hasAnyRole("ADMIN", "RECRUITER")
+                                                .requestMatchers("/offer/**")
+                                                .hasAnyRole("ADMIN", "RECRUITER", "MANAGER")
 
-                .formLogin(formLogin -> formLogin
-                        .loginPage("/login")
-                        .successHandler(customAuthenticationSuccessHandler)
-                        .failureHandler(customAuthenticationFailureHandler)
-                        .permitAll())
-                .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .accessDeniedPage("/403"))
-                .csrf(AbstractHttpConfigurer::disable);
-        return http.build();
-    }
+                                                .requestMatchers("/job/create", "/job/update/**", "/job/delete/**",
+                                                                "/job/import")
+                                                .hasAnyRole("ADMIN", "RECRUITER", "MANAGER")
+                                                .requestMatchers("/job/**").permitAll()
+                                                .requestMatchers("/interview/**")
+                                                .hasAnyRole("ADMIN", "RECRUITER", "INTERVIEWER")
+                                                .anyRequest().authenticated())
+
+                                .formLogin(formLogin -> formLogin
+                                                .loginPage("/login")
+                                                .successHandler(customAuthenticationSuccessHandler)
+                                                .failureHandler(customAuthenticationFailureHandler)
+                                                .permitAll())
+                                .exceptionHandling(exceptionHandling -> exceptionHandling
+                                                .accessDeniedPage("/403"))
+                                .csrf(AbstractHttpConfigurer::disable);
+                return http.build();
+        }
 }

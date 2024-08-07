@@ -47,6 +47,8 @@
                                     Select Skills
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="skillsDropdown" id="skillsMenu">
+                                    <input type="text" class="form-control" id="skillsSearch"
+                                        placeholder="Search skills...">
                                     <a class="dropdown-item" href="#" data-value="java">Java</a>
                                     <a class="dropdown-item" href="#" data-value="nodejs">Node.js</a>
                                     <a class="dropdown-item" href="#" data-value="net">.NET</a>
@@ -70,6 +72,8 @@
                                     Select Benefits
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="benefitsDropdown" id="benefitsMenu">
+                                    <input type="text" class="form-control" id="benefitsSearch"
+                                        placeholder="Search benefits...">
                                     <a class="dropdown-item" href="#" data-value="lunch">Lunch</a>
                                     <a class="dropdown-item" href="#" data-value="leave">25-day leave</a>
                                     <a class="dropdown-item" href="#" data-value="healthcare">Healthcare insurance</a>
@@ -85,12 +89,14 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="levels">Levels</label>
+                            <label for="level">Levels</label>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="levelsDropdown">
                                     Select Levels
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="levelsDropdown" id="levelsMenu">
+                                    <input type="text" class="form-control" id="levelsSearch"
+                                        placeholder="Search levels...">
                                     <a class="dropdown-item" href="#" data-value="fresher">Fresher</a>
                                     <a class="dropdown-item" href="#" data-value="junior">Junior</a>
                                     <a class="dropdown-item" href="#" data-value="senior">Senior</a>
@@ -105,6 +111,7 @@
                                 level.</span>
                         </div>
                     </div>
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="startDate">Start date</label>

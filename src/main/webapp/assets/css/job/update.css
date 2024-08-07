@@ -3,6 +3,16 @@ body {
 
 }
 
+.selected-item {
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.remove-item {
+    cursor: pointer;
+}
+
 /* Định dạng cho breadcrumb */
 .breadcrumb {
     font-family: 'Times New Roman', Times, serif;
@@ -14,7 +24,7 @@ body {
     /* Khoảng cách dưới breadcrumb */
     border-radius: 4px;
     /* Bo góc của breadcrumb */
-    font-size: 1.5rem;
+    font-size: 20px;
     /* Kích thước chữ của breadcrumb */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     /* Hiệu ứng bóng cho breadcrumb */
@@ -35,7 +45,7 @@ body {
     text-decoration: none;
     /* Bỏ gạch dưới */
     color: #007bff;
-    font-size: 12px;
+    font-size: 16px;
     /* Màu liên kết */
     font-weight: bold;
     /* Đậm chữ liên kết */
@@ -44,6 +54,7 @@ body {
 /* Định dạng cho item hiện tại trong breadcrumb */
 .breadcrumb-item.active {
     color: #6c757d;
+
     /* Màu chữ cho item hiện tại */
     font-weight: normal;
     /* Chữ không đậm */

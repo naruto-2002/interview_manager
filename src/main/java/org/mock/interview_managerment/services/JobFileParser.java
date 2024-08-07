@@ -2,6 +2,7 @@ package org.mock.interview_managerment.services;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import org.mock.interview_managerment.entities.Job;
 import org.mock.interview_managerment.enums.StatusJobEnum;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,12 @@ import java.util.List;
 
 @Service
 public class JobFileParser {
+
+    private final UserService userService;
+
+    public JobFileParser(UserService userService) {
+        this.userService = userService;
+    }
 
     public List<Job> parseExcelFile(MultipartFile file) throws Exception {
         List<Job> jobs = new ArrayList<>();
@@ -33,17 +40,19 @@ public class JobFileParser {
                 Job job = new Job();
                 job.setTitle(getCellValue(row.getCell(0)));
                 job.setDescription(getCellValue(row.getCell(1)));
-                job.setRequiredSkills(getCellValue(row.getCell(2)));
-                job.setLevel(getCellValue(row.getCell(3)));
+                job.setRequiredSkills(getCellValue(row.getCell(2)).toLowerCase()); // Lưu skill dưới dạng chữ thường
+                job.setLevel(getCellValue(row.getCell(3)).toLowerCase()); // Lưu level dưới dạng chữ thường
 
                 job.setStartDate(convertToTimestamp(getCellValue(row.getCell(4))));
                 job.setEndDate(convertToTimestamp(getCellValue(row.getCell(5))));
 
                 job.setLocation(getCellValue(row.getCell(6)));
-                job.setBenefits(getCellValue(row.getCell(7)));
+                job.setBenefits(getCellValue(row.getCell(7)).toLowerCase()); // Lưu benefit dưới dạng chữ thường
                 job.setStatus(StatusJobEnum.valueOf(getCellValue(row.getCell(8)).toUpperCase()));
                 job.setSalaryFrom(getCellValue(row.getCell(9)));
                 job.setSalaryTo(getCellValue(row.getCell(10)));
+                job.setStatus(StatusJobEnum.OPEN);
+                job.setLastModifiedBy(userService.getCurrentUsername());
 
                 jobs.add(job);
             }

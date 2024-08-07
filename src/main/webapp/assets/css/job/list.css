@@ -1,3 +1,19 @@
+#successMessage {
+    display: flex;
+    justify-content: center;
+    /* Căn giữa theo chiều ngang */
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
+    height: 30px;
+    /* Chiều cao của phần tử */
+    border: 1px solid #000;
+    /* Đường viền để dễ nhìn */
+    font-weight: 700;
+    background-color: #0e3b56;
+    border-radius: 8px;
+    padding: 10px;
+}
+
 .search-box {
     position: relative;
     width: 50%;
@@ -59,9 +75,7 @@
 
 }
 
-body {
-    padding-top: 20px;
-}
+
 
 table {
     width: 100%;
@@ -77,7 +91,7 @@ thead {
 table,
 th,
 td {
-    border: 1px solid #dee2e6;
+    border: none !important;
 }
 
 th,
@@ -94,6 +108,16 @@ tbody tr:hover {
     background-color: #e9ecef;
 }
 
+.table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9 !important;
+    /* Màu nền cho dòng lẻ */
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #e9ecef !important;
+    /* Màu nền cho dòng chẵn */
+}
+
 .table tbody tr:nth-child(even) {
     background-color: #c1b4b4 !important;
     /* Màu nền cho các hàng chẵn */
@@ -105,15 +129,15 @@ tbody tr:hover {
 }
 
 .text-success {
-    color: #28a745 !important;
+    color: #508C9B !important;
 }
 
 .text-warning {
-    color: #ffc107 !important;
+    color: #508C9B !important;
 }
 
 .text-danger {
-    color: #dc3545 !important;
+    color: #508C9B !important;
 }
 
 i.fas {
@@ -126,7 +150,7 @@ th {
 
 /* CSS cho các tiêu đề của bảng */
 .table thead th {
-    background-color: brown !important;
+    background-color: #201E43 !important;
     color: white;
 
     font-weight: bold;
@@ -141,7 +165,7 @@ th {
     align-items: center;
     font-size: 18px;
     /* Kích thước chữ */
-    color: #bd3309;
+    color: #134B70;
     /* Màu chữ */
     text-decoration: none;
     /* Loại bỏ gạch chân */
@@ -187,7 +211,7 @@ form {
 
 /* CSS cho nút tìm kiếm */
 .btn-info {
-    border: 2px solid #007bff;
+    border: 2px solid #134B70;
     /* Bo viền nút */
     border-radius: 5px;
     /* Bo tròn góc nút */
@@ -197,7 +221,7 @@ form {
     /* Kích thước chữ */
     background-color: #ffffff;
     /* Màu nền của nút */
-    color: #007bff;
+    color: #134B70;
     /* Màu chữ của nút */
     display: flex;
     align-items: center;
@@ -212,11 +236,11 @@ form {
 
 /* Thay đổi màu khi di chuột qua nút */
 .btn-info:hover {
-    background-color: #007bff;
+    background-color: #134B70;
     /* Màu nền khi di chuột qua */
     color: #ffffff;
     /* Màu chữ khi di chuột qua */
-    border-color: #007bff;
+    border-color: #134B70;
     /* Màu viền khi di chuột qua */
 }
 
@@ -244,6 +268,8 @@ form {
     border-radius: 8px;
     /* Bo tròn góc */
     margin: 0 2px;
+    background-color: #508C9B !important;
+
     /* Khoảng cách giữa các mục phân trang */
 }
 
@@ -258,6 +284,6 @@ form {
     /* Căn giữa tiêu đề */
     margin-bottom: 20px;
     /* Khoảng cách phía dưới tiêu đề */
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+    text-shadow: 3px 3px 6px rgba(80, 140, 155, 0.2);
     /* Hiệu ứng bóng chéo */
 }

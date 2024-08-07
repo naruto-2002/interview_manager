@@ -5,6 +5,7 @@ import org.mock.interview_managerment.entities.Interview;
 import org.mock.interview_managerment.repository.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -34,5 +35,9 @@ public class InterviewService {
         Interview interview = getByInterviewId(interviewId);
         interview.setDeleted(true);
         interviewRepository.save(interview);
+    }
+
+    public List<Interview> getAllInterviewsByInterviewDate(LocalDate date) {
+        return interviewRepository.findAllByInterviewDate(date);
     }
 }

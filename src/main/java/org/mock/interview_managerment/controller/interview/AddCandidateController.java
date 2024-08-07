@@ -1,5 +1,6 @@
 package org.mock.interview_managerment.controller.interview;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.mock.interview_managerment.entities.Candidate;
 import org.mock.interview_managerment.entities.Interview;
@@ -10,9 +11,11 @@ import org.mock.interview_managerment.services.ScheduledInterviewService;
 import org.mock.interview_managerment.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -30,16 +33,25 @@ public class AddCandidateController {
         List<Candidate> candidates = candidateRepository.findAll();
 
         model.addAttribute("candidates", candidates);
-        model.addAttribute("newInterview", new Interview());
+
+        if (!model.containsAttribute("newInterview")) {
+            model.addAttribute("newInterview", new Interview());
+        }
 
         return "interview/add_candidate";
     }
 
 
     @PostMapping("/interview/add_candidate")
-    public String getAddDetailsPage(@ModelAttribute("newInterview") Interview newInterview) {
+    public String getAddDetailsPage(@ModelAttribute("newInterview") @Valid Interview newInterview, BindingResult result, RedirectAttributes redirectAttributes) {
         if (newInterview.getCandidate() == null || newInterview.getCandidate().getId() == null) {
-            return "redirect:/interview/add_candidate";
+            if (result.hasErrors()){
+                result.rejectValue("candidate.id", "error.newInterview", "Please select a candidate.");
+
+                redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.newInterview", result);
+                redirectAttributes.addFlashAttribute("newInterview", newInterview);
+                return "redirect:/interview/add_candidate";
+            }
         }
 
         long candidateId = newInterview.getCandidate().getId();

@@ -41,6 +41,7 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
         td {
             white-space: nowrap;
 
@@ -143,9 +144,20 @@
                                                 <td>${candidateJob.job.location}</td>
                                                 <td>${candidateJob.job.status}</td>
                                                 <td class="action-buttons">
-                                                    <a type="submit" href="/interview/add_details"
-                                                       class="btn btn-sm btn-info action-button">Create new Schedule</a>
-                                                    </button>
+                                                    <c:if test="${candidateJob.job.status.toString() == 'OPEN'}">
+                                                        <a type="submit"
+                                                           href="/interview/add_details?candidateId=${candidate.id}&jobId=${candidateJob.job.jobId}"
+                                                           class="btn btn-sm btn-info action-button">Create new
+                                                            Schedule</a>
+                                                    </c:if>
+                                                    <c:if test="${candidateJob.job.status.toString() == 'CLOSE'}">
+
+                                                        <a type="submit"
+                                                           href="#"
+                                                           class="btn btn-sm btn-grey action-button" onclick="return false;">Create new
+                                                            Schedule</a>
+
+                                                    </c:if>
                                                 </td>
                                             </tr>
                                         </c:forEach>

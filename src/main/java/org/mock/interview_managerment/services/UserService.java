@@ -37,9 +37,9 @@ public class UserService {
     private final UserMapper userMapper;
 
     public UserService(UserRepository userRepository,
-                       PasswordService passwordService,
-                       EmailService emailService,
-                       UserMapper userMapper) {
+            PasswordService passwordService,
+            EmailService emailService,
+            UserMapper userMapper) {
         this.userRepository = userRepository;
         this.passwordService = passwordService;
         this.emailService = emailService;
@@ -50,7 +50,7 @@ public class UserService {
         // mapper entity
         User user = userMapper.toUser(request);
 
-        //gen password
+        // gen password
         String password = passwordService.autoGeneratePassword();
         String hashPasword = passwordService.encryptPassword(password);
         user.setPassword(hashPasword);
@@ -148,7 +148,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    //    Code van
+    // Code van
     public List<User> getUsersByRoleName(String roleName) {
         return userRepository.findByRoleName(roleName);
     }
@@ -156,6 +156,7 @@ public class UserService {
     public User getByUserId(long userId) {
         return userRepository.findByUserId(userId);
     }
+
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
@@ -168,6 +169,7 @@ public class UserService {
         }
         return null;
     }
+
     public String getCurrentUsername() {
         // Lấy thông tin người dùng từ SecurityContextHolder
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -192,8 +194,7 @@ public class UserService {
         return null;
     }
 
-
-    //"ADMIN", "RECRUITER", "INTERVIEWER", "MANAGER"
+    // "ADMIN", "RECRUITER", "INTERVIEWER", "MANAGER"
     public String getRoleName(String authority) {
         switch (authority) {
             case "[ROLE_INTERVIEWER]":
@@ -208,5 +209,10 @@ public class UserService {
             default:
                 return "Unknown role";
         }
+    }
+
+    public boolean isAdminOrManagerOrRecruiter() {
+        String role = getCurrentUserRole();
+        return "admin".equals(role) || "manager".equals(role) || "recruiter".equals(role);
     }
 }

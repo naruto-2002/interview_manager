@@ -1,12 +1,24 @@
-
-function initializeDropdown(dropdownId, menuId, selectedId, hiddenFieldId) {
+function initializeDropdown(dropdownId, menuId, selectedId, hiddenFieldId, searchId) {
     var dropdown = document.getElementById(dropdownId);
     var menu = document.getElementById(menuId);
     var selectedElement = document.getElementById(selectedId);
     var hiddenField = document.getElementById(hiddenFieldId);
+    var searchInput = document.getElementById(searchId);
 
     dropdown.addEventListener('click', function () {
         menu.classList.toggle('show');
+    });
+
+    searchInput.addEventListener('keyup', function () {
+        var filter = this.value.toLowerCase();
+        var items = menu.getElementsByClassName('dropdown-item');
+        Array.prototype.forEach.call(items, function (item) {
+            if (item.innerText.toLowerCase().includes(filter)) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
     });
 
     document.querySelectorAll('#' + menuId + ' .dropdown-item').forEach(function (item) {
@@ -52,12 +64,35 @@ function initializeDropdown(dropdownId, menuId, selectedId, hiddenFieldId) {
         });
         hiddenField.value = values.join(',');
     }
+
+    // Load initial values from hidden field
+    var initialValue = hiddenField.value;
+    if (initialValue) {
+        initialValue.split(',').forEach(function (value) {
+            var item = document.querySelector('#' + menuId + ' .dropdown-item[data-value="' + value + '"]');
+            if (item) {
+                var text = item.innerText;
+                var element = document.createElement('span');
+                element.setAttribute('class', 'selected-item badge badge-primary mr-2');
+                element.setAttribute('data-value', value);
+                element.innerHTML = text + ' <i class="fas fa-times remove-item"></i>';
+
+                element.querySelector('.remove-item').addEventListener('click', function () {
+                    this.parentNode.remove();
+                    updateHiddenField();
+                });
+
+                selectedElement.appendChild(element);
+            }
+        });
+        updateHiddenField();
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    initializeDropdown('skillsDropdown', 'skillsMenu', 'selectedSkills', 'skills');
-    initializeDropdown('benefitsDropdown', 'benefitsMenu', 'selectedBenefits', 'benefits');
-    initializeDropdown('levelsDropdown', 'levelsMenu', 'selectedLevels', 'level');
+    initializeDropdown('skillsDropdown', 'skillsMenu', 'selectedSkills', 'skills', 'skillsSearch');
+    initializeDropdown('benefitsDropdown', 'benefitsMenu', 'selectedBenefits', 'benefits', 'benefitsSearch');
+    initializeDropdown('levelsDropdown', 'levelsMenu', 'selectedLevels', 'level', 'levelsSearch');
 });
 
 function formatSalary(input) {
@@ -100,4 +135,24 @@ function validateForm() {
 
     return valid;
 }
+document.getElementById('startDate').addEventListener('change', function () {
+    const startDate = new Date(this.value);
+    const endDateInput = document.getElementById('endDate');
 
+    // Ensure endDate is after startDate
+    endDateInput.min = this.value;
+
+    if (new Date(endDateInput.value) <= startDate) {
+        endDateInput.value = '';
+    }
+});
+
+document.getElementById('endDate').addEventListener('change', function () {
+    const startDate = new Date(document.getElementById('startDate').value);
+    const endDate = new Date(this.value);
+
+    if (endDate <= startDate) {
+        alert('End date must be after the start date.');
+        this.value = '';
+    }
+});

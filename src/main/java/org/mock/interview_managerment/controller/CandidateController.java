@@ -236,7 +236,7 @@ public class CandidateController {
     @GetMapping("candidate/ban")
     public String banCandidate(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
         candidateService.banCandidate(id);
-        return "redirect:/candidate/candidateDetail?id=" + id;
+        return "redirect:/candidate";
     }
 
     private int getStatusIndex(String status) {

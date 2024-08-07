@@ -52,74 +52,94 @@
                                 <!-- Skills, Benefits, and Levels Dropdowns -->
                                 <div class="row mb-3">
                                     <div class="col-md-4">
-                                        <label for="skills">Skills</label>
-                                        <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                id="skillsDropdown">
-                                                Select Skills
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="skillsDropdown" id="skillsMenu">
-                                                <a class="dropdown-item" href="#" data-value="java">Java</a>
-                                                <a class="dropdown-item" href="#" data-value="nodejs">Node.js</a>
-                                                <a class="dropdown-item" href="#" data-value="net">.NET</a>
-                                                <a class="dropdown-item" href="#" data-value="cpp">C++</a>
-                                                <a class="dropdown-item" href="#"
-                                                    data-value="business-analysis">Business
-                                                    Analysis</a>
-                                                <a class="dropdown-item" href="#"
-                                                    data-value="communication">Communication</a>
+                                        <div class="form-group">
+                                            <label for="skills">Skills</label>
+                                            <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                    id="skillsDropdown">
+                                                    Select Skills
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="skillsDropdown"
+                                                    id="skillsMenu">
+                                                    <input type="text" class="form-control" id="skillsSearch"
+                                                        placeholder="Search skills...">
+                                                    <a class="dropdown-item" href="#" data-value="java">Java</a>
+                                                    <a class="dropdown-item" href="#" data-value="nodejs">Node.js</a>
+                                                    <a class="dropdown-item" href="#" data-value="net">.NET</a>
+                                                    <a class="dropdown-item" href="#" data-value="cpp">C++</a>
+                                                    <a class="dropdown-item" href="#"
+                                                        data-value="business-analysis">Business Analysis</a>
+                                                    <a class="dropdown-item" href="#"
+                                                        data-value="communication">Communication</a>
+                                                </div>
                                             </div>
+                                            <input type="hidden" id="skills" name="requiredSkills"
+                                                value="${update.requiredSkills}">
+                                            <div id="selectedSkills" class="mt-2"></div>
+                                            <span id="error-message-skills" style="color:red; display:none;">Please
+                                                select at least one skill.</span>
                                         </div>
-                                        <input type="hidden" id="skills" name="requiredSkills"
-                                            value="${requiredSkills}">
-                                        <div id="selectedSkills" class="mt-2"></div>
-                                        <span id="error-message-skills" style="color:red; display:none;">Vui lòng chọn
-                                            ít nhất một kỹ năng.</span>
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="benefits">Benefits</label>
-                                        <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                id="benefitsDropdown">
-                                                Select Benefits
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="benefitsDropdown"
-                                                id="benefitsMenu">
-                                                <a class="dropdown-item" href="#" data-value="lunch">Lunch</a>
-                                                <a class="dropdown-item" href="#" data-value="leave">25-day leave</a>
-                                                <a class="dropdown-item" href="#" data-value="healthcare">Healthcare
-                                                    insurance</a>
-                                                <a class="dropdown-item" href="#" data-value="hybrid">Hybrid working</a>
-                                                <a class="dropdown-item" href="#" data-value="travel">Travel</a>
+                                        <div class="form-group">
+                                            <label for="benefits">Benefits</label>
+                                            <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                    id="benefitsDropdown">
+                                                    Select Benefits
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="benefitsDropdown"
+                                                    id="benefitsMenu">
+                                                    <input type="text" class="form-control" id="benefitsSearch"
+                                                        placeholder="Search benefits...">
+                                                    <a class="dropdown-item" href="#" data-value="lunch">Lunch</a>
+                                                    <a class="dropdown-item" href="#" data-value="leave">25-day
+                                                        leave</a>
+                                                    <a class="dropdown-item" href="#" data-value="healthcare">Healthcare
+                                                        insurance</a>
+                                                    <a class="dropdown-item" href="#" data-value="hybrid">Hybrid
+                                                        working</a>
+                                                    <a class="dropdown-item" href="#" data-value="travel">Travel</a>
+                                                </div>
                                             </div>
+                                            <input type="hidden" id="benefits" name="benefits"
+                                                value="${update.benefits}">
+                                            <div id="selectedBenefits" class="mt-2"></div>
+                                            <span id="error-message-benefits" style="color:red; display:none;">Please
+                                                select at least one benefit.</span>
                                         </div>
-                                        <input type="hidden" id="benefits" name="benefits" value="${benefits}">
-                                        <div id="selectedBenefits" class="mt-2"></div>
-                                        <span id="error-message-benefits" style="color:red; display:none;">Vui lòng chọn
-                                            ít nhất một phúc lợi.</span>
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="level">Levels</label>
-                                        <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                id="levelsDropdown">
-                                                Select Levels
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="levelsDropdown" id="levelsMenu">
-                                                <a class="dropdown-item" href="#" data-value="fresher">Fresher</a>
-                                                <a class="dropdown-item" href="#" data-value="junior">Junior</a>
-                                                <a class="dropdown-item" href="#" data-value="senior">Senior</a>
-                                                <a class="dropdown-item" href="#" data-value="leader">Leader</a>
-                                                <a class="dropdown-item" href="#" data-value="manager">Manager</a>
-                                                <a class="dropdown-item" href="#" data-value="vice-head">Vice Head</a>
+                                        <div class="form-group">
+                                            <label for="level">Levels</label>
+                                            <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                    id="levelsDropdown">
+                                                    Select Levels
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="levelsDropdown"
+                                                    id="levelsMenu">
+                                                    <input type="text" class="form-control" id="levelsSearch"
+                                                        placeholder="Search levels...">
+                                                    <a class="dropdown-item" href="#" data-value="fresher">Fresher</a>
+                                                    <a class="dropdown-item" href="#" data-value="junior">Junior</a>
+                                                    <a class="dropdown-item" href="#" data-value="senior">Senior</a>
+                                                    <a class="dropdown-item" href="#" data-value="leader">Leader</a>
+                                                    <a class="dropdown-item" href="#" data-value="manager">Manager</a>
+                                                    <a class="dropdown-item" href="#" data-value="vice-head">Vice
+                                                        Head</a>
+                                                </div>
                                             </div>
+                                            <input type="hidden" id="level" name="level" value="${update.level}">
+                                            <div id="selectedLevels" class="mt-2"></div>
+                                            <span id="error-message-levels" style="color:red; display:none;">Please
+                                                select at least one level.</span>
                                         </div>
-                                        <input type="hidden" id="level" name="level" value="${level}">
-                                        <div id="selectedLevels" class="mt-2"></div>
-                                        <span id="error-message-levels" style="color:red; display:none;">Vui lòng chọn
-                                            ít nhất một cấp độ.</span>
                                     </div>
                                 </div>
+
+
+
 
                                 <!-- Date -->
                                 <div class="row mb-3">

@@ -102,14 +102,26 @@
                                             <div class="form-group row">
                                                 <label class="col-12 col-sm-3 col-form-label text-sm-left mr-4 star">Job</label>
                                                 <div class="col-12 col-sm-8 col-lg-8 text-sm-left">
-                                                    <form:select class="select2" id="job" path="job.jobId">
-                                                        <option value="" disabled selected>Select a job</option>
-                                                        <c:forEach var="candidateJob" items="${candidateJobs}">
-                                                            <form:option value="${candidateJob.job.jobId}">
-                                                                ${candidateJob.job.title} | ${candidateJob.job.status}
-                                                            </form:option>
-                                                        </c:forEach>
-                                                    </form:select>
+                                                    <c:if test="${!empty job}">
+                                                        <form:input type="text" class="d-none" id="title"
+                                                                    path="job.jobId"
+                                                                    value="${job.jobId}"/>
+                                                        <input class="form-control" id="recruiter" type="text"
+                                                               readonly="readonly" value="${job.title}"/>
+                                                    </c:if>
+                                                    <c:if test="${empty job}">
+                                                        <form:select class="select2" id="job" path="job.jobId">
+                                                            <option value="" disabled selected>Select a job</option>
+                                                            <c:forEach var="candidateJob" items="${candidateJobs}">
+
+                                                                <form:option value="${candidateJob.job.jobId}">
+                                                                    ${candidateJob.job.title} | ${candidateJob.job.status}
+                                                                </form:option>
+
+                                                            </c:forEach>
+                                                        </form:select>
+                                                    </c:if>
+
                                                     <form:errors path="job.jobId" cssClass="error"/>
                                                 </div>
                                             </div>

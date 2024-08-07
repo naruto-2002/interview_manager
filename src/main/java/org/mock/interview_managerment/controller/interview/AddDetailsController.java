@@ -8,6 +8,7 @@ import org.mock.interview_managerment.enums.ResultInterviewEnum;
 import org.mock.interview_managerment.enums.StatusCandidateEnum;
 import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.mock.interview_managerment.services.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,25 +29,28 @@ public class AddDetailsController {
     private final InterviewService interviewService;
     private final ScheduledInterviewService scheduledInterviewService;
     private final CandidateJobService candidateJobService;
-
+    @Autowired
+    JobService jobService;
     @GetMapping("/interview/add_details")
-    public String getAddDetailsPage(@RequestParam("candidateId") long candidateId, Model model) {
+    public String getAddDetailsPage(@RequestParam("candidateId") long candidateId, Model model,@RequestParam(value = "jobId" ,defaultValue = "0") long jobid) {
         List<User> interviewers = userService.getUsersByRoleName("INTERVIEWER");
         List<CandidateJob> candidateJobs = candidateJobService.getAllJobOpenByCandidateId(candidateId);
         Candidate candidate = candidateService.getCandidateById(candidateId);
 
 
+        Job jobneed=null;
+        if(jobid != 0){
+            jobneed= jobService.getJobById(jobid);
+        }
         model.addAttribute("interviewers", interviewers);
         model.addAttribute("candidateJobs", candidateJobs);
         model.addAttribute("candidate", candidate);
+        model.addAttribute("newInterview", new Interview());
 
-        if (!model.containsAttribute("newInterview")) {
-            model.addAttribute("newInterview", new Interview());
-        }
-
-
+        model.addAttribute("job", jobneed);
         return "interview/add_details";
     }
+
 
     @PostMapping("/interview/add_details")
     public String addNewInterviewDetails(@ModelAttribute("newInterview") @Valid Interview newInterview, BindingResult result, RedirectAttributes redirectAttributes) {

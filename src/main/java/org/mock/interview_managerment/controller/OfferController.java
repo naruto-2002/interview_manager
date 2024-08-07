@@ -213,10 +213,7 @@ public class OfferController {
     @PostMapping
     public String saveOffer(@ModelAttribute("offer") Offer offer, BindingResult result, Model model) {
         offer.setStatus(OfferStatusEnum.WAITING_FOR_APPROVAL);
-        if (result.hasErrors()) {
-            populateModelAttributes(model);
-            return "offers/create_offer";
-        }
+
         // Kiểm tra logic: startContract trước endContract
         if (offer.getStartContract().after(offer.getEndContract())) {
             result.rejectValue("startContract", "error.offer", "Start date must be before end date.");

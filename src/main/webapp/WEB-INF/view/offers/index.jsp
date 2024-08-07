@@ -43,8 +43,7 @@
                 <div class="col-12 col-sm-5 col-lg-4">
                     <div class="input-group input-search">
                         <input class="form-control" type="text" name="keyword" placeholder="Search" value="${keyword}">
-                        <span class="input-group-btn">
-                            <button class="btn btn-primary" type="submit"><i class="icon mdi mdi-search text-white"></i></button>
+                        <span class="input-group-btn"><button type="submit"><i class="icon mdi mdi-search text-grey"></i></button>
                         </span>
                     </div>
                 </div>
@@ -70,7 +69,7 @@
                 </div>
 
                 <div class="col-12 col-sm-2 col-lg-2 d-flex justify-content-between align-items-center">
-                    <a href="/offers" class="btn btn-warning p-2 px-6 text-center" style="border-radius: 4px"
+                    <a href="/offers" class="btn btn-secondary p-2 px-6 text-center" style="border-radius: 4px"
                        title="Clear search">
                         Clear
                     </a>
@@ -130,24 +129,24 @@
                                             <td class="text-center">${offer.status}</td>
                                             <td class="text-center">
                                                 <a href="/offers/detail/${offer.offerId}"
-                                                   class="btn btn-info" title="View Offer">
+                                                   class="text-success" title="View Offer">
 
-                                                    <span class="mdi mdi-eye"
+                                                    <span style="font-size: 22px" class="mr-1 mdi mdi-eye"
                                                           style="border-radius: 4px">
                                                     </span>
                                                 </a>
-                                                <a href="/offers/edit/${offer.offerId}" class="btn btn-warning"
+                                                <a href="/offers/edit/${offer.offerId}" class="text-warning"
                                                    title="Edit Offer"
                                                    style="border-radius: 4px">
                                                     <span
-                                                            class="mdi mdi-edit">
+                                                            style="font-size: 22px" class="mr-1 mdi mdi-edit">
                                                     </span>
                                                 </a>
-                                                <a class="btn btn-danger" style="border-radius: 4px"
+                                                <a class="text-danger" style="border-radius: 4px"
                                                    title="Delete Offer"
                                                    onclick="showDeleteModal('${offer.offerId}')">
                                                     <span
-                                                            class="mdi mdi-delete text-white">
+                                                            style="font-size: 22px" class="mr-1 mdi mdi-delete text-danger">
                                                     </span>
                                                 </a>
                                             </td>

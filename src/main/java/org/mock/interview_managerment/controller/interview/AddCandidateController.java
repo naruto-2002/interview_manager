@@ -55,6 +55,6 @@ public class AddCandidateController {
         }
 
         long candidateId = newInterview.getCandidate().getId();
-        return "redirect:/interview/add_details?candidateId=" + candidateId;
+        return "redirect:/interview/add_details?candidateId=" + candidateId + "&jobId=0";
     }
 }

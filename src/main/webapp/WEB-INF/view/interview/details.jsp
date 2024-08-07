@@ -41,6 +41,11 @@
                             </a>
                         </div>
                     </c:if>
+                    <c:if test="${not empty emailError}">
+                        <div class="d-flex justify-content-end" style="color: red; font-weight: 400">
+                            Error: ${emailError}
+                        </div>
+                    </c:if>
                 </div>
                 <div class="card-body">
                     <div class="row">

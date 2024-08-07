@@ -31,10 +31,13 @@ public class AutomaticInterviewReminderService {
         for (Interview interview : interviews) {
             interview.setScheduledInterviews(scheduledInterviewService.getScheduledInterviewByInterviewId(interview.getInterviewId()));
 
+            //Gui cho candidate
+            emailService.sendInterviewReminderForCandidate(interview.getCandidate().getEmail(), interview);
+
             //Gui cho cac interviewer
             interview.getScheduledInterviews().forEach(si -> {
                 String toEmail = si.getInterviewer().getEmail();
-                emailService.sendInterviewReminder(toEmail, interview);
+                emailService.sendInterviewReminderForInterviewer(toEmail, interview);
             });
 
             interview.setStatus(StatusInterviewEnum.INVITED);

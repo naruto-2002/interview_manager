@@ -8,6 +8,8 @@
                 <div class="left-sidebar-content">
                     <ul class="sidebar-elements">
                         <li class="divider">Menu</li>
+                        <c:choose>
+                        <c:when test="${sessionScope.isLoggedIn != false}">
                         <li class="mb-4"><a href="/user">
                             <img src="/img/account.svg" style="width: 30px; height: 30px; padding-right: 8px;"/>
                             <span>User</span></a></li>
@@ -23,6 +25,13 @@
                         <li class="mb-4"><a href="/candidate">
                             <img src="/img/candidate.svg" style="width: 30px; height: 30px; padding-right: 8px;"/>
                             <span>Candidate</span></a></li>
+                        </c:when>
+                            <c:otherwise>
+                                <li class="mb-4"><a href="/job">
+                                    <img src="/img/job.svg" style="width: 30px; height: 30px; padding-right: 8px;"/>
+                                    <span>Job</span></a></li>
+                            </c:otherwise>
+                        </c:choose>
                     </ul>
                 </div>
 

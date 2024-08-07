@@ -28,7 +28,7 @@
 
 <jsp:include page="layout/left-sidebar.jsp" />
 
-<div class="be-content">
+<div class="be-content" style="margin-top: 60px;">
     <h1 class="pt-7">Home Page</h1>
 </div>
 

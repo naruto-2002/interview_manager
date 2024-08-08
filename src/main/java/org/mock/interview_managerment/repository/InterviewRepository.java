@@ -1,6 +1,7 @@
 package org.mock.interview_managerment.repository;
 
 import org.mock.interview_managerment.entities.Interview;
+import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,6 +21,9 @@ public interface InterviewRepository extends JpaRepository<Interview, Long> {
 
     @Query("SELECT i FROM Interview i WHERE i.date = :date AND i.deleted = false")
     List<Interview> findAllByInterviewDate(LocalDate date);
+
+    @Query("SELECT i FROM Interview i WHERE i.status = :status AND i.deleted = false")
+    List<Interview> findAllByStatusInterview(StatusInterviewEnum status);
 
 
 

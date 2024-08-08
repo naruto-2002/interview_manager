@@ -41,7 +41,32 @@
                                 </div>
                             </c:if>
                         </div>
+                        <div class="card-header" style="margin-top: -20px">
+                            <form action="/interview/search" method="get">
+                                <div class="d-flex justify-content-end">
+                                    <div class="col-12 col-sm-5 col-lg-3 mb-2 mb-sm-0">
+                                        <select name="status" class="form-control" tabindex="-1" aria-hidden="true"
+                                                style="width: 100%; height: 100%">
+                                            <option value="">Status</option>
+                                            <c:forEach var="status" items="${states}">
+                                                <c:if test="${status == selectedStatus}">
+                                                    <option value="${status}" selected>${status}</option>
+                                                </c:if>
+                                                <c:if test="${status != selectedStatus}">
+                                                    <option value="${status}">${status}</option>
+                                                </c:if>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-space btn-secondary btn-width active" type="submit">Search</button>
+                                </div>
+                            </form>
+                        </div>
+
                         <div class="card-body">
+
+
+
                             <table class="table table-striped table-hover table-bordered " id="table1">
                                 <thead>
                                 <tr>

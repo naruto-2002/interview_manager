@@ -2,6 +2,7 @@ package org.mock.interview_managerment.services;
 
 import lombok.RequiredArgsConstructor;
 import org.mock.interview_managerment.entities.Interview;
+import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.mock.interview_managerment.repository.*;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +40,13 @@ public class InterviewService {
 
     public List<Interview> getAllInterviewsByInterviewDate(LocalDate date) {
         return interviewRepository.findAllByInterviewDate(date);
+    }
+
+    public List<Interview> searchInterviews(StatusInterviewEnum status) {
+        if(status != null) {
+            return interviewRepository.findAllByStatusInterview(status);
+        }
+        return interviewRepository.findAll();
+
     }
 }

@@ -7,10 +7,14 @@ import org.mock.interview_managerment.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +25,13 @@ public class JobService {
     private JobRepository jobRepository;
 
     public Page<Job> getJobs(Pageable pageable) {
-        return jobRepository.findAllByIsDeletedFalse(pageable);
-        // return jobRepository.findAll(pageable);
+        // Tạo một Pageable mới với sắp xếp theo createdAt từ mới nhất đến cũ nhất
+        Pageable sortedByCreatedAtDesc = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "createdAt"));
+
+        return jobRepository.findAllByIsDeletedFalse(sortedByCreatedAtDesc);
     }
 
     // public List<Job> getJobs() {
@@ -30,15 +39,28 @@ public class JobService {
     // }
 
     public Page<Job> searchJobs(String keyword, StatusJobEnum status, Pageable pageable) {
-        return jobRepository.findByKeywordAndStatus(keyword, StatusJobEnum.valueOf(String.valueOf(status)), pageable);
+        // Tạo một Pageable mới với sắp xếp theo createdAt từ mới nhất đến cũ nhất
+        Pageable sortedByCreatedAtDesc = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "createdAt"));
+
+        return jobRepository.findByKeywordAndStatus(keyword, status, sortedByCreatedAtDesc);
     }
 
     public Page<Job> searchJobsStatusNull(String keyword, Pageable pageable) {
-        return jobRepository.findByKeyword(keyword, pageable);
+        // Tạo một Pageable mới với sắp xếp theo createdAt từ mới nhất đến cũ nhất
+        Pageable sortedByCreatedAtDesc = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "createdAt"));
+
+        return jobRepository.findByKeyword(keyword, sortedByCreatedAtDesc);
     }
 
     public List<Job> getAllJobs() {
-        return jobRepository.findAll();
+        // Lấy tất cả các công việc và sắp xếp theo createdAt từ mới nhất đến cũ nhất
+        return jobRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     public Job saveJob(Job job) {
@@ -65,10 +87,12 @@ public class JobService {
             LocalDate startDate = job.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate endDate = job.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-            if (today.isAfter(startDate) && today.isBefore(endDate) || today.isEqual(startDate)
+            if (today.isBefore(startDate)) {
+                job.setStatus(StatusJobEnum.DRAFT);
+            } else if ((today.isAfter(startDate) && today.isBefore(endDate)) || today.isEqual(startDate)
                     || today.isEqual(endDate)) {
                 job.setStatus(StatusJobEnum.OPEN);
-            } else {
+            } else if (today.isAfter(endDate)) {
                 job.setStatus(StatusJobEnum.CLOSE);
             }
         }
@@ -90,10 +114,12 @@ public class JobService {
             LocalDate startDate = job.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate endDate = job.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-            if (today.isAfter(startDate) && today.isBefore(endDate) || today.isEqual(startDate)
+            if (today.isBefore(startDate)) {
+                job.setStatus(StatusJobEnum.DRAFT);
+            } else if ((today.isAfter(startDate) && today.isBefore(endDate)) || today.isEqual(startDate)
                     || today.isEqual(endDate)) {
                 job.setStatus(StatusJobEnum.OPEN);
-            } else {
+            } else if (today.isAfter(endDate)) {
                 job.setStatus(StatusJobEnum.CLOSE);
             }
         }
@@ -114,10 +140,12 @@ public class JobService {
         LocalDate startDate = job.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate endDate = job.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        if (today.isAfter(startDate) && today.isBefore(endDate) || today.isEqual(startDate)
+        if (today.isBefore(startDate)) {
+            job.setStatus(StatusJobEnum.DRAFT);
+        } else if ((today.isAfter(startDate) && today.isBefore(endDate)) || today.isEqual(startDate)
                 || today.isEqual(endDate)) {
             job.setStatus(StatusJobEnum.OPEN);
-        } else {
+        } else if (today.isAfter(endDate)) {
             job.setStatus(StatusJobEnum.CLOSE);
         }
     }
@@ -129,4 +157,19 @@ public class JobService {
     public List<Job> getJobsByStatusOpen() {
         return jobRepository.findAllByStatus(StatusJobEnum.OPEN);
     }
+
+    public Page<Job> sortJobByCreate(List<Job> jobs, Pageable pageable) {
+        jobs.sort((job1, job2) -> job2.getCreatedAt().compareTo(job1.getCreatedAt()));
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), jobs.size());
+
+        List<Job> pageContent = new ArrayList<>();
+        if (start <= end) {
+            pageContent = jobs.subList(start, end);
+        }
+
+        return new PageImpl<>(pageContent, pageable, jobs.size());
+    }
+
 }

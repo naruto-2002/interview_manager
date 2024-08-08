@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c' %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -41,20 +40,22 @@
         <div class="container">
             <h1>Add New Candidate</h1>
             <c:if test="${not empty message}">
-                <div class="text-danger" >${message}</div>
+                <div class="text-danger">${message}</div>
             </c:if>
 
 
             <%--@elvariable id="candidate" type=""--%>
-            <form:form action="/candidate/addCandidate" method="post" modelAttribute="candidate" id="form" enctype="multipart/form-data">
+            <form:form action="/candidate/addCandidate" method="post" modelAttribute="candidate" id="form"
+                       enctype="multipart/form-data">
                 <div class="row">
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label >Full Name:
+                            <label>Full Name:
                                 <span class="text-danger">*</span>
                             </label>
-                            <form:input type="text" class="form-control " path="name" placeholder="Enter your full name" />
+                            <form:input type="text" class="form-control " path="name"
+                                        placeholder="Enter your full name"/>
                             <form:errors path="name" cssClass="text-danger"></form:errors>
                         </div>
                         <div class="form-group">
@@ -64,12 +65,13 @@
                         </div>
                         <div class="form-group">
                             <label for="phone">Phone Number:</label>
-                            <form:input type="tel" class="form-control" path="phone" placeholder="Enter your phone number"/>
+                            <form:input type="tel" class="form-control" path="phone"
+                                        placeholder="Enter your phone number"/>
                             <form:errors path="phone" cssClass="text-danger"></form:errors>
                         </div>
                         <div class="form-group">
-                            <label >File CV:</label>
-                            <input type="file" class="form-control"  id="input" name="cv" />
+                            <label>File CV:</label>
+                            <input type="file" class="form-control" id="input" name="cv"/>
 
                         </div>
                         <div class="form-group">
@@ -100,7 +102,7 @@
                             <form:select path="user" id="recruiter" data-search="true">
                                 <form:option value="" selected="true">Choose Recruiter</form:option>
                                 <form:option value="${user}">Asign Me</form:option>
-                                <form:options items="${recruiters}" itemValue="userId" itemLabel="fullName"  />
+                                <form:options items="${recruiters}" itemValue="userId" itemLabel="fullName"/>
 
                             </form:select>
                             <form:errors path="user" cssClass="text-danger"></form:errors>
@@ -163,7 +165,10 @@
                 <div class="row justify-content-center" style="margin-top:20px;margin-bottom:50px;padding: 20px">
                     <div class="col-md-auto">
                         <button type="submit" class="btn btn-primary mx-20">Submit</button>
-                        <button type="button" class="btn btn-secondary">Cancel</button>
+                        <a href="/candidate" type="button" class="btn btn-secondary">
+                            Cancel
+
+                        </a>
                     </div>
                 </div>
             </form:form>
@@ -183,12 +188,13 @@
 
 </script>
 <script>
-    var input=document.getElementById('input')
+    var input = document.getElementById('input')
+
     function getFullPath(input) {
         if (input.files && input.files[0]) {
             var file = input.files[0];
             console.log(file.path)
-            document.getElementById('fullPathInput').value=file
+            document.getElementById('fullPathInput').value = file
             const downloadLink = document.createElement("a");
             downloadLink.href = URL.createObjectURL(pdfFile);
             downloadLink.download = pdfFile.name;

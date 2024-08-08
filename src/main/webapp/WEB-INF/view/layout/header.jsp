@@ -20,10 +20,6 @@
                                 <c:out value="${pageContext.request.userPrincipal.name}"/>
                             </div>
                         </div>
-                        <a class="dropdown-item" href="/reset-password">
-                            <span class="icon mdi mdi-settings"></span>
-                            Reset Password
-                        </a>
                         <form class="dropdown-item " method="post" action="/logout">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <button class="btn btn-secondary" href="/logout">

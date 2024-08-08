@@ -16,4 +16,6 @@ public interface ScheduledInterviewRepository extends JpaRepository<ScheduledInt
     @Query("SELECT s FROM ScheduledInterview s WHERE s.interview.interviewId = :interviewId AND s.deleted = false")
     List<ScheduledInterview> findAllByInterviewId(long interviewId);
 
+    @Query("SELECT s FROM ScheduledInterview s WHERE s.interviewer.userId = :interviewerId AND s.deleted = false")
+    List<ScheduledInterview> findAllByInterviewerId(long interviewerId);
 }

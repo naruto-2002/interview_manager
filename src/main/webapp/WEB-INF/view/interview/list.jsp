@@ -45,12 +45,26 @@
                             <form action="/interview/search" method="get">
                                 <div class="d-flex justify-content-end">
                                     <div class="col-12 col-sm-5 col-lg-3 mb-2 mb-sm-0">
+                                        <select name="interviewerId" class="form-control" tabindex="-1" aria-hidden="true"
+                                                style="width: 100%; height: 100%">
+                                            <option value="">Interviewer</option>
+                                            <c:forEach var="interviewer" items="${interviewers}">
+                                                <c:if test="${interviewer.userId == selectedInterviewerId}">
+                                                    <option value="${interviewer.userId}" selected="">${interviewer.fullName}</option>
+                                                </c:if>
+                                                <c:if test="${interviewer.userId != selectedInterviewerId}">
+                                                    <option value="${interviewer.userId}">${interviewer.fullName}</option>
+                                                </c:if>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-sm-5 col-lg-3 mb-2 mb-sm-0">
                                         <select name="status" class="form-control" tabindex="-1" aria-hidden="true"
                                                 style="width: 100%; height: 100%">
                                             <option value="">Status</option>
                                             <c:forEach var="status" items="${states}">
                                                 <c:if test="${status == selectedStatus}">
-                                                    <option value="${status}" selected>${status}</option>
+                                                    <option value="${status}" selected="">${status}</option>
                                                 </c:if>
                                                 <c:if test="${status != selectedStatus}">
                                                     <option value="${status}">${status}</option>

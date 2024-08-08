@@ -2,6 +2,7 @@ package org.mock.interview_managerment.controller.interview;
 
 import lombok.RequiredArgsConstructor;
 import org.mock.interview_managerment.entities.Interview;
+import org.mock.interview_managerment.entities.User;
 import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.mock.interview_managerment.services.InterviewService;
 import org.mock.interview_managerment.services.ScheduledInterviewService;
@@ -26,11 +27,15 @@ public class ListController {
             interview.setScheduledInterviews(scheduledInterviewService.getScheduledInterviewByInterviewId(interview.getInterviewId()));
         });
 
+        List<User> interviewers = userService.getUsersByRoleName("INTERVIEWER");
+
 
         model.addAttribute("username", userService.getCurrentUsername());
         model.addAttribute("roleName", userService.getCurrentUserRole());
         model.addAttribute("interviews", interviews);
+        model.addAttribute("interviewers", interviewers);
         model.addAttribute("states", StatusInterviewEnum.values());
+
 
         return "interview/list";
     }

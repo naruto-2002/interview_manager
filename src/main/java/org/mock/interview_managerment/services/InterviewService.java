@@ -2,11 +2,13 @@ package org.mock.interview_managerment.services;
 
 import lombok.RequiredArgsConstructor;
 import org.mock.interview_managerment.entities.Interview;
+import org.mock.interview_managerment.entities.ScheduledInterview;
 import org.mock.interview_managerment.enums.StatusInterviewEnum;
 import org.mock.interview_managerment.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,11 +44,27 @@ public class InterviewService {
         return interviewRepository.findAllByInterviewDate(date);
     }
 
-    public List<Interview> searchInterviews(StatusInterviewEnum status) {
-        if(status != null) {
+    public List<Interview> searchInterviews(Long interviewerId, StatusInterviewEnum status) {
+        List<Interview> interviews = new ArrayList<>();
+        if(interviewerId != null && status != null){
+            List<ScheduledInterview> scheduledInterviews = scheduledInterviewRepository.findAllByInterviewerId(interviewerId);
+            scheduledInterviews.forEach(scheduledInterview -> {
+                Interview interview = scheduledInterview.getInterview();
+                if(interview.getStatus() == status) {
+                    interviews.add(interview);
+                }
+            });
+        }else if(interviewerId != null){
+            List<ScheduledInterview> scheduledInterviews = scheduledInterviewRepository.findAllByInterviewerId(interviewerId);
+            scheduledInterviews.forEach(scheduledInterview -> {
+                Interview interview = scheduledInterview.getInterview();
+                interviews.add(interview);
+            });
+        }else if(status != null){
             return interviewRepository.findAllByStatusInterview(status);
+        }else {
+            return interviewRepository.findAll();
         }
-        return interviewRepository.findAll();
-
+        return interviews;
     }
 }

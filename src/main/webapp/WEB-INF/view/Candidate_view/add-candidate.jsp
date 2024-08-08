@@ -54,27 +54,27 @@
                             <label >Full Name:
                                 <span class="text-danger">*</span>
                             </label>
-                            <form:input type="text" class="form-control " path="name" placeholder="Enter your full name" />
+                            <form:input type="text" class="form-control " path="name" placeholder="Enter your full name" value="${candidate.name}" />
                             <form:errors path="name" cssClass="text-danger"></form:errors>
                         </div>
                         <div class="form-group">
                             <label for="dob">Date of Birth: <span class="text-danger">*</span></label>
-                            <form:input type="date" class="form-control" path="dob"/>
+                            <form:input type="date" class="form-control" path="dob" value="${candidate.dob}"/>
                             <form:errors cssClass="text-danger" path="dob"></form:errors>
                         </div>
                         <div class="form-group">
                             <label for="phone">Phone Number:</label>
-                            <form:input type="tel" class="form-control" path="phone" placeholder="Enter your phone number"/>
+                            <form:input type="tel" class="form-control" path="phone" placeholder="Enter your phone number" value="${candidate.phone}"/>
                             <form:errors path="phone" cssClass="text-danger"></form:errors>
                         </div>
                         <div class="form-group">
-                            <label >File CV:</label>
+                            <label >File CV: "${candidate.cvAttachmentLink}")</label>
                             <input type="file" class="form-control"  id="input" name="cv" />
 
                         </div>
                         <div class="form-group">
                             <label>CurrentPosition: <span class="text-danger">*</span></label><br>
-                            <form:select class="" path="currentPosition" id="position">
+                            <form:select class="" path="currentPosition" id="position" value="${candidate.currentPosition}">
                                 <form:option value="">Select </form:option>
                                 <form:options items="${position}"/>
                             </form:select>
@@ -83,7 +83,7 @@
                         <div class="form-group">
                             <label>Skill: <span class="text-danger">*</span></label><br>
                             <select multiple name="skills" placeholder="Skill" data-search="true"
-                                    data-silent-initial-value-set="true" id="skill">
+                                    data-silent-initial-value-set="true" id="skill" th:field="*{candidate.skills}">
                                 <option value="Java">Java</option>
                                 <option value="Nodejs">Nodejs</option>
                                 <option value=".net">.NET</option>
@@ -97,7 +97,7 @@
 
                         <div class="form-group">
                             <label>Recruiter: <span class="text-danger">*</span></label><br>
-                            <form:select path="user" id="recruiter" data-search="true">
+                            <form:select path="user" id="recruiter" data-search="true" value="${candidate.user}">
                                 <form:option value="" selected="true">Choose Recruiter</form:option>
                                 <form:option value="${user}">Asign Me</form:option>
                                 <form:options items="${recruiters}" itemValue="userId" itemLabel="fullName"  />
@@ -112,17 +112,17 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email">Email: <span class="text-danger">*</span></label>
-                            <input type="email" class="form-control" name="email" id="email" required/>
+                            <input type="email" class="form-control" name="email" id="email" value="${candidate.email}" />
                             <form:errors cssClass="text-danger" path="email"></form:errors>
                         </div>
                         <div class="form-group">
                             <label for="address">Address:</label>
-                            <form:input type="text" class="form-control" path="address"/>
+                            <form:input type="text" class="form-control" path="address" value="${candidate.address}"/>
                             <form:errors cssClass="text-danger" path="address"></form:errors>
                         </div>
                         <div class="form-group">
                             <label>Gender: <span class="text-danger">*</span></label><br>
-                            <form:select class="form-control" path="gender" id="gender">
+                            <form:select class="form-control" path="gender" id="gender" value="${candidate.gender}">
                                 <form:option value="">Select </form:option>
                                 <form:options items="${gender}"/>
                             </form:select>
@@ -131,12 +131,12 @@
 
                         <div class="form-group">
                             <label for="note">Note:</label>
-                            <form:input class="form-control" path="note"/>
+                            <form:input class="form-control" path="note" value="${candidate.note}"/>
                             <form:errors cssClass="text-danger" path="note"></form:errors>
                         </div>
                         <div class="form-group">
                             <label>Status: <span class="text-danger">*</span></label><br>
-                            <form:select class="" path="status" id="status">
+                            <form:select class="" path="status" id="status" value="${candidate.status}">
                                 <form:option value="">Select </form:option>
                                 <form:options items="${status}"/>
                             </form:select>
@@ -144,13 +144,13 @@
                             ></form:errors>
                         </div>
                         <div class="form-group">
-                            <label for="yearsExperience">Year of Experience:</label>
-                            <form:input class="form-control" path="yearsExperience"/>
+                            <label for="yearsExperience">Year of Experience: </label>
+                            <form:input class="form-control" path="yearsExperience" value="${candidate.yearsExperience}"/>
                             <form:errors cssClass="text-danger" path="yearsExperience"></form:errors>
                         </div>
                         <div class="form-group">
                             <label>Highest Level: <span class="text-danger">*</span></label><br>
-                            <form:select class="" path="highestLevel" id="highestlevel">
+                            <form:select class="" path="highestLevel" id="highestlevel" value="${candidate.highestLevel}">
                                 <form:option value="">Select </form:option>
                                 <form:options items="${highlevel}"/>
                             </form:select>

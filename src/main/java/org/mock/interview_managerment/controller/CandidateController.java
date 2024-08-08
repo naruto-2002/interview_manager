@@ -119,6 +119,7 @@ public class CandidateController {
             System.out.println(bindingResult.getAllErrors());
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("message", "Failed to created candidate");
+            model.addAttribute("candidate", candidateCreateDto);
             List<User> users = userService.findByRoleforCandidate();
             model.addAttribute("recruiters", users);
             return "Candidate_view/add-candidate";

@@ -53,7 +53,7 @@ public class CandidateController {
         List<Candidate> candidates1 = candidates.getContent();
 
         List<Candidate> l = new ArrayList<>(candidates1);
-        l = sort(l);
+//        l = sort(l);
         model.addAttribute("p", candidates);
         model.addAttribute("gender", GenderEnum.values());
         model.addAttribute("position", PositionEnum.values());

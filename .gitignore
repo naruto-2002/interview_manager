@@ -1,10 +1,14 @@
-HELP.md
+# Build output directories
 target/
-!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
+# Maven Wrapper
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE specific files
+
+### STS (Spring Tool Suite) ###
 .apt_generated
 .classpath
 .factorypath
@@ -32,6 +36,20 @@ build/
 ### VS Code ###
 .vscode/
 
+# Environment and configuration files (Sensitive data)
 *.env
 config/*.properties
 secret/*.json
+
+# Logs and database files
+*.log
+*.db
+
+# Backup and temporary files
+*~
+*.swp
+*.swo
+
+# OS-specific files
+.DS_Store
+Thumbs.db

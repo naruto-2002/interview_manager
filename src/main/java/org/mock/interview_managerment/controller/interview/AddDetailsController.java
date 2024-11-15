@@ -125,7 +125,7 @@ public class AddDetailsController {
             scheduledInterviewService.saveScheduledInterview(scheduledInterview);
         }
 
-        return "redirect:/interview/list";
+        return "redirect:/interview/reminder?interviewId=" + interview.getInterviewId();
     }
 
 }

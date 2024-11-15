@@ -1,14 +1,10 @@
-# Build output directories
+HELP.md
 target/
+!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-# Maven Wrapper
-!.mvn/wrapper/maven-wrapper.jar
-
-# IDE specific files
-
-### STS (Spring Tool Suite) ###
+### STS ###
 .apt_generated
 .classpath
 .factorypath
@@ -36,20 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
-# Environment and configuration files (Sensitive data)
 *.env
 config/*.properties
 secret/*.json
 
-# Logs and database files
-*.log
-*.db
-
-# Backup and temporary files
-*~
-*.swp
-*.swo
-
-# OS-specific files
-.DS_Store
-Thumbs.db
+src/main/java/org/mock/interview_managerment/services/UploadtoDriver.java
